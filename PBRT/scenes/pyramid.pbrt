@@ -1,0 +1,62 @@
+#cube.pbrt -- a simple pbrt input file that displays a pyramid on a matte plane
+#Richard P. Sharp - CIS782 Fall 2004
+
+#first we set up the eye
+# Eerst van waar je kijkt, dan .. en dan de up vector
+LookAt 2 1 1  -0.5 -0.3 -.2  0 0 1 #ex ey ez lx ly lz ux uy uz
+
+#the camera
+Camera "perspective" "float fov" [30]
+
+#this is the filter used for antialiasing
+PixelFilter "mitchell" "float xwidth" [2] "float ywidth" [2]
+
+#name the file
+Film "image" "string filename" ["pyramid.exr"]
+     "integer xresolution" [800] "integer yresolution" [800]
+
+#begin describing scene
+WorldBegin
+
+#light source
+AttributeBegin
+  CoordSysTransform "camera"
+  LightSource "distant" 
+              "point from" [0 0 0] "point to"   [0 0 1]
+              "color L"    [3 3 3]
+AttributeEnd
+
+#transform the world
+AttributeBegin
+  
+  
+
+  #define a matte ground plane
+  AttributeBegin
+    Scale 2 2 2
+
+    Material "matte" "color Kd" [.8945 .9570 .9765]
+
+    #this is a triangle mesh, the first set of points define four xyz 
+    #coordinates, the second set defines the mesh by indexing into
+    #those points
+    Shape "trianglemesh" "point P" [ -1 -1 0  1 -1 0  1 1 0  -1 1 0 ]
+   	  "integer indices" [ 0 1 2 2 3 0 ]
+  AttributeEnd
+
+
+  #define a matte ground plane
+  #AttributeBegin
+    #Material "matte" "color Kd" [.0 .9570 .9765]\
+    #Shape "trianglemesh" "point P" [ -1 -1 .5  1 -1 .5  1 1 .5  -1 1 .5 ]
+   #	  "integer indices" [ 0 1 2 2 3 0 ]
+  #AttributeEnd
+
+AttributeEnd
+
+#Material "matte" "color Kd" [.1098 .5647 .6]
+Material "matte" "color Kd" [0.28125 0.4609375 0.99609375]
+Translate 0 0 0
+
+Include "geometry/pyramid.pbrt"
+WorldEnd

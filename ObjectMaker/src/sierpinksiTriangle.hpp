@@ -8,6 +8,9 @@
 #ifndef SIERPINKSITRIANGLE_HPP_
 #define SIERPINKSITRIANGLE_HPP_
 
+#include "Vertex.hpp"
+
+void cube(const char* fileName);
 void sierpinksiTriangle4(int depth, const char* fileName);
 
 
