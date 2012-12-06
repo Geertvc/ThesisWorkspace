@@ -1,12 +1,9 @@
-Film "image"
-#	"integer xresolution" [128] "integer yresolution" [128] 
+Film "image" "integer xresolution" [128] "integer yresolution" [128] 
 LookAt 0 .2 .2    -.02 .1 0  0 1 0
 Camera "perspective" "float fov" [60]
 
 Sampler "lowdiscrepancy" "integer pixelsamples" [8]
-PixelFilter "gaussian"
-     "float xwidth" [10] "float ywidth" [10]
-     "float alpha" [1] 
+# PixelFilter "gaussian" "float xwidth" [10] "float ywidth" [10] "float alpha" [1] 
 Renderer "RPFsampler"
 
 WorldBegin

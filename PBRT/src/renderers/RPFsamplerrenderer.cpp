@@ -41,6 +41,7 @@
 #include "progressreporter.h"
 #include "camera.h"
 #include "intersection.h"
+#include "filters/RPFCollector.h"
 
 static uint32_t hash(char *key, uint32_t len)
 {
@@ -142,6 +143,7 @@ void RPFSamplerRendererTask::Run() {
                 PBRT_STARTED_ADDING_IMAGE_SAMPLE(&samples[i], &rays[i], &Ls[i], &Ts[i]);
                 camera->film->AddSample(samples[i], Ls[i]);
                 //Add sample to RPFstack
+                collector->AddSample(samples[i], Ls[i]);
                 PBRT_FINISHED_ADDING_IMAGE_SAMPLE();
             }
         }
@@ -174,6 +176,8 @@ RPFSamplerRenderer::RPFSamplerRenderer(Sampler *s, Camera *c,
     surfaceIntegrator = si;
     volumeIntegrator = vi;
     visualizeObjectIds = visIds;
+
+    collector = new RPFCollector(1, 1);
 }
 
 
@@ -182,6 +186,8 @@ RPFSamplerRenderer::~RPFSamplerRenderer() {
     delete camera;
     delete surfaceIntegrator;
     delete volumeIntegrator;
+
+    delete collector;
 }
 
 
@@ -209,7 +215,7 @@ void RPFSamplerRenderer::Render(const Scene *scene) {
         renderTasks.push_back(new RPFSamplerRendererTask(scene, this, camera,
                                                       reporter, sampler, sample,
                                                       visualizeObjectIds,
-                                                      nTasks-1-i, nTasks));
+                                                      nTasks-1-i, nTasks, collector));
     EnqueueTasks(renderTasks);
     WaitForAllTasks();
     for (uint32_t i = 0; i < renderTasks.size(); ++i)

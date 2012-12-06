@@ -40,6 +40,7 @@
 #include "pbrt.h"
 #include "renderer.h"
 #include "parallel.h"
+#include "filters/RPFCollector.h"
 
 // RPFSamplerRenderer Declarations
 class RPFSamplerRenderer : public Renderer {
@@ -61,6 +62,7 @@ private:
     Camera *camera;
     SurfaceIntegrator *surfaceIntegrator;
     VolumeIntegrator *volumeIntegrator;
+    RPFCollector *collector;
 };
 
 
@@ -71,11 +73,12 @@ public:
     // RPFSamplerRendererTask Public Methods
 	RPFSamplerRendererTask(const Scene *sc, Renderer *ren, Camera *c,
                         ProgressReporter &pr, Sampler *ms, Sample *sam,
-                        bool visIds, int tn, int tc)
+                        bool visIds, int tn, int tc, RPFCollector *coll)
       : reporter(pr)
     {
         scene = sc; renderer = ren; camera = c; mainSampler = ms;
         origSample = sam; visualizeObjectIds = visIds; taskNum = tn; taskCount = tc;
+        collector = coll;
     }
     void Run();
 private:
@@ -88,6 +91,7 @@ private:
     Sample *origSample;
     bool visualizeObjectIds;
     int taskNum, taskCount;
+    RPFCollector *collector;
 };
 
 
