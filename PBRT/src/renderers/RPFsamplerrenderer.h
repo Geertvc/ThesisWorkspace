@@ -40,7 +40,7 @@
 #include "pbrt.h"
 #include "renderer.h"
 #include "parallel.h"
-#include "filters/RPFCollector.h"
+#include "rpf/RPFCollector.h"
 
 // RPFSamplerRenderer Declarations
 class RPFSamplerRenderer : public Renderer {

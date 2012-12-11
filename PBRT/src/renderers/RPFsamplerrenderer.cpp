@@ -41,7 +41,7 @@
 #include "progressreporter.h"
 #include "camera.h"
 #include "intersection.h"
-#include "filters/RPFCollector.h"
+#include "rpf/RPFCollector.h"
 
 static uint32_t hash(char *key, uint32_t len)
 {
@@ -177,7 +177,7 @@ RPFSamplerRenderer::RPFSamplerRenderer(Sampler *s, Camera *c,
     volumeIntegrator = vi;
     visualizeObjectIds = visIds;
 
-    collector = new RPFCollector(1, 1);
+    collector = new RPFCollector(camera->film->xResolution, camera->film->yResolution, s->samplesPerPixel);
 }
 
 

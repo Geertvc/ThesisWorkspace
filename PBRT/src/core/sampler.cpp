@@ -35,6 +35,7 @@
 #include "sampler.h"
 #include "integrator.h"
 #include "volume.h"
+//#include <iostream>
 
 // Sampler Method Definitions
 Sampler::~Sampler() {
@@ -71,6 +72,12 @@ void Sampler::ComputeSubWindow(int num, int count, int *newXStart,
     *newXEnd   = Floor2Int(Lerp(tx1, xPixelStart, xPixelEnd));
     *newYStart = Floor2Int(Lerp(ty0, yPixelStart, yPixelEnd));
     *newYEnd   = Floor2Int(Lerp(ty1, yPixelStart, yPixelEnd));
+
+
+    /*std::cout << "Subtask " << num << "/" << count << " handles following values:" << std::endl;
+    std::cout << "(" << *newXStart << " x " << *newYStart << ") -> ("
+    		<< *newXEnd << " x " << *newYEnd << ")" << std::endl;
+    std::cout << "---" << std::endl;*/
 }
 
 

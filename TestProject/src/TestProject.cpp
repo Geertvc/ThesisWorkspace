@@ -12,20 +12,22 @@
 #include <iomanip>
 #include <boost/lexical_cast.hpp>
 #include <fstream>
-#include "rpf/RPFCollector.h"
+//#include "rpf/RPFCollector.h"
 using namespace std;
 
 void RPFCollectorTest();
 void sizeofTest();
 void stringstreamTest();
+void maxIntValueTest();
 
 template <class T>
 void printArray(T *array, int size);
 
 int main() {
-	RPFCollectorTest();
+	//RPFCollectorTest();
 	//sizeofTest();
 	//stringstreamTest();
+	maxIntValueTest();
 	return 0;
 }
 
@@ -34,15 +36,15 @@ void RPFCollectorTest(){
 	int xRes = 5;
 	int yRes = 5;
 	int size = 3*xRes*yRes;
-	RPFCollector *test = new RPFCollector(xRes,yRes);
+	//RPFCollector *test = new RPFCollector(xRes,yRes);
 	float *values = new float[size];
 	int i;
 	for (i = 0; i < size; ++i) {
 		values[i] = i;
 	}
 	printArray <float> (values, size);
-	test->setColorValues(values);
-	printArray <float> (test->getColorValues(), size);
+	//test->setColorValues(values);
+	//printArray <float> (test->getColorValues(), size);
 }
 
 template <class T>
@@ -86,4 +88,11 @@ void stringstreamTest(){
 	file.open("testfile.txt");
 	file << "f " << testValue << " " << value2 << " " << value3 << endl;
 	file.close();
+}
+
+void maxIntValueTest(){
+	int i = 2147483647000000000000000000000000000000;
+	int j = 0;
+	cout << "i: " << i << endl;
+	cout << "j: " << j << endl;
 }

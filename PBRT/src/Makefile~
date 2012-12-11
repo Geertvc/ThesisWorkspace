@@ -87,8 +87,6 @@ bin/%: dirs
 
 pbrt: bin/pbrt
 
-test: bin/test
-
 dirs:
 	/bin/mkdir -p bin objs
 
@@ -121,6 +119,10 @@ objs/film_%.o: film/%.cpp
 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 objs/filters_%.o: filters/%.cpp
+	@echo "Building object $@"
+	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+
+objs/rpf_%.o: rpf/%.cpp
 	@echo "Building object $@"
 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
 
