@@ -1245,7 +1245,7 @@ Renderer *RenderOptions::MakeRenderer() const {
         RendererParams.ReportUnused();
     }
     else if(RendererName == "RPFsampler") {
-    	Warning("We are using the RPFsamplerRenderer now");
+    	Info("We are using the RPFsamplerRenderer now");
     	bool visIds = RendererParams.FindOneBool("visualizeobjectids", false);
 		RendererParams.ReportUnused();
 		Sampler *sampler = MakeSampler(SamplerName, SamplerParams, camera->film, camera);

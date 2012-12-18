@@ -19,21 +19,15 @@
 class RPFCollector {
 public:
 	RPFCollector(const int xRes, const int yRes, const int nbOfsamplesPerPixel);
-	//void setColorValues(float *values);
-	//float *getColorValues();
 	void AddSample(const CameraSample &sample, const Spectrum &L);
 	void ExecuteRPF();
 	~RPFCollector(){
-		//free(rpfpixels);
 	}
 private:
 	const int xRes;
 	const int yRes;
 	const int nbPixels;
-	//float *colorValues;
 	const int samplesPerPixel;
-	//BlockedArray<RPFPixel> *rpfpixels;
-	//RPFPixel *rpfpixels;
 	std::vector<RPFPixel> rpfPixels;
 };
 

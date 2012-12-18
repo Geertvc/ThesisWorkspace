@@ -72,9 +72,11 @@ double RPFFilter::domainFilter(int p, int q, int i, int j){
 	int y = j-q;
 	return gaussianKernel[x+n][y+n];
 }
+
 double RPFFilter::rangeFilter(double neighBorPixelValue, double pixelValue){
 	return rangeKernel[(int) abs(neighBorPixelValue-pixelValue)];
 }
+
 double RPFFilter::gaussian(double twoSigmaSquared, int i, int j){
 	return exp(-((i*i + j*j) / (twoSigmaSquared)));
 }
@@ -102,6 +104,7 @@ double RPFFilter::applyToChannel(int x, int y, int chan, std::vector<RPFPixel> &
 	}
 	return numeratorSum/denominatorSum;
 }
+
 double RPFFilter::getPixelValue(int chan, RPFPixel &pixel){
 	double total = 0.0;
 	for (unsigned int i = 0; i < pixel.rpfsamples.size(); ++i) {

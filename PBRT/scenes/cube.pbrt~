@@ -47,5 +47,5 @@ AttributeEnd
 
 Material "matte" "color Kd" [.1098 .5647 .6]
 
-Include "geometry/cube.pbrt"
+Include "geometry/sierpinski1.pbrt"
 WorldEnd

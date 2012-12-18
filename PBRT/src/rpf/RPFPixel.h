@@ -13,15 +13,10 @@
 
 class RPFPixel{
 public:
-	//RPFPixel();
 	RPFPixel(const int samplesPerPixel);
-	//RPFPixel( RPFPixel& other );
 	RPFPixel& operator=( RPFPixel& rhs );
-	~RPFPixel(){
-		//delete[] rpfsamples;
-	}
+	~RPFPixel(){}
 	void AddSample(RPFSample *newSample);
-	//RPFSample *rpfsamples;
 	std::vector<RPFSample> rpfsamples;
 	unsigned int nextSample;
 	float totalrgb[3];

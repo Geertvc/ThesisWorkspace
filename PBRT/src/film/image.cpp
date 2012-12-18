@@ -36,7 +36,6 @@
 #include "spectrum.h"
 #include "parallel.h"
 #include "imageio.h"
-#include <iostream>
 
 // ImageFilm Method Definitions
 ImageFilm::ImageFilm(int xres, int yres, Filter *filt, const float crop[4],
