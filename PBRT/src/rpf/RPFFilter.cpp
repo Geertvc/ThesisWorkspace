@@ -9,6 +9,7 @@
 #include <iostream>
 #include <cmath>
 #include "RPFPixel.h"
+#include "progressreporter.h"
 using namespace std;
 
 RPFFilter::RPFFilter(double sigmaD, double sigmaR, int n)
@@ -48,9 +49,12 @@ void RPFFilter::applyFilter(std::vector<RPFPixel> &input, float *rgb, int xResol
 	xRes = xResolution;
 	yRes = yResolution;
 	samplesPerPixel = samples;
+
+	ProgressReporter reporter(yRes, "Filtering");
+
 	unsigned int offset = 0;
 	for (int y=0; y<yRes; ++y) {
-		cout << "Row " << y << endl;
+		//cout << "Row " << y << endl;
 		for (int x=0; x<xRes; ++x){
 			for (int chan = 0; chan < 3; ++chan) {
 				rgb[3*offset + chan] = applyToChannel(x, y, chan, input);
@@ -58,7 +62,9 @@ void RPFFilter::applyFilter(std::vector<RPFPixel> &input, float *rgb, int xResol
 			//cout << "Column " << x << endl;
 			offset++;
 		}
+		reporter.Update();
 	}
+	reporter.Done();
 }
 
 double RPFFilter::domainFilter(int p, int q, int i, int j){

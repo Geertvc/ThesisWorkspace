@@ -10,16 +10,16 @@
 #include "RPFSample.h"
 #include <cstring>
 #include <iostream>
-#include <boost/gil/gil_all.hpp>
-#include <boost/gil/extension/io/jpeg_io.hpp>
-#include "FastestBilateralFilter.h"
+//#include <boost/gil/gil_all.hpp>
+//#include <boost/gil/extension/io/jpeg_io.hpp>
+//#include "FastestBilateralFilter.h"
 #include "RPFFilter.h"
 #include "spectrum.h"
 #include "imageio.h"
+#include <sstream>
 
-//int RPFCollector::samplesPerPixel = 0;
 /**
- * nbPixels and samplesPerPixel are initialized using the constructor initialization list.
+ * initialization using the constructor initialization list.
  */
 RPFCollector::RPFCollector(const int xResolution, const int yResolution, const int s)
 : xRes(xResolution), yRes(yResolution), nbPixels(xRes*yRes), samplesPerPixel(s), rpfPixels () {
@@ -33,70 +33,9 @@ RPFCollector::RPFCollector(const int xResolution, const int yResolution, const i
 		//std::cout << i << std::endl;
 		rpfPixels.push_back (RPFPixel (samplesPerPixel));
 	}
-
-	/*RPFPixel *newPixel = new RPFPixel(samplesPerPixel);
-	int i;
-	for (i = 0; i < samplesPerPixel; ++i) {
-		std::cout << "sample " << i << " (" << newPixel->rpfsamples[i].Lrgb[0] << ", " << newPixel->rpfsamples[i].Lrgb[1] << ", " << newPixel->rpfsamples[i].Lrgb[2] << ")" << std::endl;
-	}
-
-	RPFSample *newSample = new RPFSample();
-	newSample->Lrgb[0] = 1.f;
-	newSample->Lrgb[1] = 2.f;
-	newSample->Lrgb[2] = 3.f;
-	newPixel->AddSample(newSample);
-	newPixel->AddSample(newSample);
-	newPixel->AddSample(newSample);
-	newPixel->AddSample(newSample);
-	newPixel->AddSample(newSample);
-	newPixel->AddSample(newSample);
-	newPixel->AddSample(newSample);
-	newPixel->AddSample(newSample);
-
-	for (i = 0; i < samplesPerPixel; ++i) {
-		std::cout << "sample " << i << " (" << newPixel->rpfsamples[i].Lrgb[0] << ", " << newPixel->rpfsamples[i].Lrgb[1] << ", " << newPixel->rpfsamples[i].Lrgb[2] << ")" << std::endl;
-	}*/
-
-
-	/*rpfpixels = (RPFPixel*) malloc(sizeof(RPFPixel) * nbPixels);
-	std::cout << "size of RPFPixel: " << sizeof(RPFPixel) << std::endl;
-	int i;
-	for (i = 0; i < nbPixels; ++i) {
-		new (&rpfpixels[i]) RPFPixel(i);
-		std::cout << "pixel " << i << std::endl;
-	}*/
-
-	/*int j;
-	for (i = 0; i < xRes; ++i) {
-		for (j = 0; j < yRes; ++j) {
-			RPFPixel &rpfPixel = rpfpixels[(i*yRes)+j];
-			std::cout << rpfPixel.nextSample << std::endl;
-		}
-	}*/
-
-	/*int i;
-	int j;
-	int k;
-	for (i = 0; i < xRes; ++i) {
-		for (j = 0; j < yRes; ++j) {
-			RPFPixel &rpfPixel = (*rpfpixels)(i,j);
-			RPFSample *rpfsamples = rpfPixel.rpfsamples;
-			for (k = 0; k < samplesPerPixel; ++k) {
-				std::cout << "(" << i << ", " << j << "): " << rpfsamples[k].Lrgb[0] << ", " << rpfsamples[k].Lrgb[1] << ", " << rpfsamples[k].Lrgb[2] << std::endl;
-			}
-		}
-	}*/
 }
 
-/*void RPFCollector::setColorValues(float *values){
-	memcpy(colorValues, values, sizeof(values)*3*nbPixels);
-}*/
-
-/*float *RPFCollector::getColorValues(){
-	return colorValues;
-}*/
-
-//Problemen om dit parallel aan te roepen.
+//Dit wordt parallel aangeroepen maar geen probleem want alleen writes naar aparte plaatsen in de array hier.
 void RPFCollector::AddSample(const CameraSample &sample, const Spectrum &L){
 	//Zet continu sample waarde om naar discrete range.
 	//float dimageX = sample.imageX - 0.5f;
@@ -236,29 +175,32 @@ void RPFCollector::ExecuteRPF(){
 	WriteImage(outputFileName, rgb, NULL, xRes, yRes,
 	                 xRes, yRes, 0, 0);*/
 
-	double sigmaD = 3.0;
-	double sigmaR = 20.0;//1/0.0;
-	int n = 5;
-	float *rgb = new float[3*nbPixels];
-	RPFFilter *filter = new RPFFilter(sigmaD, sigmaR, n);
 	clock_t start, end;
 	start = clock();
+	double sigmaD = 3.0;
+	double sigmaR = 20.0;//1/0.0;
+	int n = 1;
+	float *rgb = new float[3*nbPixels];
+	RPFFilter *filter = new RPFFilter(sigmaD, sigmaR, n);
 	filter->applyFilter(rpfPixels, rgb, xRes, yRes, samplesPerPixel);
 	end = clock();
-	std::cout << "Elapsed time: " << (double)(end-start)/CLOCKS_PER_SEC << " seconds." << std::endl;
-	string outputFileName = "images/newTest2.tga";
+	std::cout << "Total time used by RPF: " << (double)(end-start)/CLOCKS_PER_SEC << " seconds." << std::endl;
+
+
+	std::ostringstream os;
+	os << "images/killeroo";
+	os << "D=";
+	os << sigmaD;
+	os << "R=";
+	os << sigmaR;
+	os << "n=";
+	os << n;
+	os << "size=";
+	os << xRes;
+	os << "x";
+	os << yRes;
+	os << ".tga";
+	string outputFileName = os.str();
 	WriteImage(outputFileName, rgb, NULL, xRes, yRes,
 					 xRes, yRes, 0, 0);
-
-	/*int i;
-	int j;
-	for (i = 0; i < yRes; ++i) {
-		for (j = 0; j < xRes; ++j) {
-			RPFPixel &rpfPixel = rpfPixels[(i*xRes)+j];
-			for (int k = 0; k < rpfPixel.rpfsamples.size(); ++k) {
-				RPFSample &rpfSample = rpfPixel.rpfsamples[k];
-				std::cout << j << ", " << i << ": " << k << " = "<< "(" << rpfSample.Lrgb[0] << ", " << rpfSample.Lrgb[1] << ", " << rpfSample.Lrgb[2] << ")" << std::endl;
-			}
-		}
-	}*/
 }
