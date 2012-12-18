@@ -43,7 +43,7 @@ int main() {
 	typedef boost::gil::pixel<boost::gil::bits8, boost::gil::rgb_layout_t> rgb8_pixel_t;
 
 	ostringstream nameStream;
-	nameStream << "lena";
+	nameStream << "images/lena";
 	nameStream << imageSize;
 	nameStream << ".jpg";
 	string inputFileName = nameStream.str();
@@ -119,7 +119,7 @@ int main() {
 	//boost::gil::rgb16s_view_t dst = interleaved_view(w,h,(    rgb16s_pixel_t*)dst_pixels,dst_row_bytes);
 
 	ostringstream os;
-	os << "scaledlena";
+	os << "images/scaledlena";
 	os << "D=";
 	os << sigmaD;
 	os << "R=";
@@ -131,7 +131,7 @@ int main() {
 	os << "v=";
 	os << usedFilterVersion;
 	os << ".jpg";
-	string outputFileName = "testAgain.jpg";//os.str();
+	string outputFileName = "images/testAgain.jpg";//os.str();
 
 	cout << "Writing image to " << outputFileName << endl;
 	boost::gil::jpeg_write_view(outputFileName, view(outputImage));

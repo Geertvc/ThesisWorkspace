@@ -5,7 +5,7 @@
 LookAt 6 6 6   -1 -1 -1  0 1 0 #ex ey ez lx ly lz ux uy uz
 
 #the camera
-Camera "perspective" "float fov" [30]
+Camera "perspective" "float fov" [60]
 
 #this is the filter used for antialiasing
 PixelFilter "mitchell" "float xwidth" [2] "float ywidth" [2]

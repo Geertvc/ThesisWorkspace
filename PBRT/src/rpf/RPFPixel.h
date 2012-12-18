@@ -9,17 +9,22 @@
 #define RPFPIXEL_H_
 
 #include "RPFSample.h"
+#include <vector>
 
 class RPFPixel{
 public:
 	//RPFPixel();
 	RPFPixel(const int samplesPerPixel);
+	//RPFPixel( RPFPixel& other );
+	RPFPixel& operator=( RPFPixel& rhs );
 	~RPFPixel(){
-		delete[] rpfsamples;
+		//delete[] rpfsamples;
 	}
-	void AddSample();
-	RPFSample *rpfsamples;
-	int nextSample;
+	void AddSample(RPFSample *newSample);
+	//RPFSample *rpfsamples;
+	std::vector<RPFSample> rpfsamples;
+	unsigned int nextSample;
+	float totalrgb[3];
 };
 
 

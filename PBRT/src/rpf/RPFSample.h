@@ -11,8 +11,10 @@
 class RPFSample {
 public:
 	RPFSample();
+	//RPFSample( RPFSample& other );
+	RPFSample& operator=( RPFSample& rhs );
 	~RPFSample(){
-		delete[] Lrgb;
+		//delete[] Lrgb;
 	}
 	float Lrgb[3];
 };

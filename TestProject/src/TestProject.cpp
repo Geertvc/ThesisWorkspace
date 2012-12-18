@@ -12,6 +12,7 @@
 #include <iomanip>
 #include <boost/lexical_cast.hpp>
 #include <fstream>
+#include <vector>
 //#include "rpf/RPFCollector.h"
 using namespace std;
 
@@ -24,10 +25,11 @@ template <class T>
 void printArray(T *array, int size);
 
 int main() {
+
 	//RPFCollectorTest();
 	//sizeofTest();
 	//stringstreamTest();
-	maxIntValueTest();
+	//maxIntValueTest();
 	return 0;
 }
 

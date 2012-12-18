@@ -141,9 +141,9 @@ void RPFSamplerRendererTask::Run() {
             for (int i = 0; i < sampleCount; ++i)
             {
                 PBRT_STARTED_ADDING_IMAGE_SAMPLE(&samples[i], &rays[i], &Ls[i], &Ts[i]);
-                camera->film->AddSample(samples[i], Ls[i]);
                 //Add sample to RPFstack
                 collector->AddSample(samples[i], Ls[i]);
+                camera->film->AddSample(samples[i], Ls[i]);
                 PBRT_FINISHED_ADDING_IMAGE_SAMPLE();
             }
         }
@@ -226,6 +226,7 @@ void RPFSamplerRenderer::Render(const Scene *scene) {
     delete sample;
     camera->film->WriteImage();
     //Start the execution of the RPF algorithm???
+    collector->ExecuteRPF();
 }
 
 

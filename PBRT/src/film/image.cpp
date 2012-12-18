@@ -36,6 +36,7 @@
 #include "spectrum.h"
 #include "parallel.h"
 #include "imageio.h"
+#include <iostream>
 
 // ImageFilm Method Definitions
 ImageFilm::ImageFilm(int xres, int yres, Filter *filt, const float crop[4],
@@ -134,6 +135,7 @@ void ImageFilm::AddSample(const CameraSample &sample,
             }
         }
     }
+
 }
 
 
@@ -200,6 +202,27 @@ void ImageFilm::WriteImage(float splatScale) {
             rgb[3*offset  ] += splatScale * splatRGB[0];
             rgb[3*offset+1] += splatScale * splatRGB[1];
             rgb[3*offset+2] += splatScale * splatRGB[2];
+
+
+            /*if(rgb[3*offset] > 1){
+            	Warning("0 is bigger");
+            	rgb[3*offset] = 255;
+            	rgb[3*offset+1] = 0;
+            	rgb[3*offset+2] = 0;
+            }
+            if(rgb[3*offset+1] > 1){
+				Warning("1 is bigger");
+				rgb[3*offset] = 255;
+				rgb[3*offset+1] = 0;
+				rgb[3*offset+2] = 0;
+            }
+            if(rgb[3*offset+2] > 1){
+				Warning("2 is bigger");
+				rgb[3*offset] = 255;
+				rgb[3*offset+1] = 0;
+				rgb[3*offset+2] = 0;
+			}*/
+
             ++offset;
         }
     }
