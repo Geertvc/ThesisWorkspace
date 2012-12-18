@@ -13,6 +13,7 @@
 #include <boost/gil/gil_all.hpp>
 #include <boost/gil/extension/io/jpeg_io.hpp>
 #include "FastestBilateralFilter.h"
+#include "RPFFilter.h"
 #include "spectrum.h"
 #include "imageio.h"
 
@@ -212,7 +213,7 @@ void RPFCollector::ExecuteRPF(){
 	boost::gil::jpeg_write_view(outputFileName, view(outputImage));
 	std::cout << "Writing image done." << std::endl;*/
 
-	float *rgb = new float[3*nbPixels];
+	/*float *rgb = new float[3*nbPixels];
 	int offset = 0;
 	for (int y=0; y<yRes; ++y) {
 		std::cout << "Row " << y << std::endl;
@@ -233,8 +234,21 @@ void RPFCollector::ExecuteRPF(){
 	}
 	string outputFileName = "images/newTest.tga";
 	WriteImage(outputFileName, rgb, NULL, xRes, yRes,
-	                 xRes, yRes, 0, 0);
+	                 xRes, yRes, 0, 0);*/
 
+	double sigmaD = 3.0;
+	double sigmaR = 20.0;//1/0.0;
+	int n = 5;
+	float *rgb = new float[3*nbPixels];
+	RPFFilter *filter = new RPFFilter(sigmaD, sigmaR, n);
+	clock_t start, end;
+	start = clock();
+	filter->applyFilter(rpfPixels, rgb, xRes, yRes, samplesPerPixel);
+	end = clock();
+	std::cout << "Elapsed time: " << (double)(end-start)/CLOCKS_PER_SEC << " seconds." << std::endl;
+	string outputFileName = "images/newTest2.tga";
+	WriteImage(outputFileName, rgb, NULL, xRes, yRes,
+					 xRes, yRes, 0, 0);
 
 	/*int i;
 	int j;
