@@ -15,11 +15,13 @@
 #include <stdlib.h>
 #include <vector>
 #include <iostream>
+#include "core/intersection.h"
+#include "core/geometry.h"
 
 class RPFCollector {
 public:
 	RPFCollector(const int xRes, const int yRes, const int nbOfsamplesPerPixel);
-	void AddSample(const CameraSample &sample, const Spectrum &L);
+	void AddSample(const CameraSample &sample, const Spectrum &L, const RayDifferential &ray, const Intersection &intersection);
 	void ExecuteRPF();
 	~RPFCollector(){
 	}

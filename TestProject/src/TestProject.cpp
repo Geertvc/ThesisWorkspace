@@ -13,9 +13,11 @@
 #include <boost/lexical_cast.hpp>
 #include <fstream>
 #include <vector>
+#include "Tuple3f.h"
 //#include "rpf/RPFCollector.h"
 using namespace std;
 
+void Tuple3fTest();
 void RPFCollectorTest();
 void sizeofTest();
 void stringstreamTest();
@@ -25,12 +27,21 @@ template <class T>
 void printArray(T *array, int size);
 
 int main() {
-
+	Tuple3fTest();
 	//RPFCollectorTest();
 	//sizeofTest();
 	//stringstreamTest();
 	//maxIntValueTest();
 	return 0;
+}
+
+void Tuple3fTest(){
+	Tuple3f *tup = new Tuple3f();
+	std::cout << "x: " << tup->x << ", y: " << tup->y << ", z: " << tup->z << std::endl;
+	Tuple3f *tup2 = new Tuple3f(1.f, 2.f, 3.f);
+	std::cout << "x: " << tup2->x << ", y: " << tup2->y << ", z: " << tup2->z << std::endl;
+	Tuple3f *tup3 = new Tuple3f(.3f, .2f, .1f);
+	std::cout << "x: " << tup3->x << ", y: " << tup3->y << ", z: " << tup3->z << std::endl;
 }
 
 void RPFCollectorTest(){

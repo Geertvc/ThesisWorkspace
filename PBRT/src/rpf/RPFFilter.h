@@ -15,7 +15,7 @@ public:
 	//Constructor that is given the domain and the range sigma and the size of the neighboorhood n.
 	RPFFilter(double sigmaD, double sigmaR, int n);
 	//Starts the filter algorithm on the input variable and puts the output in the rgb array.
-	void applyFilter(std::vector<RPFPixel> &input, float *rgb, int xRes, int yRes, int samplesPerPixel);
+	void applyFilter(std::vector<RPFPixel> &input, float *xyz, int xRes, int yRes, int samplesPerPixel);
 	~RPFFilter();
 private:
 	double sigmaD;

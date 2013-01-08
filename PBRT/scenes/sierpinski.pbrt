@@ -1,0 +1,55 @@
+#cube.pbrt -- a simple pbrt input file that displays a cube on a matte plane
+#Richard P. Sharp - CIS782 Fall 2004
+
+#first we set up the eye
+LookAt 1 1 1   -1 -1 -1  0 0 2 #ex ey ez lx ly lz ux uy uz
+
+#the camera
+Camera "perspective" "float fov" [60]
+
+#this is the filter used for antialiasing
+PixelFilter "mitchell" "float xwidth" [2] "float ywidth" [2]
+
+#name the file
+Film "image" "string filename" ["sierpinski.exr"]
+     "integer xresolution" [800] "integer yresolution" [800]
+
+#begin describing scene
+WorldBegin
+
+#light source
+AttributeBegin
+  CoordSysTransform "camera"
+  #LightSource "distant" 
+   #           "point from" [0 0 0] "point to"   [0 0 1]
+    #          "color L"    [3 3 3]
+  LightSource "point" "rgb I" [1000 1000 1000] "point from" [10 -10 10]
+AttributeEnd
+
+#transform the world
+AttributeBegin
+  Translate 0 0 0
+  #Rotate 35 0 1 0
+
+  #define a matte ground plane
+  AttributeBegin
+    Scale 1 1 1
+
+    Material "matte" "color Kd" [.8945 .9570 .9765]
+
+    #this is a triangle mesh, the first set of points define four xyz 
+    #coordinates, the second set defines the mesh by indexing into
+    #those points
+    Shape "trianglemesh" "point P" [ -1 -1 0  1 -1 0  1 1 0  -1 1 0 ]
+   	  "integer indices" [ 0 1 2 2 3 0 ]
+  AttributeEnd
+
+AttributeEnd
+
+Material "matte" "color Kd" [.1098 .5647 .6]
+#Material "measured" "string filename" "brdfs/mystique.brdf"
+#Material "plastic"
+
+
+Include "geometry/sierpinski/sierpinski5.pbrt"
+WorldEnd

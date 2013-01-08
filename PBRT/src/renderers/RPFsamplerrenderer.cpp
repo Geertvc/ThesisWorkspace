@@ -97,6 +97,10 @@ void RPFSamplerRendererTask::Run() {
             if (visualizeObjectIds) {
                 if (rayWeight > 0.f && scene->Intersect(rays[i], &isects[i])) {
                     // random shading based on shape id...
+                	/* This renderer can optionally ignore the surface and volume integrators
+					and randomly shade objects based on their shape and primitive id
+					values.  This can be useful to visualize the tessellation of
+					complex objects and search for problems in geometric models.*/
                     uint32_t ids[2] = { isects[i].shapeId, isects[i].primitiveId };
                     uint32_t h = hash((char *)ids, sizeof(ids));
                     float rgb[3] = { (h & 0xff), (h >> 8) & 0xff, (h >> 16) & 0xff };
@@ -107,30 +111,31 @@ void RPFSamplerRendererTask::Run() {
                     Ls[i] = 0.f;
             }
             else {
-            if (rayWeight > 0.f)
-                Ls[i] = rayWeight * renderer->Li(scene, rays[i], &samples[i], rng,
-                                                 arena, &isects[i], &Ts[i]);
-            else {
-                Ls[i] = 0.f;
-                Ts[i] = 1.f;
-            }
+            	//Normal shading based on rendering equation
+				if (rayWeight > 0.f)
+					Ls[i] = rayWeight * renderer->Li(scene, rays[i], &samples[i], rng,
+													 arena, &isects[i], &Ts[i]);
+				else {
+					Ls[i] = 0.f;
+					Ts[i] = 1.f;
+				}
 
-            // Issue warning if unexpected radiance value returned
-            if (Ls[i].HasNaNs()) {
-                Error("Not-a-number radiance value returned "
-                      "for image sample.  Setting to black.");
-                Ls[i] = Spectrum(0.f);
-            }
-            else if (Ls[i].y() < -1e-5) {
-                Error("Negative luminance value, %f, returned"
-                      "for image sample.  Setting to black.", Ls[i].y());
-                Ls[i] = Spectrum(0.f);
-            }
-            else if (isinf(Ls[i].y())) {
-                Error("Infinite luminance value returned"
-                      "for image sample.  Setting to black.");
-                Ls[i] = Spectrum(0.f);
-            }
+				// Issue warning if unexpected radiance value returned
+				if (Ls[i].HasNaNs()) {
+					Error("Not-a-number radiance value returned "
+						  "for image sample.  Setting to black.");
+					Ls[i] = Spectrum(0.f);
+				}
+				else if (Ls[i].y() < -1e-5) {
+					Error("Negative luminance value, %f, returned"
+						  "for image sample.  Setting to black.", Ls[i].y());
+					Ls[i] = Spectrum(0.f);
+				}
+				else if (isinf(Ls[i].y())) {
+					Error("Infinite luminance value returned"
+						  "for image sample.  Setting to black.");
+					Ls[i] = Spectrum(0.f);
+				}
             }
             PBRT_FINISHED_CAMERA_RAY_INTEGRATION(&rays[i], &samples[i], &Ls[i]);
         }
@@ -142,7 +147,7 @@ void RPFSamplerRendererTask::Run() {
             {
                 PBRT_STARTED_ADDING_IMAGE_SAMPLE(&samples[i], &rays[i], &Ls[i], &Ts[i]);
                 //Add sample to RPFstack
-                collector->AddSample(samples[i], Ls[i]);
+                collector->AddSample(samples[i], Ls[i], rays[i], isects[i]);
                 camera->film->AddSample(samples[i], Ls[i]);
                 PBRT_FINISHED_ADDING_IMAGE_SAMPLE();
             }
