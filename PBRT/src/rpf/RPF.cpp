@@ -17,7 +17,6 @@ RPF::RPF(){
 void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution, int yResolution, int samplesPerPixel){
 	//copy the color of all samples to c'
 	std::vector<Tuple3f> copyColors = *(new std::vector<Tuple3f> ());
-	std::cout << "bla "<< std::endl;
 	copyColors.reserve(xResolution*yResolution*samplesPerPixel);
 	for (int y = 0; y < yResolution; ++y) {
 		for (int x = 0; x < xResolution; ++x) {
@@ -26,7 +25,7 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 				//int index = (pixelIndex)*samplesPerPixel + s;
 				float *colors = input[pixelIndex].rpfsamples[s].Lrgb;
 
-				if(isinf(colors[0])){
+				/*if(isinf(colors[0])){
 					std::cout << "0 is: " << colors[0] << std::endl;
 				}
 				if(isinf(colors[1])){
@@ -34,7 +33,7 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 				}
 				if(isinf(colors[2])){
 					std::cout << "2 is: " << colors[2] << std::endl;
-				}
+				}*/
 
 				/*if(y< 10 ){
 					std::cout << colors[0]  << ", " << colors[1] << ", " << colors[2]  << std::endl;
@@ -76,7 +75,6 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 	}
 
 	float invSamplesPerPixel = 1.f/samplesPerPixel;
-	//TODO for all pixels box filter the samples in the pixel to compute the final pixel value.
 	for (int y = 0; y < yResolution; ++y) {
 		for (int x = 0; x < xResolution; ++x) {
 			int pixelIndex = y*xResolution + x;

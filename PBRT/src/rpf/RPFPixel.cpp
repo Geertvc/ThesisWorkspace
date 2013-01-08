@@ -39,6 +39,8 @@ void RPFPixel::AddSample(RPFSample *newSample){
 		//Severe("Severe error: more samples inserted than samplesPerPixel.");
 	}
 	rpfsamples[nextSample] = *newSample;
+
+
 	totalrgb[0] += newSample->Lrgb[0];
 	totalrgb[1] += newSample->Lrgb[1];
 	totalrgb[2] += newSample->Lrgb[2];
