@@ -15,7 +15,9 @@ class RPFPixel{
 public:
 	RPFPixel(const int samplesPerPixel);
 	RPFPixel& operator=( RPFPixel& rhs );
-	~RPFPixel(){}
+	~RPFPixel(){
+		//Vectors delete themselves
+	}
 	void AddSample(RPFSample *newSample);
 	std::vector<RPFSample> rpfsamples;
 	unsigned int nextSample;

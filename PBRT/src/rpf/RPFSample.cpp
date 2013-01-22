@@ -13,6 +13,9 @@ RPFSample::RPFSample() {
 	for (i = 0; i < 3; ++i) {
 		Lrgb[i] = 0.f;
 	}
+	imageX = 0.f;
+	imageY = 0.f;
+
     randomX = 0.f;
     randomY = 0.f;
     randomLensU = 0.f;
@@ -31,6 +34,9 @@ RPFSample& RPFSample::operator=( RPFSample& rhs ){
 	Lrgb[0] = rhs.Lrgb[0];
 	Lrgb[1] = rhs.Lrgb[1];
 	Lrgb[2] = rhs.Lrgb[2];
+	imageX = rhs.imageX;
+	imageY = rhs.imageY;
+
 	randomX = rhs.randomX;
 	randomY = rhs.randomY;
 	randomLensU = rhs.randomLensU;

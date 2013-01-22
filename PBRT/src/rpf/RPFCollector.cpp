@@ -49,6 +49,9 @@ void RPFCollector::AddSample(const CameraSample &sample, const Spectrum &L, cons
 	RPFSample *newSample = new RPFSample();
 	//Set color values.
 	L.ToXYZ(newSample->Lrgb);
+	//Set position of the sample
+	newSample->imageX = sample.imageX;
+	newSample->imageY = sample.imageY;
 	//Set random parameters.
 	newSample->randomX = sample.imageX-x;
 	newSample->randomY = sample.imageY-y;
@@ -164,7 +167,7 @@ void RPFCollector::ExecuteRPF(){
 	os << yRes;
 	os << ".tga";
 	//string outputFileName = os.str();
-	string outputFileName = "testRgb.tga";
+	string outputFileName = "testRgb.exr";
 	WriteImage(outputFileName, rgb, NULL, xRes, yRes,
 					 xRes, yRes, 0, 0);
 	std::cout << " -> Image written to " << outputFileName << std::endl;

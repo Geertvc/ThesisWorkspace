@@ -17,8 +17,12 @@ public:
 	~RPFSample(){}
 	//Color values
 	float Lrgb[3];
+
+	//The position of the sample in the image.
+	float imageX, imageY;
+
 	/*Random parameters*/
-	//Random position in pixel
+	//Random position within the pixel
     float randomX, randomY;
     //Random position on lens
     float randomLensU, randomLensV;
