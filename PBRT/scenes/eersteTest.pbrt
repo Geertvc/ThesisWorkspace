@@ -2,7 +2,7 @@ Film "image" "integer xresolution" [256] "integer yresolution" [256]
 LookAt 0 .2 .2    -.02 .1 0  0 1 0
 Camera "perspective" "float fov" [60]
 
-Sampler "lowdiscrepancy" "integer pixelsamples" [1]
+Sampler "lowdiscrepancy" "integer pixelsamples" [2]
 # PixelFilter "gaussian" "float xwidth" [10] "float ywidth" [10] "float alpha" [1] 
 Renderer "RPFsampler"
 

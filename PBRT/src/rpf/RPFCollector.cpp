@@ -90,7 +90,7 @@ void RPFCollector::ExecuteRPF(){
 	std::cout << " -> RPF execution started" << std::endl;
 	clock_t start, end;
 	start = clock();
-	//De grootte van de neighboorhood.
+	/*//De grootte van de neighboorhood.
 	int n = 7;
 	//Dit is sigmaP uit de paper.
 	double sigmaD = n/4;//3.0;
@@ -99,7 +99,7 @@ void RPFCollector::ExecuteRPF(){
 	//De sigma die gebruikt wordt om sigmaC en sigmaF te berekenen tot de tweede macht:
 	double sigmaSquared = 8*sigma8Squared/samplesPerPixel;
 	//Dit is sigmaC uit de paper
-	double sigmaR = sigmaSquared;//20.0;//1/0.0;
+	double sigmaR = sigmaSquared;//20.0;//1/0.0;*/
 	float *xyz = new float[3*nbPixels];
 	//RPFFilter *filter = new RPFFilter(sigmaD, sigmaR, n);
 	//filter->applyFilter(rpfPixels, xyz, xRes, yRes, samplesPerPixel);
@@ -150,7 +150,7 @@ void RPFCollector::ExecuteRPF(){
 	}
 	std::cout << " -> Converting to rgb finished" << std::endl;
 
-	std::cout << " -> Writing image..." << std::endl;
+	/*std::cout << " -> Writing image..." << std::endl;
 	std::ostringstream os;
 	os << "images/bunny";
 	os << "D=";
@@ -165,9 +165,9 @@ void RPFCollector::ExecuteRPF(){
 	os << xRes;
 	os << "x";
 	os << yRes;
-	os << ".tga";
+	os << ".tga";*/
 	//string outputFileName = os.str();
-	string outputFileName = "testRgb.exr";
+	string outputFileName = "testRgb.tga";
 	WriteImage(outputFileName, rgb, NULL, xRes, yRes,
 					 xRes, yRes, 0, 0);
 	std::cout << " -> Image written to " << outputFileName << std::endl;

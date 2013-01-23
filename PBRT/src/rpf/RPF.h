@@ -22,9 +22,10 @@ private:
 	int xRes, yRes;
 	int numberOfSceneFeatures;
 	float epsilon;
+	float sigma8Squared;
 	void preProcessSamples(std::vector<RPFPixel> &input, int b, float M, int x, int y, std::vector<RPFSample> &outputNeighboorhood);
-	void computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorhood, std::vector<float> &alpha, std::vector<float> &beta);
-	void filterColorSamples(std::vector<RPFSample> &outputNeighboorhood, std::vector<float> &alpha, std::vector<float> &beta, std::vector<Tuple3f> &copyColors, std::vector<Tuple3f> &newFilteredColors);
+	float computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorhood, std::vector<float> &alpha, std::vector<float> &beta);
+	void filterColorSamples(float Wr_c, int x, int y, std::vector<RPFSample> &outputNeighboorhood, std::vector<float> &alpha, std::vector<float> &beta, std::vector<Tuple3f> &copyColors, std::vector<Tuple3f> &newFilteredColors);
 	/* Method used to sample the 2D area of the box with normal distribution*/
 	void getRandom2DSamples(double sigma_p, int baseX, int baseY, int boxSize, int n, int numberOfSamples,
 			std::vector<RPFPixel> &input,
