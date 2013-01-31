@@ -1,0 +1,75 @@
+@book{dutré2006advanced,
+  title={Advanced global illumination},
+  author={Dutr{\'e}, P. and Bala, K. and Bekaert, P.},
+  isbn={9781568813073},
+  lccn={2006044831},
+  series={Ak Peters Series},
+  url={http://books.google.be/books?id=KodRAAAAMAAJ},
+  year={2006},
+  publisher={AK Peters}
+}
+
+@article{RPF11,
+  author = {Pradeep Sen and
+  Soheil Darabi},
+  title = {{On Filtering the Noise from the Random Parameters in Monte Carlo Rendering}},
+  journal = {ACM Transactions on Graphics (TOG)},
+  volume = {to appear},
+  year = {2011}
+}
+
+@techreport{RPFTechReport,
+author = {Pradeep Sen and
+Soheil Darabi},
+title = {{Implementation of Random Parameter Filtering}},
+institution = {University of New Mexico},
+number = {EECE-TR-11-0004},
+month = {May},
+year = {2011},
+}
+
+@book{pharr2010physically,
+  title={Physically Based Rendering: From Theory to Implementation},
+  author={Pharr, M. and Humphreys, G.},
+  isbn={9780123750792},
+  lccn={2011377099},
+  series={The Morgan Kaufmann series in interactive 3D technology},
+  url={http://books.google.be/books?id=9nJBAJhTxt8C},
+  year={2010},
+  publisher={Elsevier Science}
+}
+
+@book{kalos2009monte,
+  title={Monte Carlo Methods},
+  author={Kalos, M.H. and Whitlock, P.A.},
+  isbn={9783527626229},
+  url={http://books.google.be/books?id=5z-AI0pbNsYC},
+  year={2009},
+  publisher={Wiley}
+}
+
+@article{Sen:CompressiveSignalEstimation:2010,
+  author = {Pradeep Sen and Soheil Darabi},
+  title = {Compressive Estimation for Signal Integration in Rendering},
+  journal = {Computer Graphics Forum},
+  year = {2010},
+  volume = {29},
+  number = {4},
+  publisher = {Eurographics},
+}
+
+@article{Ramamoorthi:2012:ATO,
+  author = {Ravi Ramamoorthi and John Anderson and Mark Meyer and Derek Nowrouzezahrai},
+  title = {A Theory of Monte Carlo Visibility Sampling},
+  journal = {ACM Transactions on Graphics},
+  year = 2012,
+  url = {http://graphics.berkeley.edu/papers/Ramamoorthi-ATO-2012-02/},
+}
+
+@article{Hachisuka:2008:MAS:1360612.1360632,
+ author = {Hachisuka, Toshiya and Jarosz, Wojciech and Weistroffer, Richard Peter and Dale, Kevin and Humphreys, Greg and Zwicker, Matthias and Jensen, Henrik Wann},
+ title = {Multidimensional adaptive sampling and reconstruction for ray tracing},
+ journal = {ACM Trans. Graph.},
+ year = 2008,
+ url = {http://doi.acm.org/10.1145/1360612.1360632},
+}

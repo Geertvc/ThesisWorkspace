@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.1.4)  31 JAN 2013 22:42
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.1.4)  31 JAN 2013 22:38
 entering extended mode
  %&-line parsing enabled.
-**paper.tex
-(./paper.tex
+**test.tex
+(./test.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
 yphenation, loaded.
@@ -272,8 +272,8 @@ File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 510.
 Package hyperref Info: Option `breaklinks' set `true' on input line 510.
-) (./paper.aux)
-\openout1 = `paper.aux'.
+) (./test.aux)
+\openout1 = `test.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 109.
 LaTeX Font Info:    ... okay on input line 109.
@@ -358,65 +358,52 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 Underfull \vbox (badness 1460) has occurred while \output is active []
 
 
-Underfull \hbox (badness 1231) in paragraph at lines 214--217
+Underfull \hbox (badness 1231) in paragraph at lines 215--218
 []\OT1/ptm/m/n/9 More in-for-ma-tion about Monte Carlo meth-ods can be found
  []
 
 
-Underfull \hbox (badness 1005) in paragraph at lines 218--287
-[]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 Tem-po-ral Light Field
- Re-con-struc-tion for Ren-der-ing
- []
+LaTeX Warning: Citation 'Lehtinen2011sg' on page 1 undefined on input line 226.
 
 
-Underfull \hbox (badness 1478) in paragraph at lines 218--287
+
+LaTeX Warning: Citation 'UdayMehta:2012:AAF' on page 1 undefined on input line 
+234.
+
+
+LaTeX Warning: Citation 'Rousselle:2012:ARN:2366145.2366214' on page 1 undefine
+d on input line 240.
+
+
+LaTeX Warning: Citation 'Li:2012:SBO' on page 1 undefined on input line 255.
+
+
+LaTeX Warning: Citation 'Rousselle:2011:ASR:2070781.2024193' on page 1 undefine
+d on input line 265.
+
+
+LaTeX Warning: Citation 'Gribel2011' on page 1 undefined on input line 273.
+
+
+Underfull \hbox (badness 1478) in paragraph at lines 219--287
 []$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 Re-con-struc-tion the 
 In-di-rect Light Field for Global
  []
 
 
-Underfull \hbox (badness 1248) in paragraph at lines 218--287
-[]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 2012: adap-tive fil-te
-r-ing Axis-Aligned Fil-ter-ing for
- []
-
-
-Underfull \hbox (badness 1231) in paragraph at lines 218--287
-[]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 2012: adap-tive sam-pl
-ing Adap-tive Ren-der-ing with
- []
-
-
-Underfull \hbox (badness 2951) in paragraph at lines 218--287
-[]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 2011: adap-tive sam-pl
-ing re-con-struc-tion Adap-tive
- []
-
-
-Underfull \hbox (badness 1609) in paragraph at lines 218--287
-\OT1/ptm/m/n/9 sam-pling and re-con-struc-tion us-ing greedy er-ror min-i-miza-
-tion
- []
-
-
-Underfull \hbox (badness 1661) in paragraph at lines 218--287
-\OT1/ptm/m/n/9 with the only pur-pose to ren-der mo-tion blur with per-pixel
- []
-
-
-Underfull \hbox (badness 1430) in paragraph at lines 218--287
+Underfull \hbox (badness 1430) in paragraph at lines 219--287
 \OT1/ptm/m/n/9 ef-fec-tive-ness of dif-fer-ent non-adaptive Monte Carlo sam-pli
 ng
  []
 
 
-Underfull \hbox (badness 1158) in paragraph at lines 218--287
+Underfull \hbox (badness 1158) in paragraph at lines 219--287
 \OT1/ptm/m/n/9 sam-ples with-out los-ing pre-ci-sion by us-ing the best sam-pli
 ng
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 218--287
+Underfull \hbox (badness 10000) in paragraph at lines 219--287
 
  []
 
@@ -427,35 +414,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 218--287
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-<images/samplefigure.pdf, id=43, 101.37875pt x 101.37875pt>
+<images/samplefigure.pdf, id=35, 101.37875pt x 101.37875pt>
 File: images/samplefigure.pdf Graphic file (type pdf)
 
-<use images/samplefigure.pdf>
-Underfull \hbox (badness 1675) in paragraph at lines 334--336
-\OT1/ptm/m/n/9 hele-maal opgelost, eventueel vergeli-jkin-gen met geli-jkaardig
-e
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 334--336
-
- []
-
-[2
+<use images/samplefigure.pdf> [2
 ! pdfTeX error (ext4): \pdfendlink ended up in different nesting level than \pd
 fstartlink.
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.337 \section{Conclusion}
+l.342 \section{Conclusion}
                           
 
  
 Here is how much of TeX's memory you used:
- 6077 strings out of 495061
- 89908 string characters out of 1182622
+ 6075 strings out of 495061
+ 89835 string characters out of 1182622
  196267 words of memory out of 3000000
- 9158 multiletter control sequences out of 15000+50000
+ 9159 multiletter control sequences out of 15000+50000
  21493 words of font info for 47 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 45i,7n,40p,256b,353s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 45i,7n,40p,255b,353s stack positions out of 5000i,500n,10000p,200000b,50000s
 !  ==> Fatal error occurred, no output PDF file produced!

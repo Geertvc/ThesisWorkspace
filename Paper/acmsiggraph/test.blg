@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: test.aux
+The style file: acmsiggraph.bst
+Database file #1: test.bib
+Warning--I didn't find a database entry for "Lehtinen2011sg"
+Warning--I didn't find a database entry for "UdayMehta:2012:AAF"
+Warning--I didn't find a database entry for "Rousselle:2012:ARN:2366145.2366214"
+Warning--I didn't find a database entry for "Li:2012:SBO"
+Warning--I didn't find a database entry for "Rousselle:2011:ASR:2070781.2024193"
+Warning--I didn't find a database entry for "Gribel2011"
+You've used 8 entries,
+            2748 wiz_defined-function locations,
+            652 strings with 5902 characters,
+and the built_in function-call counts, 2824 in all, are:
+= -- 275
+> -- 154
+< -- 1
++ -- 55
+- -- 58
+* -- 217
+:= -- 511
+add.period$ -- 34
+call.type$ -- 8
+change.case$ -- 53
+chr.to.int$ -- 7
+cite$ -- 8
+duplicate$ -- 109
+empty$ -- 190
+format.name$ -- 66
+if$ -- 557
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 10
+newline$ -- 51
+num.names$ -- 24
+pop$ -- 54
+preamble$ -- 1
+purify$ -- 48
+quote$ -- 0
+skip$ -- 72
+stack$ -- 0
+substring$ -- 41
+swap$ -- 24
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 52
+warning$ -- 0
+while$ -- 21
+width$ -- 10
+write$ -- 110
+(There were 6 warnings)

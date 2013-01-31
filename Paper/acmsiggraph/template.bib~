@@ -114,3 +114,14 @@ very large scanned models."
   school = "Cornell University",
   year = 2000,
 }
+
+@ARTICLE{Li:2012:SBO,
+    AUTHOR      = {Tzu-Mao Li and Yu-Ting Wu and Yung-Yu Chuang},
+    TITLE       = {SURE-based Optimization for Adaptive Sampling and Reconstruction},
+    JOURNAL     = {ACM Transactions on Graphics (Proceedings of ACM SIGGRAPH Asia 2012)},
+    VOLUME      = {31},
+    NUMBER      = {6},  
+    YEAR        = {2012},
+    MONTH       = {November},
+    PAGES       = {186:1--186:9},
+}

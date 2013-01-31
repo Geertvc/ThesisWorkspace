@@ -184,7 +184,8 @@ To conclude, some other methods that handle the noise caused by Monte Carlo rend
 %%% The first section of your paper. 
 
 \section{Introduction}
-\todo{de beschrijving van het probleem, welk probleem lost je op, waarom is dit een belangrijk probleem}
+\todo{de beschrijving van het probleem, welk probleem lost je op,
+waarom is dit een belangrijk probleem}
 
 Computer Graphics has evolved from 2D to almost realistic 3D during the last decennia.
 To reach this realism in graphics, Global Illumination algorithms became very important, 
@@ -215,13 +216,12 @@ More information about Monte Carlo methods can be found here~\cite{kalos2009mont
 while more information about advanced rendering can be found here~\cite{dutré2006advanced} and here \cite{pharr2010physically}.
 Some recent work that try to tackle the problem of noise at low sampling rates when using Monte Carlo rendering are discussed below.
 
-\todo{2010: integration  Compressive estimation for signal integration in rendering}
+\todo{2010: integration -- Compressive estimation for signal integration in rendering}
 While Monte Carlo methods are used to evaluate functions, 
 other methods like the one explained in ~\cite{Sen:CompressiveSignalEstimation:2010} can also be used to compute the integral of an unknown function.
 This is possible because of the theory of compressed sensing, which allows to reconstruct a signal from a few linear samples if it is sparse in a transform domain.
 This method can also be used to compute computer graphics distribution effects like anti-aliasing and motion blur.
 The advantage of this function over Monte Carlo methods is that is needs only a few samples to estimate the function.
-\\
 \todo{Temporal Light Field Reconstruction for Rendering Distribution Effects}
 A general reconstruction technique that tries to maximize the image quality based on a given set of samples is given in ~\cite{Lehtinen2011sg}.
 This technique exploits the dependencies in the temporal light field and allows efficient reuse of samples between different pixels.
@@ -229,14 +229,14 @@ The effective sampling rate is multiplied by a large factor when using this tech
 \\
 \todo{Reconstruction the Indirect Light Field for Global Illumination}
 \\
-\todo{2012: adaptive filtering  Axis-Aligned Filtering for Interactive Sampled Soft Shadows}
+\todo{2012: adaptive filtering -- Axis-Aligned Filtering for Interactive Sampled Soft Shadows}
 The post-processing step needed in Light Field Reconstruction techniques is very expensive.
 Other algorithms like the one proposed in ~\cite{UdayMehta:2012:AAF} has a very simple filtering step by using axis-aligned filters.
 Because of this extremely simple step, this algorithm can be integrated in real-time raytracers.
 Adaptive filtering is used because the parameters of the used filters are adjusted depending on the input samples.
 This algorithm is basically an image filter for noise that is fixed on the soft shadows effect.
 \\
-\todo{2012: adaptive sampling  Adaptive Rendering with Non-Local Means Filtering}
+\todo{2012: adaptive sampling -- Adaptive Rendering with Non-Local Means Filtering}
 The following algorithm found in ~\cite{Rousselle:2012:ARN:2366145.2366214} describes an adaptive sampling algorithm for Monte Carlo rendering.
 An adaptive sampling algorithm tries to determine the optimal sample distribution across the image.
 This can be done by allocating more samples to regions with difficult light effects.
@@ -244,14 +244,14 @@ The first step of the algorithm distributes a given budget of samples over the i
 This filter considers distances between pairs of pixel values to compute filter weights, the term non-local is caused by the fact that the set of samples that contribute to one output pixel can come from a large region in the input image.
 In the third step of the algorithm the remaining error in the filtered image is estimated to drive the adaptive sampling in the next iteration step.
 \\
-\todo{2008: adaptive sampling  Multidimensional Adaptive Sampling and Reconstruction for Ray Tracing}
+\todo{2008: adaptive sampling -- Multidimensional Adaptive Sampling and Reconstruction for Ray Tracing}
 A combination of adaptive sampling and reconstruction is proposed in ~\cite{Hachisuka:2008:MAS:1360612.1360632}.
 This paper introduces a new sampling strategy for ray tracing.
 The samples on which the strategy operates are generated from the rendering equation directly and are thus not generated through Monte Carlo sampling.
 Additionally this algorithm uses all previously generated samples to generate a new sample.
 After sampling this high-dimensional function, a reconstruction is made by integrating the function over all but the image dimensions.
 \\
-\todo{2012: adaptive sampling reconstruction  SURE-based Optimization for Adaptive Sampling and Reconstruction}
+\todo{2012: adaptive sampling+reconstruction -- SURE-based Optimization for Adaptive Sampling and Reconstruction}
 A similar goal is aimed for by ~\cite{Li:2012:SBO} allthough samples are distributed over the image based on an estimator of the Mean Squared Error (MSE) of the image.
 The estimator that is used is called Stein's Unbiased Risk Estimator (SURE), it allows to estimate the error of an estimator without knowing the true value that is estimated.
 Another difference is that a filterbank is used in stead of a single filter.
@@ -261,7 +261,7 @@ A small number of initial samples are rendered first, followed by filtering each
 Next the filtered color with the lowest SURE error is chosen for each pixel and is used in the reconstruction.
 When more samples are available, these are used for the pixels with the largest SURE errors after which the process goes back to filtering each pixel with all the filters from the filterbank.
 \\
-\todo{2011: adaptive sampling reconstruction  Adaptive sampling and reconstruction using greedy error minimization}
+\todo{2011: adaptive sampling+reconstruction -- Adaptive sampling and reconstruction using greedy error minimization}
 Another algorithm that does not fix which filter is used for different pixels is described in ~\cite{Rousselle:2011:ASR:2070781.2024193}.
 As this algorithm is greedy, it minimizes the function at each stage hoping to reach a global optimum.
 Given a current sample distribution, a filter that minimizes the pixel error is selected from a discrete set of filters that can be different for each pixel.
@@ -269,7 +269,7 @@ Given the filter selection, addition samples are distributed to further reduce t
 Because the MSE cannot be calculated exactly the change in MSE is calculated instead.
 This whole process can be repeated until any chosen termination criterion is met.
 \\
-\todo{2011: Visibility  High-Quality Spatio-Temporal Rendering using Semi-Analytical Visibility}
+\todo{2011: Visibility -- High-Quality Spatio-Temporal Rendering using Semi-Analytical Visibility}
 A visibility technique with the only purpose to render motion blur with per-pixel anti-aliasing is described in ~\cite{Gribel2011}.
 A number of line samples are used over a rectangular group of pixels that form a 2D spatio-temporal visibility problem together with the time dimension.
 This problem needs to be solved per line sample.
@@ -278,7 +278,7 @@ For each group a Bounding Volume Hierarchy is used to receive only the geometry 
 Furthermore each line sample is processed one at a time by calculating what triangles intersect with the sample followed by resolving the depth visibility.
 When all the triangles have been processed, the final visibility is resolved and for each pixel the contribution of the line samples overlapping the pixel is accumulated to the color of that pixel.
 \\
-\todo{2012: visibility sampling  A Theory of Monte Carlo Visibility Sampling}
+\todo{2012: visibility sampling -- A Theory of Monte Carlo Visibility Sampling}
 ~\cite{Ramamoorthi:2012:ATO} tries to lower the amount of noise introduced by Monte Carlo sampling of the visibility term in the rendering equation.
 By analysing the effectiveness of different non-adaptive Monte Carlo sampling patterns for rendering soft shadows, 
 they search for the pattern with the lowest expected variance for a certain visibility function.
@@ -288,8 +288,11 @@ These results can lead to a reduction in the needed number of shadow samples wit
 
 \section{Exposition}
 \todo{technische secties, die in detail jou aanpak beschrijven}
-\todo{daarvoor eventueel een overview sectie, die uitlegt hoe de technische secties samenhangen (dit kan bv. ook een laatste paragraaf in de inleiding zijn)}
+\todo{daarvoor eventueel een overview sectie, die uitlegt hoe de technische
+secties samenhangen (dit kan bv. ook een laatste paragraaf in de
+inleiding zijn)}
 \todo{explain Bilateral Filter first, then RPF}
+~\cite{RPFTechReport}
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -331,8 +334,10 @@ culpa qui officia deserunt mollit anim id est laborum.
 \section{Results}
 \todo{vergeet niet PBRT2 te vermelden}
 \section{Discussion}
-\todo{stel resultaten voor en beschrijf en interpreteer ze, welke zijn de sterke / zwakke punten, welke problemen zijn nog niet helemaal opgelost, eventueel vergelijkingen met gelijkaardige systemen, ...}
-\\
+\todo{stel resultaten voor
+en beschrijf en interpreteer ze, welke zijn de sterke / zwakke punten,
+welke problemen zijn nog niet helemaal opgelost, eventueel
+vergelijkingen met gelijkaardige systemen, ...}
 
 \section{Conclusion}
 \todo{typische een zeer korte summary + conclusie van je werk}
@@ -354,5 +359,5 @@ culpa qui officia deserunt mollit anim id est laborum.
 %%% bibliography.
 
 \bibliographystyle{acmsiggraph}
-\bibliography{paper}
+\bibliography{test}
 \end{document}

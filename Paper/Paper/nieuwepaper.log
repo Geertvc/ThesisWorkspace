@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.1.4)  31 JAN 2013 22:42
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.1.4)  31 JAN 2013 22:57
 entering extended mode
  %&-line parsing enabled.
-**paper.tex
-(./paper.tex
+**nieuwepaper.tex
+(./nieuwepaper.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
 yphenation, loaded.
@@ -272,8 +272,8 @@ File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 510.
 Package hyperref Info: Option `breaklinks' set `true' on input line 510.
-) (./paper.aux)
-\openout1 = `paper.aux'.
+) (./nieuwepaper.aux)
+\openout1 = `nieuwepaper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 109.
 LaTeX Font Info:    ... okay on input line 109.
@@ -363,60 +363,29 @@ Underfull \hbox (badness 1231) in paragraph at lines 214--217
  []
 
 
-Underfull \hbox (badness 1005) in paragraph at lines 218--287
-[]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 Tem-po-ral Light Field
- Re-con-struc-tion for Ren-der-ing
+Underfull \hbox (badness 10000) in paragraph at lines 218--225
+
  []
 
 
-Underfull \hbox (badness 1478) in paragraph at lines 218--287
+Underfull \hbox (badness 1005) in paragraph at lines 226--233
+[][]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 Tem-po-ral Light Fie
+ld Re-con-struc-tion for Ren-der-ing
+ []
+
+
+Underfull \hbox (badness 1478) in paragraph at lines 226--233
 []$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 Re-con-struc-tion the 
 In-di-rect Light Field for Global
  []
 
 
-Underfull \hbox (badness 1248) in paragraph at lines 218--287
-[]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 2012: adap-tive fil-te
-r-ing Axis-Aligned Fil-ter-ing for
+Underfull \hbox (badness 10000) in paragraph at lines 226--233
+
  []
 
 
-Underfull \hbox (badness 1231) in paragraph at lines 218--287
-[]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 2012: adap-tive sam-pl
-ing Adap-tive Ren-der-ing with
- []
-
-
-Underfull \hbox (badness 2951) in paragraph at lines 218--287
-[]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 2011: adap-tive sam-pl
-ing re-con-struc-tion Adap-tive
- []
-
-
-Underfull \hbox (badness 1609) in paragraph at lines 218--287
-\OT1/ptm/m/n/9 sam-pling and re-con-struc-tion us-ing greedy er-ror min-i-miza-
-tion
- []
-
-
-Underfull \hbox (badness 1661) in paragraph at lines 218--287
-\OT1/ptm/m/n/9 with the only pur-pose to ren-der mo-tion blur with per-pixel
- []
-
-
-Underfull \hbox (badness 1430) in paragraph at lines 218--287
-\OT1/ptm/m/n/9 ef-fec-tive-ness of dif-fer-ent non-adaptive Monte Carlo sam-pli
-ng
- []
-
-
-Underfull \hbox (badness 1158) in paragraph at lines 218--287
-\OT1/ptm/m/n/9 sam-ples with-out los-ing pre-ci-sion by us-ing the best sam-pli
-ng
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 218--287
+Underfull \hbox (badness 10000) in paragraph at lines 234--256
 
  []
 
@@ -424,38 +393,80 @@ Underfull \hbox (badness 10000) in paragraph at lines 218--287
 
 
 ]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \hbox (badness 2951) in paragraph at lines 257--290
+[]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 2011: adap-tive sam-pl
+ing re-con-struc-tion Adap-tive
+ []
 
 
-<images/samplefigure.pdf, id=43, 101.37875pt x 101.37875pt>
+Underfull \hbox (badness 1609) in paragraph at lines 257--290
+\OT1/ptm/m/n/9 sam-pling and re-con-struc-tion us-ing greedy er-ror min-i-miza-
+tion
+ []
+
+
+Underfull \hbox (badness 1661) in paragraph at lines 257--290
+\OT1/ptm/m/n/9 with the only pur-pose to ren-der mo-tion blur with per-pixel
+ []
+
+
+Underfull \hbox (badness 1430) in paragraph at lines 257--290
+\OT1/ptm/m/n/9 ef-fec-tive-ness of dif-fer-ent non-adaptive Monte Carlo sam-pli
+ng
+ []
+
+
+Underfull \hbox (badness 1158) in paragraph at lines 257--290
+\OT1/ptm/m/n/9 sam-ples with-out los-ing pre-ci-sion by us-ing the best sam-pli
+ng
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--290
+
+ []
+
+<images/samplefigure.pdf, id=41, 101.37875pt x 101.37875pt>
 File: images/samplefigure.pdf Graphic file (type pdf)
 
 <use images/samplefigure.pdf>
-Underfull \hbox (badness 1675) in paragraph at lines 334--336
+Underfull \hbox (badness 1675) in paragraph at lines 336--338
 \OT1/ptm/m/n/9 hele-maal opgelost, eventueel vergeli-jkin-gen met geli-jkaardig
 e
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 334--336
+Underfull \hbox (badness 10000) in paragraph at lines 336--338
 
  []
 
-[2
-! pdfTeX error (ext4): \pdfendlink ended up in different nesting level than \pd
-fstartlink.
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.337 \section{Conclusion}
-                          
+[2 <./images/samplefigure.pdf>] (./nieuwepaper.bbl
+Underfull \hbox (badness 3590) in paragraph at lines 60--64
+[]\OT1/ptm/m/sc/9 Ramamoorthi, R., An-der-son, J., Meyer, M., and
+ []
 
- 
+) [3] (./nieuwepaper.aux) ) 
 Here is how much of TeX's memory you used:
- 6077 strings out of 495061
- 89908 string characters out of 1182622
- 196267 words of memory out of 3000000
- 9158 multiletter control sequences out of 15000+50000
- 21493 words of font info for 47 fonts, out of 3000000 for 9000
+ 6103 strings out of 495061
+ 90269 string characters out of 1182622
+ 190267 words of memory out of 3000000
+ 9162 multiletter control sequences out of 15000+50000
+ 24353 words of font info for 50 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 45i,7n,40p,256b,353s stack positions out of 5000i,500n,10000p,200000b,50000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 45i,7n,40p,262b,311s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.en
+c}</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr
+/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf
+-texlive/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-texlive/fon
+ts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/publ
+ic/amsfonts/cm/cmr9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
+m/cmsy9.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr
+/share/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texl
+ive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/
+times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
+Output written on nieuwepaper.pdf (3 pages, 134311 bytes).
+PDF statistics:
+ 115 PDF objects out of 1000 (max. 8388607)
+ 29 named destinations out of 1000 (max. 500000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+

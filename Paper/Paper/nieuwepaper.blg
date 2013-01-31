@@ -1,10 +1,10 @@
 This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
-The top-level auxiliary file: paper.aux
+The top-level auxiliary file: nieuwepaper.aux
 The style file: acmsiggraph.bst
-Database file #1: paper.bib
+Database file #1: nieuwepaper.bib
 You've used 13 entries,
             2748 wiz_defined-function locations,
-            676 strings with 6706 characters,
+            676 strings with 6718 characters,
 and the built_in function-call counts, 5316 in all, are:
 = -- 539
 > -- 257

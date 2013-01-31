@@ -1,0 +1,58 @@
+\begin{thebibliography}{\protect\citename{Ramamoorthi et~al\mbox{.} }2012}
+
+\bibitem[\protect\citename{Dutr{\'e} et~al\mbox{.} }2006]{dutré2006advanced}
+{\sc Dutr{\'e}, P., Bala, K., and Bekaert, P.}
+\newblock 2006.
+\newblock {\em Advanced global illumination}.
+\newblock Ak Peters Series. AK Peters.
+
+\bibitem[\protect\citename{Hachisuka et~al\mbox{.}
+  }2008]{Hachisuka:2008:MAS:1360612.1360632}
+{\sc Hachisuka, T., Jarosz, W., Weistroffer, R.~P., Dale, K., Humphreys, G.,
+  Zwicker, M., and Jensen, H.~W.}
+\newblock 2008.
+\newblock Multidimensional adaptive sampling and reconstruction for ray
+  tracing.
+\newblock {\em ACM Transactions on Graphics\/}.
+
+\bibitem[\protect\citename{Kalos and Whitlock }2009]{kalos2009monte}
+{\sc Kalos, M., and Whitlock, P.}
+\newblock 2009.
+\newblock {\em Monte Carlo Methods}.
+\newblock Wiley.
+
+\bibitem[\protect\citename{Pharr and Humphreys }2010]{pharr2010physically}
+{\sc Pharr, M., and Humphreys, G.}
+\newblock 2010.
+\newblock {\em Physically Based Rendering: From Theory to Implementation}.
+\newblock The Morgan Kaufmann series in interactive 3D technology. Elsevier
+  Science.
+
+\bibitem[\protect\citename{Ramamoorthi et~al\mbox{.}
+  }2012]{Ramamoorthi:2012:ATO}
+{\sc Ramamoorthi, R., Anderson, J., Meyer, M., and Nowrouzezahrai, D.}
+\newblock 2012.
+\newblock A theory of monte carlo visibility sampling.
+\newblock {\em ACM Transactions on Graphics\/}.
+
+\bibitem[\protect\citename{Sen and Darabi
+  }2010]{Sen:CompressiveSignalEstimation:2010}
+{\sc Sen, P., and Darabi, S.}
+\newblock 2010.
+\newblock Compressive estimation for signal integration in rendering.
+\newblock {\em Computer Graphics Forum 29}, 4.
+
+\bibitem[\protect\citename{Sen and Darabi }2011a]{RPFTechReport}
+{\sc Sen, P., and Darabi, S.}
+\newblock 2011.
+\newblock {Implementation of Random Parameter Filtering}.
+\newblock Tech. Rep. EECE-TR-11-0004, University of New Mexico, May.
+
+\bibitem[\protect\citename{Sen and Darabi }2011b]{RPF11}
+{\sc Sen, P., and Darabi, S.}
+\newblock 2011.
+\newblock {On Filtering the Noise from the Random Parameters in Monte Carlo
+  Rendering}.
+\newblock {\em ACM Transactions on Graphics (TOG) to appear\/}.
+
+\end{thebibliography}

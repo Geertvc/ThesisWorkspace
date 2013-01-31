@@ -102,7 +102,7 @@
 
 %%% User-defined keywords.
 
-\keywords{monte carlo rendering, filter, distribution effects}
+\keywords{monte carlo rendering, filter, distribution effects, global illumination}
 
 %%% End of the document preamble, start of the document.
 
@@ -133,18 +133,22 @@
 
 When rendering using Monte Carlo methods, either a large amount of samples are necessary or noise will be present in the image.
 A lot of methods have already tried to tackle this problem including adaptive sampling, reconstruction techniques and advanced image filtering techniques.
-\todo{verwijs naar meerdere methodes die dit hebben proberen aan te pakken?}
+In this paper I will recapitulate the work I have done for my thesis so far. 
+The focus will be on the RPF algorithm called random parameter filtering (RPF) as proposed in ~\cite{RPF11}.
+As this algorithm is based on a cross bilateral filter, this concept will be explained and discussed as well.
+To conclude, some other methods that handle the noise caused by Monte Carlo rendering at low sampling rates were investigated as well.
+\todo{verwijs naar meerdere methodes die dit hebben proberen aan te pakken?}~\cite{dutré2006advanced}
 
-Citations can be done this way~\cite{Jobs95} or this more concise 
-way~\shortcite{Jobs95}, depending upon the application.
+%Citations can be done this way~\cite{Jobs95} or this more concise 
+%way~\shortcite{Jobs95}, depending upon the application.
 
-Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
-suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem
-vel eum iriure dolor in hendrerit~\cite{Pellacini:2005:LAH}
-in vulputate velit esse molestie~\cite{notes2002} 
-consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
-accumsan et iusto odio dignissim qui blandit praesent luptatum zzril
-delenit augue duis dolore te feugait nulla facilisi.~\cite{Park:2006:DSI}
+%Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+%suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem
+%vel eum iriure dolor in hendrerit~\cite{Pellacini:2005:LAH}
+%in vulputate velit esse molestie~\cite{notes2002} 
+%consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
+%accumsan et iusto odio dignissim qui blandit praesent luptatum zzril
+%delenit augue duis dolore te feugait nulla facilisi.~\cite{Park:2006:DSI}
 
 
 \end{abstract}
@@ -154,8 +158,7 @@ delenit augue duis dolore te feugait nulla facilisi.~\cite{Park:2006:DSI}
 %%% on CR categories, please see http://www.acm.org/class/1998.
 
 \begin{CRcatlist}
-  \CRcat{I.3.3}{Computer Graphics}{Three-Dimensional Graphics and Realism}{Display Algorithms}
-  \CRcat{I.3.7}{Computer Graphics}{Three-Dimensional Graphics and Realism}{Radiosity};
+  \CRcat{I.3.7}{Computer Graphics}{Three-Dimensional Graphics and Realism}{Raytracing};
 \end{CRcatlist}
 \todo{CRcatlist}
 
@@ -181,35 +184,112 @@ delenit augue duis dolore te feugait nulla facilisi.~\cite{Park:2006:DSI}
 %%% The first section of your paper. 
 
 \section{Introduction}
+\todo{de beschrijving van het probleem, welk probleem lost je op, waarom is dit een belangrijk probleem}
 
-Monte Carlo methods are popular when rendering images.
-They can be used to solve the multidimensional equations like the rendering equation in this case.
-As Monte Carlo methods take random samples to evaluate a function, a lot of samples are necessary to evaluate the function precisely and 
+Computer Graphics has evolved from 2D to almost realistic 3D during the last decennia.
+To reach this realism in graphics, Global Illumination algorithms became very important, 
+these incorporate the indirect light caused by the surroundings.
+These algorithms require large numbers of calculations and thus a large rendering time, especially when results without noise are expected.
+To lower this rendering time, Monte Carlo methods are often used because they can be used to evaluate multidimensional functions in an unbiased way.
+Complex and photorealistic images can be created using these Monte Carlo methods.
+In the case of (Monte Carlo) rendering, the multidimensional equation that needs to be solved is the rendering equation. 
+\todo{put in the rendering equation}
+As Monte Carlo methods take random samples to evaluate a function, a lot of samples are usually necessary to evaluate the function precisely and 
 thus a lot of noise will be present when using a low number of samples. 
 One obvious solution to this problem is to use more samples, 
-but the rendering time increases dramatically with this as a lot of calculations are necessary for each sample.
+but as the rendering time increases dramatically with the amount of samples this is not always an option.
 Adaptive sampling algorithms can then be used to distribute these (sometimes large) numbers of samples in the best possible way across the image.
 Reconstruction techniques can also be used to suppress the number of samples, 
-as these try to use the available samples as much as possible, across pixels and even frames.
+as these try to use the available samples as much as possible, across pixels and even across frames.
+Another technique that can be used is the focus of this paper and is an advanced image filter, 
+it uses not only the color computed at each sample of the image, 
+but also other parameters that are available during the rendering process, to filter the image.
+
+\section{Related Work}
+\todo{explain all the different techniques that are explained on my blog}
+\todo{hoe heeft vorig werk dit of gerelateerde problemen
+opgelost, hoe is jou werk verschillend}
+\todo{plak de verschillende paper uitleggen aan elkaar, sorteer volgens jaar ???}
+
+More information about Monte Carlo methods can be found here~\cite{kalos2009monte}, 
+while more information about advanced rendering can be found here~\cite{dutré2006advanced} and here \cite{pharr2010physically}.
+Some recent work that try to tackle the problem of noise at low sampling rates when using Monte Carlo rendering are discussed below.
+
+\todo{2010: integration  Compressive estimation for signal integration in rendering}
+While Monte Carlo methods are used to evaluate functions, 
+other methods like the one explained in ~\cite{Sen:CompressiveSignalEstimation:2010} can also be used to compute the integral of an unknown function.
+This is possible because of the theory of compressed sensing, which allows to reconstruct a signal from a few linear samples if it is sparse in a transform domain.
+This method can also be used to compute computer graphics distribution effects like anti-aliasing and motion blur.
+The advantage of this function over Monte Carlo methods is that is needs only a few samples to estimate the function.
+\\
+\todo{Temporal Light Field Reconstruction for Rendering Distribution Effects}
+A general reconstruction technique that tries to maximize the image quality based on a given set of samples is given in ~\cite{Lehtinen2011sg}.
+This technique exploits the dependencies in the temporal light field and allows efficient reuse of samples between different pixels.
+The effective sampling rate is multiplied by a large factor when using this technique.
+\\
+\todo{Reconstruction the Indirect Light Field for Global Illumination}
+\\
+\todo{2012: adaptive filtering  Axis-Aligned Filtering for Interactive Sampled Soft Shadows}
+The post-processing step needed in Light Field Reconstruction techniques is very expensive.
+Other algorithms like the one proposed in ~\cite{UdayMehta:2012:AAF} has a very simple filtering step by using axis-aligned filters.
+Because of this extremely simple step, this algorithm can be integrated in real-time raytracers.
+Adaptive filtering is used because the parameters of the used filters are adjusted depending on the input samples.
+This algorithm is basically an image filter for noise that is fixed on the soft shadows effect.
+\\
+\todo{2012: adaptive sampling  Adaptive Rendering with Non-Local Means Filtering}
+The following algorithm found in ~\cite{Rousselle:2012:ARN:2366145.2366214} describes an adaptive sampling algorithm for Monte Carlo rendering.
+An adaptive sampling algorithm tries to determine the optimal sample distribution across the image.
+This can be done by allocating more samples to regions with difficult light effects.
+The first step of the algorithm distributes a given budget of samples over the image after which the image is filtered in the second step of the algorithm with a variant of the NL-means filter which is a generalisation of the bilateral filter.
+This filter considers distances between pairs of pixel values to compute filter weights, the term non-local is caused by the fact that the set of samples that contribute to one output pixel can come from a large region in the input image.
+In the third step of the algorithm the remaining error in the filtered image is estimated to drive the adaptive sampling in the next iteration step.
+\\
+\todo{2008: adaptive sampling  Multidimensional Adaptive Sampling and Reconstruction for Ray Tracing}
+A combination of adaptive sampling and reconstruction is proposed in ~\cite{Hachisuka:2008:MAS:1360612.1360632}.
+This paper introduces a new sampling strategy for ray tracing.
+The samples on which the strategy operates are generated from the rendering equation directly and are thus not generated through Monte Carlo sampling.
+Additionally this algorithm uses all previously generated samples to generate a new sample.
+After sampling this high-dimensional function, a reconstruction is made by integrating the function over all but the image dimensions.
+\\
+\todo{2012: adaptive sampling reconstruction  SURE-based Optimization for Adaptive Sampling and Reconstruction}
+A similar goal is aimed for by ~\cite{Li:2012:SBO} allthough samples are distributed over the image based on an estimator of the Mean Squared Error (MSE) of the image.
+The estimator that is used is called Stein's Unbiased Risk Estimator (SURE), it allows to estimate the error of an estimator without knowing the true value that is estimated.
+Another difference is that a filterbank is used in stead of a single filter.
+The usage of a filterbank makes this algorithm different from algorithms like RPF because any kind of filter can be added to this filterbank.
+The authors of the paper have experimented with isotropic Gaussian, cross bilateral and a modified non-local means filter.
+A small number of initial samples are rendered first, followed by filtering each pixel with all filters in the filterbank.
+Next the filtered color with the lowest SURE error is chosen for each pixel and is used in the reconstruction.
+When more samples are available, these are used for the pixels with the largest SURE errors after which the process goes back to filtering each pixel with all the filters from the filterbank.
+\\
+\todo{2011: adaptive sampling reconstruction  Adaptive sampling and reconstruction using greedy error minimization}
+Another algorithm that does not fix which filter is used for different pixels is described in ~\cite{Rousselle:2011:ASR:2070781.2024193}.
+As this algorithm is greedy, it minimizes the function at each stage hoping to reach a global optimum.
+Given a current sample distribution, a filter that minimizes the pixel error is selected from a discrete set of filters that can be different for each pixel.
+Given the filter selection, addition samples are distributed to further reduce the MSE.
+Because the MSE cannot be calculated exactly the change in MSE is calculated instead.
+This whole process can be repeated until any chosen termination criterion is met.
+\\
+\todo{2011: Visibility  High-Quality Spatio-Temporal Rendering using Semi-Analytical Visibility}
+A visibility technique with the only purpose to render motion blur with per-pixel anti-aliasing is described in ~\cite{Gribel2011}.
+A number of line samples are used over a rectangular group of pixels that form a 2D spatio-temporal visibility problem together with the time dimension.
+This problem needs to be solved per line sample.
+Each group of pixels in the image is rendered separately.
+For each group a Bounding Volume Hierarchy is used to receive only the geometry that overlaps with the tile. 
+Furthermore each line sample is processed one at a time by calculating what triangles intersect with the sample followed by resolving the depth visibility.
+When all the triangles have been processed, the final visibility is resolved and for each pixel the contribution of the line samples overlapping the pixel is accumulated to the color of that pixel.
+\\
+\todo{2012: visibility sampling  A Theory of Monte Carlo Visibility Sampling}
+~\cite{Ramamoorthi:2012:ATO} tries to lower the amount of noise introduced by Monte Carlo sampling of the visibility term in the rendering equation.
+By analysing the effectiveness of different non-adaptive Monte Carlo sampling patterns for rendering soft shadows, 
+they search for the pattern with the lowest expected variance for a certain visibility function.
+These results can lead to a reduction in the needed number of shadow samples without losing precision by using the best sampling pattern.
+\\
+
 
 \section{Exposition}
-\todo{explain all the different techniques that are explained on my blog and go further into the RPF technique.}
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
+\todo{technische secties, die in detail jou aanpak beschrijven}
+\todo{daarvoor eventueel een overview sectie, die uitlegt hoe de technische secties samenhangen (dit kan bv. ook een laatste paragraaf in de inleiding zijn)}
+\todo{explain Bilateral Filter first, then RPF}
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -235,24 +315,6 @@ aliquip ex ea commodo consequat. Duis aute irure dolor in
 reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
 pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
 culpa qui officia deserunt mollit anim id est laborum.
-
-\section{Exposition}
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=1.5in]{images/samplefigure}
@@ -266,66 +328,17 @@ reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
 pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
 culpa qui officia deserunt mollit anim id est laborum.
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
-
-\section{Exposition}
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
+\section{Results}
+\todo{vergeet niet PBRT2 te vermelden}
+\section{Discussion}
+\todo{stel resultaten voor
+en beschrijf en interpreteer ze, welke zijn de sterke / zwakke punten,
+welke problemen zijn nog niet helemaal opgelost, eventueel
+vergelijkingen met gelijkaardige systemen, ...}
+\\
 
 \section{Conclusion}
-\todo{?????}
+\todo{typische een zeer korte summary + conclusie van je werk}
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -336,8 +349,9 @@ pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
 culpa qui officia deserunt mollit anim id est laborum.
 
 \section*{Acknowledgements}
+\todo{KULEUVEn en de makers van RPF enzo..}
 
-To Robert, for all the bagels.
+%To Robert, for all the bagels.
 
 %%% Please use the ``acmsiggraph'' BibTeX style to properly format your
 %%% bibliography.
