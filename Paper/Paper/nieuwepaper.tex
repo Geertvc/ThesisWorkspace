@@ -44,6 +44,9 @@
 
 \documentclass[review]{acmsiggraph}
 
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
 
 
 \newcommand{\npar}{\par \vspace{2.3ex plus 0.3ex minus 0.3ex} \noindent}
@@ -197,10 +200,10 @@ To conclude, some other methods that handle the noise caused by Monte Carlo rend
 
 \section{Random Parameter Filtering algorithm}
 
-\todo{cross bilateral filter explanation}
 \todo{Mutual information}
 \todo{different parts of algorithm}
-blabla
+\\
+\input{RPF.tex}
 
 \section{Results}
 \todo{vergeet niet PBRT2 te vermelden}

@@ -208,10 +208,19 @@ doi={10.1109/ICCV.1998.710815},
 ISSN={},
 }
 
-@misc{bilfilter2,
+@misc{bilfilter,
 	author = {Haarith Devarajan and Harold Nyikal},
 	title = {Image Scaling and Bilateral Filtering},
 	howpublished = "\\ \url{http://scien.stanford.edu/pages/labsite/2006/psych221/projects/06/imagescaling/index2.html}",
 	year = {2013},
 	note = "\spar [Online, accessed 31 jan 2013]"
+}
+
+@book{cover2006elements,
+  title={Elements of Information Theory},
+  author={Cover, T.M. and Thomas, J.A.},
+  isbn={9780471748816},
+  url={http://books.google.be/books?id=0QuawYmc2pIC},
+  year={2006},
+  publisher={Wiley}
 }

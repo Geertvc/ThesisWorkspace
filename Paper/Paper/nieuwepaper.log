@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.1.4)  1 FEB 2013 03:49
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.1.4)  1 FEB 2013 18:14
 entering extended mode
  %&-line parsing enabled.
 **nieuwepaper.tex
@@ -272,24 +272,61 @@ File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 510.
 Package hyperref Info: Option `breaklinks' set `true' on input line 510.
+)
+(/usr/share/texmf-texlive/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+
+(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texmf-texlive/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count114
+\c@ALG@rem=\count115
+\c@ALG@nested=\count116
+\ALG@tlm=\skip51
+\ALG@thistlm=\skip52
+\c@ALG@Lnr=\count117
+\c@ALG@blocknr=\count118
+\c@ALG@storecount=\count119
+\c@ALG@tmpcounter=\count120
+\ALG@tmplength=\skip53
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (/usr/share/texmf-texlive/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+
+(/usr/share/texmf-texlive/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count121
+\float@exts=\toks23
+\float@box=\box29
+\@float@everytoks=\toks24
+\@floatcapt=\box30
+)
+\@float@every@algorithm=\toks25
+\c@algorithm=\count122
 ) (./nieuwepaper.aux)
 \openout1 = `nieuwepaper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 111.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 114.
 
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/ot1ptm.fd
@@ -297,18 +334,19 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count114
+\scratchcounter=\count123
 \scratchdimen=\dimen128
-\scratchbox=\box29
-\nofMPsegments=\count115
-\nofMParguments=\count116
-\everyMPshowfont=\toks23
-\MPscratchCnt=\count117
+\scratchbox=\box31
+\nofMPsegments=\count124
+\nofMParguments=\count125
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count126
 \MPscratchDim=\dimen129
-\MPnumerator=\count118
-\everyMPtoPDFconversion=\toks24
+\MPnumerator=\count127
+\everyMPtoPDFconversion=\toks27
 )
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
  (/usr/share/texmf-texlive/tex/latex/graphics/color.sty
@@ -319,7 +357,7 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
-Package hyperref Info: Link coloring ON on input line 111.
+Package hyperref Info: Link coloring ON on input line 114.
 
 (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
@@ -327,33 +365,33 @@ Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
 (/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
 Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
-\c@section@level=\count119
+\c@section@level=\count128
 )
-LaTeX Info: Redefining \ref on input line 111.
-LaTeX Info: Redefining \pageref on input line 111.
-\AtBeginShipoutBox=\box30
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 128.
+LaTeX Info: Redefining \ref on input line 114.
+LaTeX Info: Redefining \pageref on input line 114.
+\AtBeginShipoutBox=\box32
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 131.
 
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 13.24796pt on input line 128.
+(Font)              scaled to size 13.24796pt on input line 131.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 128.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 131.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 13.24796pt on input line 128.
+(Font)              scaled to size 13.24796pt on input line 131.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 129.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 132.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 4.59999pt on input line 130.
+(Font)              scaled to size 4.59999pt on input line 133.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 11.03998pt on input line 156.
+(Font)              scaled to size 11.03998pt on input line 159.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 156.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 159.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 11.03998pt on input line 156.
+(Font)              scaled to size 11.03998pt on input line 159.
  (./introduction.tex
 Overfull \hbox (0.87186pt too wide) detected at line 23
 \OML/cmm/m/it/9 I\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 i; j\OT1/cmr/m/n/9 ) = [] [] [
@@ -433,7 +471,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 117--126
  []
 
 [2])
-Underfull \hbox (badness 10000) in paragraph at lines 128--194
+Underfull \hbox (badness 10000) in paragraph at lines 128--197
 
  []
 
@@ -444,64 +482,105 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 6.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 9.19998pt on input line 6.
-)
-Underfull \hbox (badness 1675) in paragraph at lines 208--210
+) (./RPF.tex
+Underfull \hbox (badness 1173) in paragraph at lines 203--1
+[]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 Mu-tual in-for-ma-tion
+ $\OMS/cmsy/m/n/9 i$ [] []$h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 dif-fer-ent pa
+rts of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 203--1
+
+ []
+
+[3]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 32.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 52.
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 52.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 8.27998pt on input line 52.
+
+Underfull \hbox (badness 7030) in paragraph at lines 68--68
+[]\OT1/phv/b/n/9 Compute sta-tis-ti-cal de-pen-den-cies and the fil-ter
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 69--71
+
+ []
+
+
+Underfull \vbox (badness 2119) has occurred while \output is active []
+
+ [4])
+Underfull \hbox (badness 1675) in paragraph at lines 211--213
 \OT1/ptm/m/n/9 hele-maal opgelost, eventueel vergeli-jkin-gen met geli-jkaardig
 e
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 208--210
+Underfull \hbox (badness 10000) in paragraph at lines 211--213
 
  []
 
 (./nieuwepaper.bbl
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 8.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 14.
  (/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 10000) in paragraph at lines 4--9
+Underfull \hbox (badness 10000) in paragraph at lines 10--15
 [][]$\OT1/pcr/m/n/9 http : / / scien . stanford . edu / pages / labsite /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 4--9
+Underfull \hbox (badness 10000) in paragraph at lines 10--15
 \OT1/pcr/m/n/9 2006 / psych221 / projects / 06 / imagescaling /
  []
 
-[3]
-Underfull \hbox (badness 3590) in paragraph at lines 75--79
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--76
+[][]$\OT1/pcr/m/n/9 http : / / www . mathworks . com / matlabcentral /
+ []
+
+
+Underfull \hbox (badness 3590) in paragraph at lines 87--91
 []\OT1/ptm/m/sc/9 Ramamoorthi, R., An-der-son, J., Meyer, M., and
  []
 
-) [4
-
-] (./nieuwepaper.aux) ) 
+) [5] (./nieuwepaper.aux) ) 
 Here is how much of TeX's memory you used:
- 6165 strings out of 495061
- 91041 string characters out of 1182622
- 194267 words of memory out of 3000000
- 9194 multiletter control sequences out of 15000+50000
- 29243 words of font info for 58 fonts, out of 3000000 for 9000
+ 6805 strings out of 495061
+ 100167 string characters out of 1182622
+ 201917 words of memory out of 3000000
+ 9797 multiletter control sequences out of 15000+50000
+ 31482 words of font info for 61 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  45i,9n,40p,285b,452s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</
-usr/share/texmf-texlive/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/sha
-re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-tex
-live/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/t
-ype1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-texlive/fonts/type1/public/
-amsfonts/cm/cmr5.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/c
-mr6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr
-/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texmf
--texlive/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-texlive/fon
-ts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helve
-tic/uhvb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></
-usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texl
-ive/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf-texlive/fonts/type1/urw
-/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on nieuwepaper.pdf (4 pages, 202824 bytes).
+pdfTeX warning (dest): name{algorithm.2} has been re
+ferenced but does not exist, replaced by a fixed one
+
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texlive
+/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-texlive/fonts/type1/public
+/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm
+/cmmi9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr5.pfb></
+usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/tex
+mf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-texlive/fo
+nts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-texlive/fonts/type1/pu
+blic/amsfonts/cm/cmsy6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfont
+s/cm/cmsy9.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></u
+sr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-te
+xlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/type1
+/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmbi8a.p
+fb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf
+-texlive/fonts/type1/urw/times/utmri8a.pfb>
+Output written on nieuwepaper.pdf (5 pages, 237945 bytes).
 PDF statistics:
- 171 PDF objects out of 1000 (max. 8388607)
- 45 named destinations out of 1000 (max. 500000)
+ 206 PDF objects out of 1000 (max. 8388607)
+ 60 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

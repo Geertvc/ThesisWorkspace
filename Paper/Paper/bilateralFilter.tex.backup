@@ -43,7 +43,4 @@ x and y are again the difference in the positions of the pixels $p_i$ and $p_m$ 
 
 
 \subsection{Cross Bilateral Filter}
-The RPF algorithm that is described in the following section, is based on a more advanced version of a bilateral filter, called the cross bilateral filter.
-A Cross bilateral filter does not only filter in the spatial and the intensity domain but adds another filtering function to the filter.
-This added function is a function just like the image function and returns a value for each position in the image.
-Examples of this function are the world position at the first intersection point of the ray traced through that pixel.
+The RPF algorithm that is described in the following section, is based on a more advanced version of 

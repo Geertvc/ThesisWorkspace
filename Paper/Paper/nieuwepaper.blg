@@ -3,45 +3,45 @@ The top-level auxiliary file: nieuwepaper.aux
 The style file: acmsiggraph.bst
 Database file #1: nieuwepaper.bib
 Warning--empty organization in 710815
-You've used 16 entries,
+You've used 19 entries,
             2748 wiz_defined-function locations,
-            693 strings with 7295 characters,
-and the built_in function-call counts, 6555 in all, are:
-= -- 665
-> -- 310
-< -- 0
-+ -- 107
-- -- 112
-* -- 578
-:= -- 1098
-add.period$ -- 66
-call.type$ -- 16
-change.case$ -- 111
-chr.to.int$ -- 16
-cite$ -- 17
-duplicate$ -- 208
-empty$ -- 481
-format.name$ -- 128
-if$ -- 1319
-int.to.chr$ -- 1
+            706 strings with 7608 characters,
+and the built_in function-call counts, 7487 in all, are:
+= -- 758
+> -- 349
+< -- 1
++ -- 120
+- -- 127
+* -- 639
+:= -- 1261
+add.period$ -- 78
+call.type$ -- 19
+change.case$ -- 127
+chr.to.int$ -- 18
+cite$ -- 20
+duplicate$ -- 248
+empty$ -- 555
+format.name$ -- 145
+if$ -- 1508
+int.to.chr$ -- 2
 int.to.str$ -- 0
-missing$ -- 18
-newline$ -- 99
-num.names$ -- 48
-pop$ -- 99
+missing$ -- 20
+newline$ -- 117
+num.names$ -- 57
+pop$ -- 122
 preamble$ -- 1
-purify$ -- 98
+purify$ -- 112
 quote$ -- 0
-skip$ -- 137
+skip$ -- 162
 stack$ -- 0
-substring$ -- 364
-swap$ -- 48
-text.length$ -- 0
+substring$ -- 379
+swap$ -- 57
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 116
+type$ -- 136
 warning$ -- 1
-while$ -- 53
-width$ -- 19
-write$ -- 221
+while$ -- 62
+width$ -- 22
+write$ -- 263
 (There was 1 warning)

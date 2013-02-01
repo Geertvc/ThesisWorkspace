@@ -1,0 +1,143 @@
+\subsection{General information}
+The algorithm Random parameter filtering introduced in ~\cite{RPF11} tries to reduce the noise caused by the random parameters used in Monte Carlo integration.
+This noise reduces when the sampling rate increases, but this also increases the rendering time which is often not desirable.
+A Monte Carlo renderin system calculates the colors of the pixels using a function like this:
+\[
+ c_i \Leftarrow f(p_{i,1},p_{i,2};r_{i,1},r_{i,2},\cdots,r_{i,n})
+\]
+
+with f being the function of the scene with inputs $p_i$ being the position of the sample and the random parameters $r_i$.
+As the RPF algorithm is a post-process filter and uses a lot more than only the colors of the samples to filter the image, the following data has to be collected by the rendering system and given to the RPF algorithm as input:
+\[
+ x_i = \{p_{i,1},p_{i,2};r_{i,1},\cdots,r_{i,n};f_{i,1},\cdots,f_{i,m};c_{i,1},c_{i,2},c_{i,3}\}
+\]
+
+For each sample a vector like this is stored, containing the position of the sample $p_i$, the random parameters $r_i$ needed to compute the sample colors $c_i$ and the scene features $f_i$.
+These scene features are the extra features on which the cross bilateral filter also filters, in particular the features that are used are
+the world-space position, normal and texture values for the first intersection point of the ray and the world position and normal for the second intersection when using path tracing.
+When a feature is not available for a certain sample it is replaced with a zero.
+
+The algorithm itself computes the statistical dependency between the outputs and the inputs of the rendering system.
+This information is then used in the filter to adjust the importance of the sample value.
+\\
+An example can clarify this process, an image that is rendered using depth of field:
+regions that are in focus are free of noise because a ray that goes through the lens from a focused point on the image will land on the same point in the scene, regardless of where on the lens the random point is located.
+For pixels out of focus on the other hand, the color of the sample depends on the random lens position.
+
+\subsection{Implementation of the algorithm}
+A detailed description on how the RPF algorithm is implemented can be found in ~\cite{RPFTechReport}.
+The algorithm consists of three big parts which will be explained seperately.
+
+\begin{algorithm}
+  \caption{RPF algorithm}
+
+  \begin{algorithmic}
+    \State filterSize[] = ${55,35,17,7}$
+    \For  {$t=0$ to $filterSize.length$} 
+      \For {all pixels P in image I} 
+	 \State Preprocess samples in neighboorhood N of P based on 
+	 \State filterSize[t]
+	 \State Compute statistical dependencies of sample color and 
+	 \State features on inputs $p_i$ and $r_i$, use them to compute filter 
+	 \State weights.
+	 \State Filter sample colors in P using the weighted cross 
+	 \State bilateral filter.
+      \EndFor
+    \EndFor \\
+    Box filter all samples of each pixel to compute the final pixel color \\
+    \Return filtered image
+  \end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Multiple iterations}
+While a filter with a neighboorhood size of the entire image would be desirable, this is not feasible because of the computation overload 
+(to filter one sample all the samples in the neighboorhood have to be used).
+To solve this problem multiple iterations with different neighboorhood sizes are used.
+By experimenting, the authors found four iterations with the following sizes to be sufficient: ${55,35,17,7}$.
+By going from a large to a small size, the low frequency noise is filtered first followed by filtering more and more detail noise.
+
+\subsubsection{Preprocess samples in Neighboorhood N of P based on the filtersize}
+In this part of the algorithm a vector of samples is created to use in the computation of the filter weights.
+Because the number of samples increases as $O(N^2)$ with the block size, a smaller number of random samples are chosen from within the neighboorhood.
+These samples are then clustered, this means that the random sample is only added to the neighboorhood if all of its scene features are within three standard deviations of the mean for the pixel.
+This test is only done when the standard deviation of that scene feature for the pixel is bigger than 0.1, this makes sure that not all samples are thrown away when the variance is very small.
+\\
+Before the statistical dependencies are computed for this newly created neighboorhood, all the elements in the sample vector are normalized by removing the mean and deviding by the standard deviation of all samples in the neighboorhood.
+This makes sure that all features get an equal weight when calculating dependencies.
+
+\subsubsection{Compute statistical dependencies and the filter weights}
+First Mutual information is explained as this technique is used to calculate the statistical dependencies between a sample feature and the inputs to the Monte Carlo system.
+\\
+
+\textbf{Mutual Information}
+The technique of mutual information is described in ~\cite{cover2006elements} as a measure of the amount of information that one random variable contains about another random variable.
+The mutual information of two random variables X and Y with a joint probability mass function $p(x,y)$ and marginal probability mass function $p(x)$ and $p(y)$ is given by:
+
+\[
+ I(X,Y) = \sum_{x\in X} \sum_{y\in Y} p(x,y)log\frac{p(x,y)}{p(x)p(y)}
+\]
+
+To implement the computation of the mutual information between two vectors, the histogram of each of them as well as their joint histogram is computed.
+The marginal histograms are computed by making all the values positive first by subtracting the minimum element and quantize the elements to integers.
+Then the number of times a value occurs is then counted after which these values are devided by the length of the vector.
+The joint histogram is implemented very similarly like in ~\cite{jointhistogram} using the positive and quantized vectors.
+The number of times each couple of values occurs is calculated using a 2D array after which each element is divided by the length of the vectors.
+
+\textbf{Computing the filter weights}
+Two vectors with filter weights are needed, $\alpha$ and $\beta$.
+$\alpha$ is the vector containing the weights used for the color term, one value for each color channel.
+$\beta$ contains the weights used for the feature term, one value for each scene feature.
+After the computation of the dependencies of the colors of the samples with the random parameters, the positions and the scene features, the filter weights that are used for the color values can be computed with the following equations:
+
+\begin{equation}
+ \begin{aligned}
+ \alpha_k &=& max(1-2(1+0.1t)W_{c,k}^{r},0) \\
+ \beta_k &=& W_{c}^{f,k}max(1-(1+0.1t)W_{f,k}^{r}, 0)
+ \end{aligned}
+\end{equation}
+
+with $W_{c,k}^r$ the fractional contribution of the random parameters on the $k^{th}$ color channel,
+$t$ the number of the block size, $W_{f,k}^{r}$ the fractional contribution of the random parameters on the $k^{th}$ scene feature and
+$W_{c}^{f,k}$ the fractional contribution of the $k^{th}$ scene feature  on the color.
+The normalized dependency on the random parameters gets more weight as the block size goes down with each iteration.
+
+\subsubsection{Filter the samples using the weighted cross bilateral filter}
+After the computation of the filter weights, the filtering of the samples is done simply using algorithm~\ref{algorithm}
+
+\begin{algorithm} 
+  \caption{Filter the samples}
+  \label{algorithm}
+  \begin{algorithmic}
+    \For  {all samples i in P} 
+      \State $c_i^{''} \leftarrow 0, w \leftarrow 0$
+      \For {all samples j in N} 
+	 \State Calculate $w_{ij}$ with equation~\ref{eq:weight}
+	 \State $c_i^{''} \leftarrow c_i^{''} + w_{ij}c_i^{'}$
+	 \State $w \leftarrow w + w_{ij}$
+      \EndFor
+      \State $c_i^{''} \leftarrow \frac{c_i^{''}}{w}$
+    \EndFor \\
+    \Return filtered color of the samples $c^{''}$
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{equation} \label{eq:weight}
+  \begin{aligned}
+ w_{ij} = &exp&(-\frac{1}{2\sigma_{c}^{2}}\sum_{1\leq k\leq3}\alpha_k(c_{i,k}-c_{j,k})^2)* \\
+	  &exp&(-\frac{1}{2\sigma_{f}^{2}}\sum_{1\leq k\leq m}\beta_k(f_{i,k}-f_{j,k})^2)
+  \end{aligned}
+\end{equation}
+
+Because the samples in the neighboorhood are selected using a Gaussian distribution the position term of the bilateral filter could be dropped.
+The variances of the filter are:
+
+\begin{equation}
+ \begin{aligned}
+    \sigma_c^{2} = \sigma_f^{2} &=& \frac{\sigma^2}{(1-W_c^r)^2} \\
+    \text{with } \\
+    \sigma^2 &=& 8\sigma_8^2/s
+ \end{aligned}
+\end{equation}
+
+with $s$ the samples per pixel and $\sigma_8^2$ the experimentally selected variance of $0.02$ for noisy scenes or $0.002$ for all others.
+

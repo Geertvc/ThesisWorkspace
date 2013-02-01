@@ -1,5 +1,11 @@
 \begin{thebibliography}{\protect\citename{Ramamoorthi et~al\mbox{.} }2012}
 
+\bibitem[\protect\citename{Cover and Thomas }2006]{cover2006elements}
+{\sc Cover, T., and Thomas, J.}
+\newblock 2006.
+\newblock {\em Elements of Information Theory}.
+\newblock Wiley.
+
 \bibitem[\protect\citename{Devarajan and Nyikal }2013]{bilfilter}
 {\sc Devarajan, H., and Nyikal, H.}, 2013.
 \newblock Image scaling and bilateral filtering.
@@ -63,6 +69,12 @@ scaling/index2.html}.
 \newblock Axis-aligned filtering for interactive sampled soft shadows.
 \newblock {\em ACM Trans. Graph. 31}, 6 (Nov), 163:1--163:10.
 
+\bibitem[\protect\citename{Peng }2007]{jointhistogram}
+{\sc Peng, H.}, 2007.
+\newblock Mutual information computation.
+\newblock \\ \url{http://www.mathworks.com/matlabcentral/fileexchange/14888}.
+\newblock \spar [Online, accessed 31 jan 2013].
+
 \bibitem[\protect\citename{Pharr and Humphreys }2010]{pharr2010physically}
 {\sc Pharr, M., and Humphreys, G.}
 \newblock 2010.
@@ -98,7 +110,13 @@ scaling/index2.html}.
 \newblock Compressive estimation for signal integration in rendering.
 \newblock {\em Computer Graphics Forum 29}, 4.
 
-\bibitem[\protect\citename{Sen and Darabi }2011]{RPF11}
+\bibitem[\protect\citename{Sen and Darabi }2011a]{RPFTechReport}
+{\sc Sen, P., and Darabi, S.}
+\newblock 2011.
+\newblock {Implementation of Random Parameter Filtering}.
+\newblock Tech. Rep. EECE-TR-11-0004, University of New Mexico, May.
+
+\bibitem[\protect\citename{Sen and Darabi }2011b]{RPF11}
 {\sc Sen, P., and Darabi, S.}
 \newblock 2011.
 \newblock {On Filtering the Noise from the Random Parameters in Monte Carlo

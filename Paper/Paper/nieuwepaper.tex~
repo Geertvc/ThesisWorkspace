@@ -196,7 +196,11 @@ To conclude, some other methods that handle the noise caused by Monte Carlo rend
 \input{bilateralFilter.tex}
 
 \section{Random Parameter Filtering algorithm}
-blabla
+
+\todo{Mutual information}
+\todo{different parts of algorithm}
+\\
+\input{RPF.tex}
 
 \section{Results}
 \todo{vergeet niet PBRT2 te vermelden}
