@@ -1,0 +1,42 @@
+The Bilateral filter is introduced in ~\cite{710815}, I have used some extra information from ~\cite{bilfilter} as well.
+\\
+As the name already suggests, a bilateral filter filters an image using two different inputs.
+To understand the working of a bilateral filter, the concept of a Gaussian filter is explained first.
+
+\subsection{Gaussian filter}
+As an image has two dimensions, the 2D version of the gaussian filter will be explained, in fact this is simply the product of two one dimensional gaussians, one per direction.
+The equation of a 2D Gaussian filter is defined as:
+
+\begin{equation}
+   g(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^{2}+y^{2}}{2\sigma^{2}}}
+\end{equation}
+
+with x and y being the distance from the origin and $\sigma$ being the standard deviation of the Gaussian distribution.
+The shape of a Gaussian filter being a 2D bell shaped function.
+\\
+When an image is filtered using a Gaussian filter, this will lead to blurred images as the values of each pixel will fade into the values of the surrounding pixels.
+\todo{Add a Gaussian filtered image!!}
+
+\subsection{Bilateral filter as two Gaussian filters}
+A bilateral filter can be explained as being two Gaussian filter that filter respectively in the spatial (the domain filter D) and in the intensity domain (the range filter R).
+
+\begin{equation}
+  \begin{aligned}
+    D(x,y) &=& e^{-\frac{x^{2}+y^{2}}{2\sigma^{2}}} \\
+    R(p_i, p_j) &=& e^{-\frac{f(p_i)^{2}+f(p_j)^{2}}{2\sigma^{2}}}
+  \end{aligned}
+\end{equation}
+
+The domain filter filters using the difference x and y between the positions of the two pixels and the range filter uses the intensity value (obtained by the image function $f$) of both pixels.
+\\
+We can now write down the equation to compute final value of a pixel filtered using a bilateral filter.
+
+\begin{equation}
+\begin{aligned}
+   b(p_i) &=& k^{-1}\sum_{m=0}^{N-1} f(p_m)D(x,y)R(p_i,p_m) \\
+   \text{with} \\
+   k &=& \sum_{m=0}^{N-1} D(x,y)R(p_i,p_m)
+\end{aligned}
+\end{equation}
+
+x and y are again the difference in the positions of the pixels $p_i$ and $p_m$ and N is the size of the neighboorhood taken into account for each pixel.

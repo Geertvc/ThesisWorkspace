@@ -189,18 +189,98 @@ To conclude, some other methods that handle the noise caused by Monte Carlo rend
 \input{introduction.tex}
 
 \section{Related Work}
+\todo{explain all the different techniques that are explained on my blog}
+\todo{hoe heeft vorig werk dit of gerelateerde problemen
+opgelost, hoe is jou werk verschillend}
 \todo{plak de verschillende paper uitleggen aan elkaar, sorteer volgens jaar ???}
+
 \input{relatedWork.tex}
 
 \section{Bilateral Filter}
-\input{bilateralFilter.tex}
+
+The Bilateral filter is introduced in ~\cite{710815}, I have used some extra information from ~\cite{bilfilter} as well.
+\\
+As the name already suggests, a bilateral filter filters an image using two different inputs.
+To understand the working of a bilateral filter, the concept of a Gaussian filter is explained first.
+
+\subsection{Gaussian filter}
+As an image has two dimensions, the 2D version of the gaussian filter will be explained, in fact this is simply the product of two one dimensional gaussians, one per direction.
+The equation of a 2D Gaussian filter is defined as:
+
+\begin{equation}
+   g(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^{2}+y^{2}}{2\sigma^{2}}}
+\end{equation}
+
+with x and y being the distance from the origin and $\sigma$ being the standard deviation of the Gaussian distribution.
+The shape of a Gaussian filter being a 2D bell shaped function.
+\\
+When an image is filtered using a Gaussian filter, this will lead to blurred images as the values of each pixel will fade into the values of the surrounding pixels.
+\todo{Add a Gaussian filtered image!!}
+
+\subsection{Bilateral filter as two Gaussian filters}
+A bilateral filter can be explained as being two Gaussian filter that filter respectively in the spatial (the domain filter D) and in the intensity domain (the range filter R).
+
+\begin{equation}
+  \begin{aligned}
+    D(x,y) &=& e^{-\frac{x^{2}+y^{2}}{2\sigma^{2}}} \\
+    R(p_i, p_j) &=& e^{-\frac{f(p_i)^{2}+f(p_j)^{2}}{2\sigma^{2}}}
+  \end{aligned}
+\end{equation}
+
+The domain filter filters using the difference x and y between the positions of the two pixels and the range filter uses the intensity value (obtained by the image function $f$) of both pixels.
+\\
+We can now write down the equation to compute final value of a pixel filtered using a bilateral filter.
+
+\begin{equation}
+\begin{aligned}
+   b(p_i) &=& k^{-1}\sum_{m=0}^{N-1} f(p_m)D(x,y)R(p_i,p_m) \\
+   \text{with} \\
+   k &=& \sum_{m=0}^{N-1} D(x,y)R(p_i,p_m)
+\end{aligned}
+\end{equation}
+
+x and y are again the difference in the positions of the pixels $p_i$ and $p_m$ and N is the size of the neighboorhood taken into account for each pixel.
 
 \section{Random Parameter Filtering algorithm}
-
-\todo{cross bilateral filter explanation}
-\todo{Mutual information}
-\todo{different parts of algorithm}
 blabla
+
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+aliquip ex ea commodo consequat. Duis aute irure dolor in
+reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
+
+\begin{equation}
+ \sum_{j=1}^{z} j = \frac{z(z+1)}{2}
+\end{equation}
+
+\begin{eqnarray}
+x & \ll & y_{1} + \cdots + y_{n} \\
+  & \leq & z
+\end{eqnarray}
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+aliquip ex ea commodo consequat. Duis aute irure dolor in
+reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1.5in]{images/samplefigure}
+  \caption{Sample illustration.}
+\end{figure}
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+aliquip ex ea commodo consequat. Duis aute irure dolor in
+reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
 
 \section{Results}
 \todo{vergeet niet PBRT2 te vermelden}

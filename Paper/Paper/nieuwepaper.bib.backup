@@ -195,23 +195,10 @@ articleno = {54},
  keywords = {ambient occlusion, defocus, indirect illumination, light field, motion blur, reconstruction},
 } 
 
-@INPROCEEDINGS{710815, 
-author={Tomasi, C. and Manduchi, R.}, 
-booktitle={Computer Vision, 1998. Sixth International Conference on}, title={Bilateral filtering for gray and color images}, 
-year={1998}, 
-month={jan}, 
-volume={}, 
-number={}, 
-pages={839 -846}, 
-keywords={Color;Computer science;Filtering;Humans;Imaging phantoms;Low pass filters;Photometry;Pixel;Shape measurement;Smoothing methods;colour vision;computer vision;image processing;bilateral filtering;color images;edges preservation;geometric closeness;gray images;perceptual metric;phantom colors;photometric similarity;}, 
-doi={10.1109/ICCV.1998.710815}, 
-ISSN={},
-}
-
-@misc{bilfilter2,
-	author = {Haarith Devarajan and Harold Nyikal},
-	title = {Image Scaling and Bilateral Filtering},
-	howpublished = "\\ \url{http://scien.stanford.edu/pages/labsite/2006/psych221/projects/06/imagescaling/index2.html}",
+@misc{bilfilter1,
+	author = {Manduchi},
+	title = {Bilateral Filtering for Gray and Color Images},
+	howpublished = "\\ \url{http://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html}",
 	year = {2013},
 	note = "\spar [Online, accessed 31 jan 2013]"
 }

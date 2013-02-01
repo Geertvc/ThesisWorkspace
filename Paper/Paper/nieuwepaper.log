@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.1.4)  31 JAN 2013 22:57
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.1.4)  1 FEB 2013 03:49
 entering extended mode
  %&-line parsing enabled.
 **nieuwepaper.tex
@@ -275,21 +275,21 @@ Package hyperref Info: Option `breaklinks' set `true' on input line 510.
 ) (./nieuwepaper.aux)
 \openout1 = `nieuwepaper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 109.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 111.
 
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/ot1ptm.fd
@@ -319,7 +319,7 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
-Package hyperref Info: Link coloring ON on input line 109.
+Package hyperref Info: Link coloring ON on input line 111.
 
 (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
@@ -329,144 +329,179 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
 \c@section@level=\count119
 )
-LaTeX Info: Redefining \ref on input line 109.
-LaTeX Info: Redefining \pageref on input line 109.
+LaTeX Info: Redefining \ref on input line 111.
+LaTeX Info: Redefining \pageref on input line 111.
 \AtBeginShipoutBox=\box30
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 126.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 128.
 
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 13.24796pt on input line 126.
+(Font)              scaled to size 13.24796pt on input line 128.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 126.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 128.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 13.24796pt on input line 126.
+(Font)              scaled to size 13.24796pt on input line 128.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 127.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 129.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 4.59999pt on input line 128.
+(Font)              scaled to size 4.59999pt on input line 130.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 11.03998pt on input line 154.
+(Font)              scaled to size 11.03998pt on input line 156.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 154.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 156.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 11.03998pt on input line 154.
-
-Underfull \vbox (badness 1460) has occurred while \output is active []
-
-
-Underfull \hbox (badness 1231) in paragraph at lines 214--217
-[]\OT1/ptm/m/n/9 More in-for-ma-tion about Monte Carlo meth-ods can be found
+(Font)              scaled to size 11.03998pt on input line 156.
+ (./introduction.tex
+Overfull \hbox (0.87186pt too wide) detected at line 23
+\OML/cmm/m/it/9 I\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 i; j\OT1/cmr/m/n/9 ) = [] [] [
+] [] [] [] \OML/cmm/m/it/9 f\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 x; y; []  ; u; v; t
+\OT1/cmr/m/n/9 ) \OML/cmm/m/it/9 dt dv du dy dx:
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 218--225
-
- []
-
-
-Underfull \hbox (badness 1005) in paragraph at lines 226--233
-[][]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 Tem-po-ral Light Fie
-ld Re-con-struc-tion for Ren-der-ing
- []
-
-
-Underfull \hbox (badness 1478) in paragraph at lines 226--233
-[]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 Re-con-struc-tion the 
-In-di-rect Light Field for Global
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 226--233
+) (./relatedWork.tex
+Underfull \hbox (badness 10000) in paragraph at lines 6--13
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 234--256
-
- []
-
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 21.
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-Underfull \hbox (badness 2951) in paragraph at lines 257--290
-[]$\OMS/cmsy/m/n/9 h$ \OT1/ptm/b/n/9 TODO \OT1/ptm/m/n/9 2011: adap-tive sam-pl
-ing re-con-struc-tion Adap-tive
- []
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
 
-
-Underfull \hbox (badness 1609) in paragraph at lines 257--290
-\OT1/ptm/m/n/9 sam-pling and re-con-struc-tion us-ing greedy er-ror min-i-miza-
-tion
- []
-
-
-Underfull \hbox (badness 1661) in paragraph at lines 257--290
-\OT1/ptm/m/n/9 with the only pur-pose to ren-der mo-tion blur with per-pixel
- []
-
-
-Underfull \hbox (badness 1430) in paragraph at lines 257--290
-\OT1/ptm/m/n/9 ef-fec-tive-ness of dif-fer-ent non-adaptive Monte Carlo sam-pli
-ng
- []
-
-
-Underfull \hbox (badness 1158) in paragraph at lines 257--290
-\OT1/ptm/m/n/9 sam-ples with-out los-ing pre-ci-sion by us-ing the best sam-pli
-ng
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 257--290
+Underfull \hbox (badness 1102) in paragraph at lines 56--65
+\OT1/ptm/m/n/9 The main dif-fer-ence be-tween the two al-go-rithms is that this
 
  []
 
-<images/samplefigure.pdf, id=41, 101.37875pt x 101.37875pt>
-File: images/samplefigure.pdf Graphic file (type pdf)
 
-<use images/samplefigure.pdf>
-Underfull \hbox (badness 1675) in paragraph at lines 336--338
+Underfull \hbox (badness 10000) in paragraph at lines 56--65
+
+ []
+
+
+Underfull \hbox (badness 1014) in paragraph at lines 67--74
+\OT1/ptm/m/n/9 step, this al-go-rithm can be in-te-grated in real-time ray-trac
+-ers.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 67--74
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 76--84
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 86--93
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--105
+
+ []
+
+
+Underfull \hbox (badness 1648) in paragraph at lines 107--115
+[]\OT1/ptm/b/n/9 Adaptive sam-pling and re-con-struc-tion us-ing greedy er-ror
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--115
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--126
+[]\OT1/ptm/b/n/9 High-Quality Spatio-Temporal Ren-der-ing us-ing Semi-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--126
+
+ []
+
+[2])
+Underfull \hbox (badness 10000) in paragraph at lines 128--194
+
+ []
+
+(./bilateralFilter.tex
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 9.19998pt on input line 6.
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 6.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 9.19998pt on input line 6.
+)
+Underfull \hbox (badness 1675) in paragraph at lines 208--210
 \OT1/ptm/m/n/9 hele-maal opgelost, eventueel vergeli-jkin-gen met geli-jkaardig
 e
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 336--338
+Underfull \hbox (badness 10000) in paragraph at lines 208--210
 
  []
 
-[2 <./images/samplefigure.pdf>] (./nieuwepaper.bbl
-Underfull \hbox (badness 3590) in paragraph at lines 60--64
+(./nieuwepaper.bbl
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 8.
+ (/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+Underfull \hbox (badness 10000) in paragraph at lines 4--9
+[][]$\OT1/pcr/m/n/9 http : / / scien . stanford . edu / pages / labsite /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4--9
+\OT1/pcr/m/n/9 2006 / psych221 / projects / 06 / imagescaling /
+ []
+
+[3]
+Underfull \hbox (badness 3590) in paragraph at lines 75--79
 []\OT1/ptm/m/sc/9 Ramamoorthi, R., An-der-son, J., Meyer, M., and
  []
 
-) [3] (./nieuwepaper.aux) ) 
+) [4
+
+] (./nieuwepaper.aux) ) 
 Here is how much of TeX's memory you used:
- 6103 strings out of 495061
- 90269 string characters out of 1182622
- 190267 words of memory out of 3000000
- 9162 multiletter control sequences out of 15000+50000
- 24353 words of font info for 50 fonts, out of 3000000 for 9000
+ 6165 strings out of 495061
+ 91041 string characters out of 1182622
+ 194267 words of memory out of 3000000
+ 9194 multiletter control sequences out of 15000+50000
+ 29243 words of font info for 58 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 45i,7n,40p,262b,311s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.en
-c}</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr
-/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf
--texlive/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-texlive/fon
-ts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/publ
-ic/amsfonts/cm/cmr9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
-m/cmsy9.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr
-/share/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texl
-ive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/
-times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on nieuwepaper.pdf (3 pages, 134311 bytes).
+ 45i,9n,40p,285b,452s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</
+usr/share/texmf-texlive/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-tex
+live/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/t
+ype1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-texlive/fonts/type1/public/
+amsfonts/cm/cmr5.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/c
+mr6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr
+/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texmf
+-texlive/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-texlive/fon
+ts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helve
+tic/uhvb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></
+usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texl
+ive/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf-texlive/fonts/type1/urw
+/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
+Output written on nieuwepaper.pdf (4 pages, 202824 bytes).
 PDF statistics:
- 115 PDF objects out of 1000 (max. 8388607)
- 29 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 171 PDF objects out of 1000 (max. 8388607)
+ 45 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

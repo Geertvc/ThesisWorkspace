@@ -1,5 +1,13 @@
 \begin{thebibliography}{\protect\citename{Ramamoorthi et~al\mbox{.} }2012}
 
+\bibitem[\protect\citename{Devarajan and Nyikal }2013]{bilfilter}
+{\sc Devarajan, H., and Nyikal, H.}, 2013.
+\newblock Image scaling and bilateral filtering.
+\newblock \\
+  \url{http://scien.stanford.edu/pages/labsite/2006/psych221/projects/06/image%
+scaling/index2.html}.
+\newblock \spar [Online, accessed 31 jan 2013].
+
 \bibitem[\protect\citename{Dutr{\'e} et~al\mbox{.} }2006]{dutré2006advanced}
 {\sc Dutr{\'e}, P., Bala, K., and Bekaert, P.}
 \newblock 2006.
@@ -34,6 +42,13 @@
 \newblock Temporal light field reconstruction for rendering distribution
   effects.
 \newblock {\em ACM Trans. Graph. 30}, 4.
+
+\bibitem[\protect\citename{Lehtinen et~al\mbox{.}
+  }2012]{Lehtinen:2012:RIL:2185520.2185547}
+{\sc Lehtinen, J., Aila, T., Laine, S., and Durand, F.}
+\newblock 2012.
+\newblock Reconstructing the indirect light field for global illumination.
+\newblock {\em ACM Trans. Graph. 31}, 4 (July), 51:1--51:10.
 
 \bibitem[\protect\citename{Li et~al\mbox{.} }2012]{Li:2012:SBO}
 {\sc Li, T.-M., Wu, Y.-T., and Chuang, Y.-Y.}
@@ -89,5 +104,12 @@
 \newblock {On Filtering the Noise from the Random Parameters in Monte Carlo
   Rendering}.
 \newblock {\em ACM Transactions on Graphics (TOG) to appear\/}.
+
+\bibitem[\protect\citename{Tomasi and Manduchi }1998]{710815}
+{\sc Tomasi, C., and Manduchi, R.}
+\newblock 1998.
+\newblock Bilateral filtering for gray and color images.
+\newblock In {\em Computer Vision, 1998. Sixth International Conference on},
+  839 --846.
 
 \end{thebibliography}

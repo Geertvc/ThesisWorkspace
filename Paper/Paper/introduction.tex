@@ -1,0 +1,38 @@
+Computer Graphics has evolved from 2D to almost realistic 3D during the last decennia.
+To reach this realism in graphics, Global Illumination algorithms became very important, 
+these incorporate the indirect light caused by the surroundings.
+These algorithms require large numbers of calculations and thus a large rendering time, especially when results without noise are expected.
+To lower this rendering time, Monte Carlo methods are often used because they can be used to evaluate multidimensional functions in an unbiased way.
+Complex and photorealistic images can be created using these Monte Carlo methods.
+In the case of (Monte Carlo) rendering, the multidimensional integrals that needs to be solved at every pixel of the image are: 
+integration of the radiance over the aperture of the camera (u,v), over the time the shutter is open ($t_0 \rightarrow t_1$) and over the area of the pixel ($(i-1/2,j-1/2) \rightarrow (i+1/2,j+1/2)$. 
+
+\[
+  I(i,j) = \int\limits_{i-\frac{1}{2}}^{i+\frac{1}{2}} 
+		\int\limits_{j-\frac{1}{2}}^{j+\frac{1}{2}} 
+		      \cdots
+			  \int\limits_{-1}^{1} 
+			      \int\limits_{-1}^{1}
+				  \int\limits_{t_0}^{t_1} 
+				    f(x,y,\cdots,u,v,t)
+				  \,dt
+			      \,dv
+			  \,du
+		\,dy
+	    \,dx.
+\]
+
+As Monte Carlo methods take random samples to evaluate a function, a lot of samples are usually necessary to evaluate the function precisely and 
+thus a lot of noise will be present when using a low number of samples. 
+One obvious solution to this problem is to use more samples, 
+but as the rendering time increases dramatically with the amount of samples this is not always an option.
+Adaptive sampling algorithms can then be used to distribute these (sometimes large) numbers of samples in the best possible way across the image.
+Reconstruction techniques can also be used to suppress the number of samples, 
+as these try to use the available samples as much as possible, across pixels and even across frames.
+Another technique that can be used is the focus of this paper and is an advanced image filter, 
+it uses not only the color computed at each sample of the image, 
+but also other parameters that are available during the rendering process, to filter the image.
+\\
+In the related work section I will describe all the different related papers I researched before deciding to research the RPF algorithm in more detail.
+The technical sections describe the concept of bilateral filter after which the RPF algorithm is explained in detail.
+To conclude the results describe my current results followed by a discussion of these results and a concise conclusion.

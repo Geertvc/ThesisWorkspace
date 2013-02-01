@@ -2,44 +2,46 @@ This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
 The top-level auxiliary file: nieuwepaper.aux
 The style file: acmsiggraph.bst
 Database file #1: nieuwepaper.bib
-You've used 13 entries,
+Warning--empty organization in 710815
+You've used 16 entries,
             2748 wiz_defined-function locations,
-            676 strings with 6718 characters,
-and the built_in function-call counts, 5316 in all, are:
-= -- 539
-> -- 257
+            693 strings with 7295 characters,
+and the built_in function-call counts, 6555 in all, are:
+= -- 665
+> -- 310
 < -- 0
-+ -- 89
-- -- 92
-* -- 474
-:= -- 898
-add.period$ -- 54
-call.type$ -- 13
-change.case$ -- 91
-chr.to.int$ -- 13
-cite$ -- 13
-duplicate$ -- 168
-empty$ -- 381
-format.name$ -- 105
-if$ -- 1064
++ -- 107
+- -- 112
+* -- 578
+:= -- 1098
+add.period$ -- 66
+call.type$ -- 16
+change.case$ -- 111
+chr.to.int$ -- 16
+cite$ -- 17
+duplicate$ -- 208
+empty$ -- 481
+format.name$ -- 128
+if$ -- 1319
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 16
-newline$ -- 81
-num.names$ -- 39
-pop$ -- 76
+missing$ -- 18
+newline$ -- 99
+num.names$ -- 48
+pop$ -- 99
 preamble$ -- 1
-purify$ -- 81
+purify$ -- 98
 quote$ -- 0
-skip$ -- 111
+skip$ -- 137
 stack$ -- 0
-substring$ -- 291
-swap$ -- 39
+substring$ -- 364
+swap$ -- 48
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 92
-warning$ -- 0
-while$ -- 42
-width$ -- 16
-write$ -- 179
+type$ -- 116
+warning$ -- 1
+while$ -- 53
+width$ -- 19
+write$ -- 221
+(There was 1 warning)
