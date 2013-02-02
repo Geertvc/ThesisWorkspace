@@ -1,6 +1,7 @@
 The Bilateral filter is introduced in ~\cite{710815}, I have used some extra information from ~\cite{bilfilter} as well.
 \\
 As the name already suggests, a bilateral filter filters an image using two different inputs.
+To most important property and reason why the bilateral filter is used very often is that it preserves the edges in the image.
 To understand the working of a bilateral filter, the concept of a Gaussian filter is explained first.
 
 \subsection{Gaussian filter}
@@ -15,7 +16,7 @@ with x and y being the distance from the origin and $\sigma$ being the standard 
 The shape of a Gaussian filter being a 2D bell shaped function.
 \\
 When an image is filtered using a Gaussian filter, this will lead to blurred images as the values of each pixel will fade into the values of the surrounding pixels.
-\todo{Add a Gaussian filtered image!!}
+
 
 \subsection{Bilateral filter as two Gaussian filters}
 A bilateral filter can be explained as being two Gaussian filter that filter respectively in the spatial (the domain filter D) and in the intensity domain (the range filter R).
@@ -43,4 +44,7 @@ x and y are again the difference in the positions of the pixels $p_i$ and $p_m$ 
 
 
 \subsection{Cross Bilateral Filter}
-The RPF algorithm that is described in the following section, is based on a more advanced version of 
+The RPF algorithm that is described in the following section, is based on a more advanced version of a bilateral filter, called the cross bilateral filter.
+A Cross bilateral filter does not only filter in the spatial and the intensity domain but adds another filtering function to the filter.
+This added function is a function just like the image function and returns a value for each position in the image.
+Examples of this function are the world position at the first intersection point of the ray traced through that pixel, other features like the normal can also be chosen.

@@ -25,11 +25,11 @@ After sampling this high-dimensional function, a reconstruction is made by integ
 A similar goal is aimed for by ~\cite{Li:2012:SBO} allthough samples are distributed over the image based on an estimator of the Mean Squared Error (MSE) of the image.
 The estimator that is used is called Stein's Unbiased Risk Estimator (SURE), it allows to estimate the error of an estimator without knowing the true value that is estimated.
 A difference with most other algorithms using a filter is that a filterbank is used instead of a single filter, any kind of filter can be added to this filterbank.
+The usage of a filterbank makes this algorithm different from algorithms like RPF because any kind of filter can be added to this filterbank.
 The authors of the paper have experimented with isotropic Gaussian, cross bilateral and a modified non-local means filter.
-The algorithm itself goes as follows:
 A small number of initial samples are rendered first, followed by filtering each pixel with all filters in the filterbank.
 Next the filtered color with the lowest SURE error is chosen for each pixel and is used in the reconstruction.
-When more samples are available and thus yet to be distributed over the image, these are used for the pixels with the largest SURE errors after which the process goes back to filtering each pixel with all the filters from the filterbank.
+When more samples are available, these are used for the pixels with the largest SURE errors after which the process goes back to filtering each pixel with all the filters from the filterbank.
 \\
 
 %\todo{2011: adaptive sampling reconstruction  Adaptive sampling and reconstruction using greedy error minimization}
@@ -38,7 +38,7 @@ Another algorithm that does not fix which filter is used for different pixels is
 As this algorithm is greedy, it minimizes the function at each stage hoping to reach a global optimum.
 Given a current sample distribution, a filter that minimizes the pixel error is selected from a discrete set of filters that can be different for each pixel.
 Given the filter selection, addition samples are distributed to further reduce the MSE.
-Because the MSE cannot be calculated exactly, the change in MSE is calculated instead.
+Because the MSE cannot be calculated exactly the change in MSE is calculated instead.
 This whole process can be repeated until any chosen termination criterion is met.
 \\
 
@@ -71,7 +71,7 @@ The paper makes the following four contributions:
     By using the key observation that the relative ordering of the sreen positions of samples from a non-overlapping surface never changes under reprojections, 
     they derive a formal criterion named SAMESURFACE to detect when a set of reprojected samples should be filtered together.
   \item \textit{\textbf{Resolve visibility without explicit surface reconstruction}} \\
-    Which surface is visible at the reconstruction location is determined in this technique. 
+    Which surface is visible at the reconstruction location is determined. 
     The challenge is to distinguish between small holes in the geometry and apparent holes caused by stochastic sampling. 
     To do this a radius R is precomputed, R is the radius of the largest empty circle that is expected to be visible on the xy plane after reprojection. 
     Holes that are smaller than R should be filled because it is beyond the resolution of the input sampling. 
@@ -86,10 +86,10 @@ The paper makes the following four contributions:
 %\todo{Reconstruction the Indirect Light Field for Global Illumination}
 \textbf{Reconstruction the Indirect Light Field for Global Illumination:} \\
 The algorithm that is described in ~\cite{Lehtinen:2012:RIL:2185520.2185547} is similar to the former algorithm and is published by almost the same authors.
-The paper also describes a general reconstruction technique that exploits anisotropy in the light field and permits efficient reuse of input samples between pixels or world-space locations, 
+The paper also describes a general reconstruction technique that exploits anisotropu in the light field and permits efficient reuse of input samples between pixels or world-space locations, 
 multiplying the effective sampling rate by a large factor.
 \\
-The main difference between the two algorithms is that this algorithm tries to reconstruct the indirect light field at scene point instead of at points on the lens.
+The main difference between the two algorithms is that this algorithm tries to reconstruct the indirect light field at scene point instead of at points on the lens like the algorithm in ~\cite{Lehtinen2011sg} does.
 That is also why reconstructing an image using this algorithm takes three to four times longer than the former algorithm. 
 The former algorithm uses a 2D hierarchy, but this algorithm needs to reconstruct the incident light field at arbitrary points in the scene, so a true 3D algorithm is needed.
 \\

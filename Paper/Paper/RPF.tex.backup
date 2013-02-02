@@ -1,7 +1,7 @@
 \subsection{General information}
 The algorithm Random parameter filtering introduced in ~\cite{RPF11} tries to reduce the noise caused by the random parameters used in Monte Carlo integration.
 This noise reduces when the sampling rate increases, but this also increases the rendering time which is often not desirable.
-A Monte Carlo renderin system calculates the colors of the pixels using a function like this:
+A Monte Carlo rendering system calculates the colors of the pixels using a function like this:
 \[
  c_i \Leftarrow f(p_{i,1},p_{i,2};r_{i,1},r_{i,2},\cdots,r_{i,n})
 \]
@@ -12,13 +12,13 @@ As the RPF algorithm is a post-process filter and uses a lot more than only the 
  x_i = \{p_{i,1},p_{i,2};r_{i,1},\cdots,r_{i,n};f_{i,1},\cdots,f_{i,m};c_{i,1},c_{i,2},c_{i,3}\}
 \]
 
-For each sample a vector like this is stored, containing the position of the sample $p_i$, the random parameters $r_i$ needed to compute the sample colors $c_i$ and the scene features $f_i$.
+For each sample a vector like this is stored, containing the position of the sample $p_i$, the random parameters $r_i$, needed to compute the sample colors $c_i$ and the scene features $f_i$.
 These scene features are the extra features on which the cross bilateral filter also filters, in particular the features that are used are
 the world-space position, normal and texture values for the first intersection point of the ray and the world position and normal for the second intersection when using path tracing.
 When a feature is not available for a certain sample it is replaced with a zero.
 
 The algorithm itself computes the statistical dependency between the outputs and the inputs of the rendering system.
-This information is then used in the filter to adjust the importance of the sample value.
+This information is then used in the filter to adjust the importance of the sample value (i.e. the filter weight).
 \\
 An example can clarify this process, an image that is rendered using depth of field:
 regions that are in focus are free of noise because a ray that goes through the lens from a focused point on the image will land on the same point in the scene, regardless of where on the lens the random point is located.
@@ -30,7 +30,7 @@ The algorithm consists of three big parts which will be explained seperately.
 
 \begin{algorithm}
   \caption{RPF algorithm}
-
+  \label{algo:RPF}
   \begin{algorithmic}
     \State filterSize[] = ${55,35,17,7}$
     \For  {$t=0$ to $filterSize.length$} 
@@ -102,11 +102,11 @@ $W_{c}^{f,k}$ the fractional contribution of the $k^{th}$ scene feature  on the 
 The normalized dependency on the random parameters gets more weight as the block size goes down with each iteration.
 
 \subsubsection{Filter the samples using the weighted cross bilateral filter}
-After the computation of the filter weights, the filtering of the samples is done simply using algorithm~\ref{algorithm}
+After the computation of the filter weights, the filtering of the samples is done simply using algorithm~\ref{algo:filter}
 
 \begin{algorithm} 
   \caption{Filter the samples}
-  \label{algorithm}
+  \label{algo:filter}
   \begin{algorithmic}
     \For  {all samples i in P} 
       \State $c_i^{''} \leftarrow 0, w \leftarrow 0$
@@ -123,22 +123,21 @@ After the computation of the filter weights, the filtering of the samples is don
 
 \begin{equation} \label{eq:weight}
   \begin{aligned}
- w_{ij} = &exp&(-\frac{1}{2\sigma_{p}^{2}}\sum_{1\leq k\leq2}(p_{i,k}-p_{j,k})^2)* \\
-	  &exp&(-\frac{1}{2\sigma_{c}^{2}}\sum_{1\leq k\leq3}\alpha_k(c_{i,k}-c_{j,k})^2)* \\
+ w_{ij} = &exp&(-\frac{1}{2\sigma_{c}^{2}}\sum_{1\leq k\leq3}\alpha_k(c_{i,k}-c_{j,k})^2)* \\
 	  &exp&(-\frac{1}{2\sigma_{f}^{2}}\sum_{1\leq k\leq m}\beta_k(f_{i,k}-f_{j,k})^2)
   \end{aligned}
 \end{equation}
 
-with the variances of the filter being:
+Because the samples in the neighboorhood are selected using a Gaussian distribution the position term of the bilateral filter could be dropped.
+The variances of the filter are:
 
 \begin{equation}
  \begin{aligned}
-    \sigma_c^{2} &=& \sigma_f^{2} = \frac{\sigma^2}{(1-W_c^r)^2} 
+    \sigma_c^{2} = \sigma_f^{2} &=& \frac{\sigma^2}{(1-W_c^r)^2} \\
+    \text{with } \\
+    \sigma^2 &=& 8\sigma_8^2/s
  \end{aligned}
 \end{equation}
 
-
-dan worden de dependencies en filter gewichten berekend
-
-waarna de samples gefilterd worden.
+with $s$ the samples per pixel and $\sigma_8^2$ the experimentally selected variance of $0.02$ for noisy scenes or $0.002$ for all others.
 

@@ -1,6 +1,7 @@
-The Bilateral filter is introduced in ~\cite{710815}, I have used some extra information from ~\cite{bilfilter} as well.
+The Bilateral filter is introduced in ~\cite{710815}, some information can also be found in ~\cite{bilfilter}.
 \\
-As the name already suggests, a bilateral filter filters an image using two different inputs.
+As the name already suggests, a bilateral filter filters an image using two different inputs, the position of pixels and its intensity value.
+The most important property and reason why the bilateral filter is used very often is that it preserves the edges in the image.
 To understand the working of a bilateral filter, the concept of a Gaussian filter is explained first.
 
 \subsection{Gaussian filter}
@@ -15,10 +16,10 @@ with x and y being the distance from the origin and $\sigma$ being the standard 
 The shape of a Gaussian filter being a 2D bell shaped function.
 \\
 When an image is filtered using a Gaussian filter, this will lead to blurred images as the values of each pixel will fade into the values of the surrounding pixels.
-\todo{Add a Gaussian filtered image!!}
+
 
 \subsection{Bilateral filter as two Gaussian filters}
-A bilateral filter can be explained as being two Gaussian filter that filter respectively in the spatial (the domain filter D) and in the intensity domain (the range filter R).
+A bilateral filter can be explained as being two Gaussian filters that filter in the spatial (the domain filter D) and in the intensity domain (the range filter R) respectively.
 
 \begin{equation}
   \begin{aligned}
@@ -27,7 +28,8 @@ A bilateral filter can be explained as being two Gaussian filter that filter res
   \end{aligned}
 \end{equation}
 
-The domain filter filters using the difference x and y between the positions of the two pixels and the range filter uses the intensity value (obtained by the image function $f$) of both pixels.
+The domain filter uses the difference between the positions of the two pixels in both the horizontal direction (x) and the vertical direction (y). 
+The range filter uses the intensity value (obtained by the image function $f$) of both pixels.
 \\
 We can now write down the equation to compute final value of a pixel filtered using a bilateral filter.
 
@@ -40,10 +42,12 @@ We can now write down the equation to compute final value of a pixel filtered us
 \end{equation}
 
 x and y are again the difference in the positions of the pixels $p_i$ and $p_m$ and N is the size of the neighboorhood taken into account for each pixel.
+The value of the pixel is multiplied with the two filter weights and then summed over all the samples in the neighboorhood, the $k^{-1}$ term makes sure the filter does not introduce more intensity into the image.
+A nice property of the bilateral filter is that when the variance of the range filter is set to infinity, the bilateral filter acts like a Gaussian filter.
 
 
 \subsection{Cross Bilateral Filter}
 The RPF algorithm that is described in the following section, is based on a more advanced version of a bilateral filter, called the cross bilateral filter.
 A Cross bilateral filter does not only filter in the spatial and the intensity domain but adds another filtering function to the filter.
 This added function is a function just like the image function and returns a value for each position in the image.
-Examples of this function are the world position at the first intersection point of the ray traced through that pixel.
+An example of this function are the world position at the first intersection point of the ray traced through that pixel, allthough other features like the normal can also be chosen.

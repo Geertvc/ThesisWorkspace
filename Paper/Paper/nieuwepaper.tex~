@@ -44,6 +44,13 @@
 
 \documentclass[review]{acmsiggraph}
 
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
 
 
 \newcommand{\npar}{\par \vspace{2.3ex plus 0.3ex minus 0.3ex} \noindent}
@@ -90,7 +97,7 @@
 %%% Setting the entire title in upper-case letters is not correct, nor is 
 %%% capitalizing only the first letter of the title.
 
-\title{The Title of Your Paper Goes Here}
+\title{The problem of Monte Carlo rendering noise}
 
 %%% Define the author list in the ``\author'' command. The ``\thanks'' 
 %%% field can be used to define an e-mail address for the author.
@@ -126,7 +133,6 @@
 %%% defined above, and prepares the formatted title.
 
 \maketitle
-\todo{pick title}
 
 %%% The ``abstract'' environment should contain the abstract for your
 %%% content -- one to several paragraphs which describe the work.
@@ -138,8 +144,7 @@ A lot of methods have already tried to tackle this problem including adaptive sa
 In this paper I will recapitulate the work I have done for my thesis so far. 
 The focus will be on the RPF algorithm called random parameter filtering (RPF) as proposed in ~\cite{RPF11}.
 As this algorithm is based on a cross bilateral filter, this concept will be explained and discussed as well.
-To conclude, some other methods that handle the noise caused by Monte Carlo rendering at low sampling rates were investigated as well.
-\todo{verwijs naar meerdere methodes die dit hebben proberen aan te pakken?}~\cite{dutré2006advanced}
+Other methods that handle the noise caused by Monte Carlo rendering at low sampling rates were investigated as well and discussed as Related Work.
 
 %Citations can be done this way~\cite{Jobs95} or this more concise 
 %way~\shortcite{Jobs95}, depending upon the application.
@@ -162,7 +167,6 @@ To conclude, some other methods that handle the noise caused by Monte Carlo rend
 \begin{CRcatlist}
   \CRcat{I.3.7}{Computer Graphics}{Three-Dimensional Graphics and Realism}{Raytracing};
 \end{CRcatlist}
-\todo{CRcatlist}
 
 %%% The ``\keywordlist'' prints out the user-defined keywords.
 
@@ -189,43 +193,68 @@ To conclude, some other methods that handle the noise caused by Monte Carlo rend
 \input{introduction.tex}
 
 \section{Related Work}
-\todo{plak de verschillende paper uitleggen aan elkaar, sorteer volgens jaar ???}
 \input{relatedWork.tex}
 
 \section{Bilateral Filter}
 \input{bilateralFilter.tex}
 
 \section{Random Parameter Filtering algorithm}
-
-\todo{Mutual information}
-\todo{different parts of algorithm}
-\\
 \input{RPF.tex}
 
+\begin{figure*}
+        \centering
+        \begin{subfigure}[b]{0.3\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/lena512.jpg}
+                \caption{The famous picture called Lena.}
+                \label{fig:lena}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.3\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/outD=3R=inf.jpg}
+                \caption{Lena filtered using a Gaussian filter}
+                \label{fig:lenaGaussian}
+        \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.3\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/outD=3R=50.jpg}
+                \caption{Lena filtered using the bilateral filter}
+                \label{fig:lenaBilateral}
+        \end{subfigure}
+        \caption{Pictures of Lena to compare a Gaussian and a bilateral filter, notice how the bilateral filtered image preserves the edges in the image}
+        \label{fig:lenas}
+\end{figure*}
+
 \section{Results}
-\todo{vergeet niet PBRT2 te vermelden}
+I implemented a bilateral filter algorithm in C++ at the start to get to know the concept and its details.
+In figure~\ref{fig:lenas} an image that is unfiltered, one that is filtered with a Gaussian filter and another that is filtered with a bilateral filter, both created using my implementation, can be compared.
+
+Afterwards I implemented the RPF algorithm in C++ also using the PBRT2 renderer from ~\cite{pharr2010physically}.
+The algorithm is not implemented in its completeness as it is presented in ~\cite{RPFTechReport}.
+The following items are different or not implemented in my implementation:
+
+\begin{itemize}
+ \item The algorithm does not handle sample spikes in the high dynamic range differently although in ~\cite{RPFTechReport} it is described how to do it.
+ \item Instead of taking into account all the described scene features, the implementation only uses the normal and world-space coordinates of the first intersection of the ray.
+\end{itemize}
+
 \section{Discussion}
-\todo{stel resultaten voor en beschrijf en interpreteer ze, welke zijn de sterke-zwakke punten, welke problemen zijn nog niet helemaal opgelost, eventueel vergelijkingen met gelijkaardige systemen, enz.}
-\\
+The reason this paper does not contain resulting images filtered with the RPF algorithm is that the current implementation is not working correctly yet due to an unknown reason.
+Another problem with the current implementation is that the memory management seems incorrect as the algorithm uses more memory than it should.
+
+These problems will be taken care of during the rest of my thesis as well as an attempt to improve on the RPF algorithm or try to get it to filter out noise caused by probabilistic visibility.
+A comparison between this implementation and the full RPF algorithm or other algorithms is thus impossible as this implementation is not working correctly yet.
 
 \section{Conclusion}
-\todo{typische een zeer korte summary + conclusie van je werk}
+Different algorithms to solve the problem of noise in Monte Carlo rendering have been discussed in this paper.
+Random Parameter Filtering is different from most other algorithms that tackle this problem in the fact that it is a very general algorithm.
+The statistical dependency which is computed using the theory of Mutual information makes the algorithm useful for any kind of sample feature that can be found.
+As all the different algorithms show, this is a popular research topic in Computer Graphics at the moment, which makes us hope for even more genious algorithms that solve this problem.
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
-
-\section*{Acknowledgements}
-\todo{KULEUVEn en de makers van RPF enzo..}
-
-%To Robert, for all the bagels.
-
-%%% Please use the ``acmsiggraph'' BibTeX style to properly format your
-%%% bibliography.
 
 %%% Please use the ``acmsiggraph'' BibTeX style to properly format your
 %%% bibliography.

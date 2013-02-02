@@ -2,13 +2,44 @@ More information about Monte Carlo methods can be found here~\cite{kalos2009mont
 while more information about advanced rendering can be found here~\cite{dutré2006advanced} and here \cite{pharr2010physically}.
 Some recent work that try to tackle the problem of noise at low sampling rates when using Monte Carlo rendering are discussed below.
 
-%\todo{2010: integration  Compressive estimation for signal integration in rendering} \\
-\textbf{Compressive estimation for signal integration in rendering:} \\ 
-While Monte Carlo methods are used to evaluate functions, 
-other methods like the one explained in ~\cite{Sen:CompressiveSignalEstimation:2010} can also be used to compute the integral of an unknown function.
-This is possible because of the theory of compressed sensing, which allows to reconstruct a signal from a few linear samples if it is sparse in a transform domain.
-This method can also be used to compute computer graphics distribution effects like anti-aliasing and motion blur.
-The advantage of this function over Monte Carlo methods is that is needs only a few samples to estimate the function.
+%\todo{2012: adaptive sampling -- Adaptive Rendering with Non-Local Means Filtering}
+\textbf{Adaptive Rendering with Non-Local Means Filtering:} \\
+The following algorithm found in ~\cite{Rousselle:2012:ARN:2366145.2366214} describes an adaptive sampling algorithm for Monte Carlo rendering.
+The first step of the algorithm distributes a given budget of samples over the image.
+In the second step the image is filtered with a variant of the NL-means filter which is a generalisation of the bilateral filter.
+This filter considers distances between pairs of pixel values to compute filter weights, the term non-local is caused by the fact that the set of samples that contribute to one output pixel can come from a large region in the input image.
+In the third step of the algorithm the remaining error in the filtered image is estimated to drive the adaptive sampling in the next iteration step.
+\\
+
+%\todo{2008: adaptive sampling -- Multidimensional Adaptive Sampling and Reconstruction for Ray Tracing}
+\textbf{Multidimensional Adaptive Sampling and Reconstruction for Ray Tracing:} \\
+A combination of adaptive sampling and reconstruction is proposed in ~\cite{Hachisuka:2008:MAS:1360612.1360632}.
+This paper introduces a new sampling strategy for ray tracing.
+The samples on which the strategy operates are generated from the rendering equation directly and are thus not generated through Monte Carlo sampling.
+Additionally this algorithm uses all previously generated samples to generate a new sample.
+After sampling this high-dimensional function, a reconstruction is made by integrating the function over all but the image dimensions.
+\\
+
+%\todo{2012: adaptive sampling reconstruction  SURE-based Optimization for Adaptive Sampling and Reconstruction}
+\textbf{SURE-based Optimization for Adaptive Sampling and Reconstruction:} \\
+A similar goal is aimed for by ~\cite{Li:2012:SBO} allthough samples are distributed over the image based on an estimator of the Mean Squared Error (MSE) of the image.
+The estimator that is used is called Stein's Unbiased Risk Estimator (SURE), it allows to estimate the error of an estimator without knowing the true value that is estimated.
+A difference with most other algorithms using a filter is that a filterbank is used instead of a single filter, any kind of filter can be added to this filterbank.
+The authors of the paper have experimented with isotropic Gaussian, cross bilateral and a modified non-local means filter.
+The algorithm itself goes as follows:
+A small number of initial samples are rendered first, followed by filtering each pixel with all filters in the filterbank.
+Next the filtered color with the lowest SURE error is chosen for each pixel and is used in the reconstruction.
+When more samples are available and thus yet to be distributed over the image, these are used for the pixels with the largest SURE errors after which the process goes back to filtering each pixel with all the filters from the filterbank.
+\\
+
+%\todo{2011: adaptive sampling reconstruction  Adaptive sampling and reconstruction using greedy error minimization}
+\textbf{Adaptive sampling and reconstruction using greedy error minimization:} \\
+Another algorithm that does not fix which filter is used for different pixels is described in ~\cite{Rousselle:2011:ASR:2070781.2024193}.
+As this algorithm is greedy, it minimizes the function at each stage hoping to reach a global optimum.
+Given a current sample distribution, a filter that minimizes the pixel error is selected from a discrete set of filters that can be different for each pixel.
+Given the filter selection, addition samples are distributed to further reduce the MSE.
+Because the MSE cannot be calculated exactly, the change in MSE is calculated instead.
+This whole process can be repeated until any chosen termination criterion is met.
 \\
 
 %\todo{Temporal Light Field Reconstruction for Rendering Distribution Effects}
@@ -36,17 +67,17 @@ The paper makes the following four contributions:
     \end{enumerate}
 
     
-  \item \textbf{Determining visibility consistency} \\
+  \item \textit{\textbf{Determining visibility consistency}} \\
     By using the key observation that the relative ordering of the sreen positions of samples from a non-overlapping surface never changes under reprojections, 
     they derive a formal criterion named SAMESURFACE to detect when a set of reprojected samples should be filtered together.
-  \item \textbf{Resolve visibility without explicit surface reconstruction} \\
-    Which surface is visible at the reconstruction location is determined. 
+  \item \textit{\textbf{Resolve visibility without explicit surface reconstruction}} \\
+    Which surface is visible at the reconstruction location is determined in this technique. 
     The challenge is to distinguish between small holes in the geometry and apparent holes caused by stochastic sampling. 
     To do this a radius R is precomputed, R is the radius of the largest empty circle that is expected to be visible on the xy plane after reprojection. 
     Holes that are smaller than R should be filled because it is beyond the resolution of the input sampling. 
     The visibility is then determined using the following rule. 
     A reconstruction location is covered if it is possible to find three reprojected input samples that form a triangle that covers the reconstruction location and fits inside a circle of radius R.
-  \item \textbf{Hierarchical query structure} \\
+  \item \textit{\textbf{Hierarchical query structure}} \\
     The reconstruction algorithm needs to retrieve the input samples that reproject to the vicinity of reconstruction location’s (x, y), given (u, v, t) quickly.
     The input samples are organized into a bounding volume hierarchy, where the extents of the nodes xy are parameterized using u, v and t. 
     When executing a query, the parameterized bounding volume is used to test if the reconstruction location is inside the bounds.
@@ -55,7 +86,7 @@ The paper makes the following four contributions:
 %\todo{Reconstruction the Indirect Light Field for Global Illumination}
 \textbf{Reconstruction the Indirect Light Field for Global Illumination:} \\
 The algorithm that is described in ~\cite{Lehtinen:2012:RIL:2185520.2185547} is similar to the former algorithm and is published by almost the same authors.
-The paper also describes a general reconstruction technique that exploits anisotropu in the light field and permits efficient reuse of input samples between pixels or world-space locations, 
+The paper also describes a general reconstruction technique that exploits anisotropy in the light field and permits efficient reuse of input samples between pixels or world-space locations, 
 multiplying the effective sampling rate by a large factor.
 \\
 The main difference between the two algorithms is that this algorithm tries to reconstruct the indirect light field at scene point instead of at points on the lens like the algorithm in ~\cite{Lehtinen2011sg} does.
@@ -70,47 +101,6 @@ Other algorithms like the one proposed in ~\cite{UdayMehta:2012:AAF} has a very 
 Because of this extremely simple step, this algorithm can be integrated in real-time raytracers.
 Adaptive filtering is used because the parameters of the used filters are adjusted depending on the input samples.
 This algorithm is basically an image filter for noise that is fixed on the soft shadows effect.
-\\
-
-%\todo{2012: adaptive sampling -- Adaptive Rendering with Non-Local Means Filtering}
-\textbf{Adaptive Rendering with Non-Local Means Filtering:} \\
-The following algorithm found in ~\cite{Rousselle:2012:ARN:2366145.2366214} describes an adaptive sampling algorithm for Monte Carlo rendering.
-An adaptive sampling algorithm tries to determine the optimal sample distribution across the image.
-This can be done by allocating more samples to regions with difficult light effects.
-The first step of the algorithm distributes a given budget of samples over the image after which the image is filtered in the second step of the algorithm with a variant of the NL-means filter which is a generalisation of the bilateral filter.
-This filter considers distances between pairs of pixel values to compute filter weights, the term non-local is caused by the fact that the set of samples that contribute to one output pixel can come from a large region in the input image.
-In the third step of the algorithm the remaining error in the filtered image is estimated to drive the adaptive sampling in the next iteration step.
-\\
-
-%\todo{2008: adaptive sampling -- Multidimensional Adaptive Sampling and Reconstruction for Ray Tracing}
-\textbf{Multidimensional Adaptive Sampling and Reconstruction for Ray Tracing:} \\
-A combination of adaptive sampling and reconstruction is proposed in ~\cite{Hachisuka:2008:MAS:1360612.1360632}.
-This paper introduces a new sampling strategy for ray tracing.
-The samples on which the strategy operates are generated from the rendering equation directly and are thus not generated through Monte Carlo sampling.
-Additionally this algorithm uses all previously generated samples to generate a new sample.
-After sampling this high-dimensional function, a reconstruction is made by integrating the function over all but the image dimensions.
-\\
-
-%\todo{2012: adaptive sampling reconstruction  SURE-based Optimization for Adaptive Sampling and Reconstruction}
-\textbf{SURE-based Optimization for Adaptive Sampling and Reconstruction:} \\
-A similar goal is aimed for by ~\cite{Li:2012:SBO} allthough samples are distributed over the image based on an estimator of the Mean Squared Error (MSE) of the image.
-The estimator that is used is called Stein's Unbiased Risk Estimator (SURE), it allows to estimate the error of an estimator without knowing the true value that is estimated.
-Another difference is that a filterbank is used instead of a single filter.
-The usage of a filterbank makes this algorithm different from algorithms like RPF because any kind of filter can be added to this filterbank.
-The authors of the paper have experimented with isotropic Gaussian, cross bilateral and a modified non-local means filter.
-A small number of initial samples are rendered first, followed by filtering each pixel with all filters in the filterbank.
-Next the filtered color with the lowest SURE error is chosen for each pixel and is used in the reconstruction.
-When more samples are available, these are used for the pixels with the largest SURE errors after which the process goes back to filtering each pixel with all the filters from the filterbank.
-\\
-
-%\todo{2011: adaptive sampling reconstruction  Adaptive sampling and reconstruction using greedy error minimization}
-\textbf{Adaptive sampling and reconstruction using greedy error minimization:} \\
-Another algorithm that does not fix which filter is used for different pixels is described in ~\cite{Rousselle:2011:ASR:2070781.2024193}.
-As this algorithm is greedy, it minimizes the function at each stage hoping to reach a global optimum.
-Given a current sample distribution, a filter that minimizes the pixel error is selected from a discrete set of filters that can be different for each pixel.
-Given the filter selection, addition samples are distributed to further reduce the MSE.
-Because the MSE cannot be calculated exactly the change in MSE is calculated instead.
-This whole process can be repeated until any chosen termination criterion is met.
 \\
 
 %\todo{2011: Visibility  High-Quality Spatio-Temporal Rendering using Semi-Analytical Visibility}
@@ -130,4 +120,12 @@ When all the triangles have been processed, the final visibility is resolved and
 By analysing the effectiveness of different non-adaptive Monte Carlo sampling patterns for rendering soft shadows, 
 they search for the pattern with the lowest expected variance for a certain visibility function.
 These results can lead to a reduction in the needed number of shadow samples without losing precision by using the best sampling pattern.
+\\
+
+%\todo{2010: integration  Compressive estimation for signal integration in rendering} \\
+\textbf{Compressive estimation for signal integration in rendering:} \\ 
+To conclude with, Monte Carlo methods are not the only methods around that can compute an integral of an unknown function,
+in ~\cite{Sen:CompressiveSignalEstimation:2010} a method like this is presented and applied to anti-aliasing and motion blur effects.
+This is possible because of the theory of compressed sensing, which allows to reconstruct a signal from a few linear samples if it is sparse in a transform domain.
+The advantage of this function over Monte Carlo methods is that is needs only a few samples to estimate the function.
 \\

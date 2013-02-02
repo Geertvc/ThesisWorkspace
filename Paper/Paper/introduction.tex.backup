@@ -26,12 +26,11 @@ thus a lot of noise will be present when using a low number of samples.
 One obvious solution to this problem is to use more samples, 
 but as the rendering time increases dramatically with the amount of samples this is not always an option.
 Adaptive sampling algorithms offer a way to distribute the available numbers of samples in the best possible way across the image.
-This can be done by allocating more samples to regions with difficult light effects.
 Reconstruction techniques take the image with a fixed amount of samples and try to use these available samples as much as possible, across pixels and even across frames.
-Another technique that can be used is the focus of this paper and is basically an advanced image filter, 
-it uses not only the color computed at each sample of the image to filter it, 
-but also other parameters that are available during the rendering process.
+Another technique that can be used is the focus of this paper and is an advanced image filter, 
+it uses not only the color computed at each sample of the image, 
+but also other parameters that are available during the rendering process, to filter the image.
 \\
 In the related work section I will describe all the different related papers I researched before deciding to research the RPF algorithm in more detail.
-The subsequent sections describe the concept of bilateral filter after which the RPF algorithm is explained in detail.
-To conclude the results describe my current results followed by a discussion of these results and a conclusion.
+The technical sections describe the concept of bilateral filter after which the RPF algorithm is explained in detail.
+To conclude the results describe my current results followed by a discussion of these results and a concise conclusion.
