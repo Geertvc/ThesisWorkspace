@@ -23,15 +23,15 @@ private:
 	int numberOfSceneFeatures;
 	float epsilon;
 	float sigma8Squared;
-	void preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, int y, std::vector<RPFSample> &outputNeighboorhood);
-	float computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorhood, std::vector<float> &alpha, std::vector<float> &beta);
-	void filterColorSamples(float Wr_c, int x, int y, std::vector<RPFSample> &outputNeighboorhood, std::vector<float> &alpha, std::vector<float> &beta, std::vector<Tuple3f> &copyColors, std::vector<Tuple3f> &newFilteredColors);
+	void preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, int y, std::vector<RPFSample> &outputNeighboorhood, std::vector<int> &neighboorhoodSampleIndices);
+	float computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorhood, std::vector<float> &alpha, std::vector<float> &beta, bool print);
+	void filterColorSamples(float Wr_c, int x, int y, std::vector<RPFSample> &outputNeighboorhood, std::vector<int> &neighboorhoodSampleIndices, std::vector<float> &alpha, std::vector<float> &beta, std::vector<Tuple3f> &copyColors, std::vector<Tuple3f> &newFilteredColors);
 	/* Method used to sample the 2D area of the box with normal distribution*/
-	void getRandom2DSamples(double sigma_p, int baseX, int baseY, int boxSize, int n, int numberOfSamples,
+	unsigned int getRandom2DSamples(double sigma_p, int baseX, int baseY, int boxSize, int n, int numberOfSamples,
 			std::vector<RPFPixel> &input,
 			std::vector<int> &outputXCoords, std::vector<int> &outputYCoords, std::vector<int> &outputSampleCoords);
 	/* Methods used to get the random samples */
-	double calcNormalChance(float xCoord, float yCoord, double xMean, double yMean, double sigma);
+	double calcNormalChance(float xCoord, float yCoord, double xMean, double yMean, double sigma, bool print);
 	void normalizeChancesVector(std::vector<double> &chances, double totalChance);
 	double calcTotalVector(std::vector<double> &chances);
 	int findRandomSample(std::vector<double> &chances, double randomNumber);
@@ -42,5 +42,14 @@ private:
 	void getJointHistogram(std::vector<int> &Xbins, int xNumberOfStates, std::vector<int> &Ybins, int yNumberOfStates, std::vector<std::vector<float> > &histXY);
 	float calculateMutualInformation(std::vector<float> &X, std::vector<float> &Y);
 };
+
+#ifdef RPFDEBUG
+#define RPFAssert(expr) ((void)0)
+#else
+#define RPFAssert(expr) \
+    ((expr) ? (void)0 : \
+        Severe("Assertion \"%s\" failed in %s, line %d", \
+               #expr, __FILE__, __LINE__))
+#endif // NDEBUG
 
 #endif /* RPF_H_ */

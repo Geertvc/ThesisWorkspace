@@ -13,6 +13,7 @@ RPFSample::RPFSample() {
 	for (i = 0; i < 3; ++i) {
 		Lrgb[i] = 0.f;
 	}
+
 	imageX = 0.f;
 	imageY = 0.f;
 
