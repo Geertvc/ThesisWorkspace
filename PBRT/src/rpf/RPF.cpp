@@ -50,6 +50,7 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 					std::cout << "color2: " << colors[2] << std::endl;
 				}*/
 				copyColors[(pixelIndex*samplesPerPixel) + s] = *tuple;
+				delete tuple;
 			}
 		}
 	}
@@ -66,8 +67,8 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 	//TODO change back into and loop back to 4 instead to 1: int box[] = {55, 35, 17, 7};
 	std::vector<Tuple3f> newFilteredColors (numberOfSamples);
 
-	std::cout << "length newFilteredColors: " << numberOfSamples << std::endl;
-	std::cout << "length copyColors: " << numberOfSamples << std::endl;
+	//std::cout << "length newFilteredColors: " << numberOfSamples << std::endl;
+	//std::cout << "length copyColors: " << numberOfSamples << std::endl;
 
 	int box[] = {7};
 	for (int t = 0; t < 1; ++t) {
@@ -81,8 +82,8 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 		for (int y = 0; y < yRes; ++y) {
 			for (int x = 0; x < xRes; ++x) {
 				//pre-process samples
-				std::vector<RPFSample> *outputNeighboorhood = new std::vector<RPFSample>();
-				std::vector<int> *neighboorhoodSampleIndices = new std::vector<int>();
+				std::vector<RPFSample> outputNeighboorhood;// = new std::vector<RPFSample>();
+				std::vector<int> neighboorhoodSampleIndices;// = new std::vector<int>();
 								/*if(x==52 && y==101){
 									std::cout << "initial size: " << (*outputNeighboorhood).size() << std::endl;
 								}*/
@@ -108,8 +109,8 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 									}
 								}*/
 
-				preProcessSamples(input, b, M, x, y, *outputNeighboorhood, *neighboorhoodSampleIndices);
-				RPFAssert((*outputNeighboorhood).size() == (*neighboorhoodSampleIndices).size());
+				preProcessSamples(input, b, M, x, y, outputNeighboorhood, neighboorhoodSampleIndices);
+				RPFAssert(outputNeighboorhood.size() == neighboorhoodSampleIndices.size());
 				// compute feature weights
 				std::vector<float> alpha (3);
 
@@ -130,14 +131,13 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 												if(x==52 && y==101){
 													print = true;
 												}
-				float Wr_c = computeFeatureWeights(t, *outputNeighboorhood, alpha, beta, print);
+				float Wr_c = computeFeatureWeights(t, outputNeighboorhood, alpha, beta, print);
 				//filter color samples
-				filterColorSamples(Wr_c, x, y, *outputNeighboorhood, *neighboorhoodSampleIndices, alpha, beta, copyColors, newFilteredColors);
+				filterColorSamples(Wr_c, x, y, outputNeighboorhood, neighboorhoodSampleIndices, alpha, beta, copyColors, newFilteredColors);
 
 								/*if(y>249){
 									std::cout << "(" << x << ", " << y << ")" << std::endl;
 								}*/
-
 
 				//print part of copyColors
 				//int i = y*xRes + x;
@@ -301,22 +301,22 @@ void RPF::preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, i
 	std::vector<int> randomYCoords;
 	std::vector<int> randomSampleCoords;
 
-				if(y==250){
+				/*if(y==250){
 					std::cout << "before" << std::endl;
 					std::cout << "numberOfSamples: " << numberOfExtraSamples << std::endl;
-				}
+				}*/
 
 	unsigned int actualNumberOfExtraSamples = getRandom2DSamples(sigma_p, x, y, b, (b-1)/2, numberOfExtraSamples, input, randomXCoords, randomYCoords, randomSampleCoords);
 												/*if(x==52 && y==101){
 													std::cout << "actualNumberOfExtraSamples: " << actualNumberOfExtraSamples << std::endl;
 												}*/
 
-	if(y==250){
+	/*if(y==250){
 		std::cout << "actualExtraSamples: " << actualNumberOfExtraSamples << std::endl;
 		for (unsigned int var = 0; var < randomXCoords.size(); ++var) {
 			std::cout << var << ": (" << randomXCoords[var] << ", " << randomYCoords[var] << ", " << randomSampleCoords[var] << ")" << std::endl;
 		}
-	}
+	}*/
 
 
 	double diff;
@@ -326,12 +326,12 @@ void RPF::preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, i
 		int sampleY = randomYCoords[q];
 		int pixelIndex = sampleY*xRes + sampleX;
 
-					if(y==250){
+					/*if(y==250){
 						std::cout << "size: " << input.size() << std::endl;
 						std::cout << "index: " << pixelIndex << std::endl;
 						std::cout << "xy(" << x << "," << y << ")" << std::endl;
 						std::cout << "samplexy(" << sampleX << "," << sampleY << ")" << std::endl;
-					}
+					}*/
 		RPFAssert(!(pixelIndex >= input.size()));
 
 		RPFSample selectedSample = input[pixelIndex].rpfsamples[randomSampleCoords[q]];
@@ -406,9 +406,9 @@ void RPF::preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, i
 	int actualNeighboorhoodSize = outputNeighboorhood.size();
 
 
-	if(y==250){
+	/*if(y==250){
 			std::cout << "after" << std::endl;
-		}
+		}*/
 																			/*if(x==52 && y==101){
 																				std::cout << actualNeighboorhoodSize << std::endl;
 																			}*/
@@ -1169,7 +1169,6 @@ void RPF::filterColorSamples(float Wr_c, int x, int y, std::vector<RPFSample> &o
 			float colToFilterY = copyColors[colorToFilterIndex].y;
 			float colToFilterZ = copyColors[colorToFilterIndex].z;
 
-			//TODO verander dees, ge gebruikt altijd de standaardkleur
 			col1 += (wi_j*colToFilterX);
 			col2 += (wi_j*colToFilterY);
 			col3 += (wi_j*colToFilterZ);
@@ -1229,7 +1228,7 @@ unsigned int RPF::getRandom2DSamples(double sigma_p, int baseX, int baseY, int b
 
 
 	//Calculate the chances of each sample within the box.
-	std::vector<double> normalChances = *(new vector<double>());
+	std::vector<double> normalChances;// = *(new vector<double>());
 	normalChances.reserve(boxSize*boxSize*samplesPerPixel);
 	for (int j = baseY-n; j < baseY+n+1; ++j) {
 		if(j < 0){
@@ -1303,7 +1302,7 @@ unsigned int RPF::getRandom2DSamples(double sigma_p, int baseX, int baseY, int b
 	boost::uniform_real<float> u(0.0f, 1.0f);
 	boost::variate_generator<boost::mt19937&, boost::uniform_real<float> > gen(rng, u);
 
-	std::vector<int> randomSamples = *(new vector<int>());
+	std::vector<int> randomSamples;// = *(new vector<int>());
 	randomSamples.reserve(numberOfSamples);
 	double chanceOfLastSelectedSample = 0.0;
 	for (int i = 0; i < numberOfSamples; ++i) {
@@ -1501,10 +1500,10 @@ float RPF::calculateMutualInformation(std::vector<float> &X, std::vector<float> 
 		return -1.f;
 	}
 	// Calculate pX and pY for calculating p(x) and p(y).
-	std::vector<int> *Xbins = new std::vector<int>();
-	std::vector<int> *Ybins = new std::vector<int>();
-	int nStatesX = quantizeAndPositiveVector(X, *Xbins);
-	int nStatesY = quantizeAndPositiveVector(Y, *Ybins);
+	std::vector<int> Xbins;// = new std::vector<int>();
+	std::vector<int> Ybins;// = new std::vector<int>();
+	int nStatesX = quantizeAndPositiveVector(X, Xbins);
+	int nStatesY = quantizeAndPositiveVector(Y, Ybins);
 
 
 	/*for (unsigned int x = 0; x < X.size(); ++x) {
@@ -1516,10 +1515,10 @@ float RPF::calculateMutualInformation(std::vector<float> &X, std::vector<float> 
 	std::cout << "nStatesX: " << nStatesX << std::endl;
 	std::cout << "nStatesY: " << nStatesY << std::endl;*/
 
-	std::vector<float> *histX = new std::vector<float>();
-	getHistogram(*Xbins, nStatesX, *histX);
-	std::vector<float> *histY = new std::vector<float>();
-	getHistogram(*Ybins, nStatesY, *histY);
+	std::vector<float> histX;// = new std::vector<float>();
+	getHistogram(Xbins, nStatesX, histX);
+	std::vector<float> histY;// = new std::vector<float>();
+	getHistogram(Ybins, nStatesY, histY);
 
 	/*for (unsigned int i = 0; i < (*histX).size(); ++i) {
 		std::cout << "histX " << i << ": " << (*histX)[i] << std::endl;
@@ -1529,8 +1528,8 @@ float RPF::calculateMutualInformation(std::vector<float> &X, std::vector<float> 
 	}*/
 
 	//Calculate pXY for calculating p(x,y).
-	std::vector<std::vector<float> > *histXY = new std::vector<std::vector<float> >();
-	getJointHistogram(*Xbins, nStatesX, *Ybins, nStatesY, *histXY);
+	std::vector<std::vector<float> > histXY;// = new std::vector<std::vector<float> >();
+	getJointHistogram(Xbins, nStatesX, Ybins, nStatesY, histXY);
 
 	/*for (int i = 0; i < nStatesY; ++i) {
 		for (int j = 0; j < nStatesX; ++j) {
@@ -1542,8 +1541,8 @@ float RPF::calculateMutualInformation(std::vector<float> &X, std::vector<float> 
 	float muXY = 0.f;
 	for (int i = 0; i < nStatesY; ++i) {
 		for (int j = 0; j < nStatesX; ++j) {
-			if((*histXY)[i][j] !=0.f && (*histX)[j] != 0.f && (*histY)[i] != 0.f){
-				muXY += (*histXY)[i][j]*log((*histXY)[i][j]/((*histX)[j]*(*histY)[i]));
+			if(histXY[i][j] !=0.f && histX[j] != 0.f && histY[i] != 0.f){
+				muXY += histXY[i][j]*log(histXY[i][j]/(histX[j]*histY[i]));
 			}
 		}
 	}

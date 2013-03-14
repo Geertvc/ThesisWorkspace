@@ -72,6 +72,7 @@ void RPFCollector::AddSample(const CameraSample &sample, const Spectrum &L, cons
 	//y*xRes + x sorts the entries like this: (0,0), (1,0), ... (xRes, 0), (0,1), (1,1), ... (xRes, 1), ....
 	rpfPixels[y*xRes + x].AddSample(newSample);
 
+	delete newSample;
 	//Sommige pixels hebben teveel samples?
 	/*if(rpfPixels[index].nextSample > samplesPerPixel){
 		std::cout << "too much: " << index << std::endl;
