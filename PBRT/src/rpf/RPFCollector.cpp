@@ -26,10 +26,10 @@ RPFCollector::RPFCollector(const int xResolution, const int yResolution, const i
 	std::cout << " -> nbPixel: " << nbPixels << std::endl;
 	std::cout << " -> spp: " << samplesPerPixel << std::endl;
 
-	rpfPixels.reserve (nbPixels); // Reserve memory not to allocate it 10 times...
+	rpfPixels.reserve(nbPixels); // Reserve memory not to allocate it 10 times...
 	for (int i = 0; i < nbPixels; ++i){
 		//std::cout << i << std::endl;
-		rpfPixels.push_back (RPFPixel (samplesPerPixel));
+		rpfPixels.push_back(RPFPixel (samplesPerPixel));
 	}
 }
 
@@ -89,18 +89,9 @@ double getPixelValue(int chan, RPFPixel pixel){
 
 void RPFCollector::ExecuteRPF(){
 	std::cout << " -> RPF execution started" << std::endl;
-	clock_t start, end;
-	start = clock();
-	/*//De grootte van de neighboorhood.
-	int n = 7;
-	//Dit is sigmaP uit de paper.
-	double sigmaD = n/4;//3.0;
-	//De experimenteel bepaalde sigma voor 8 samples per pixel tot de tweede macht:
-	double sigma8Squared = 0.002;
-	//De sigma die gebruikt wordt om sigmaC en sigmaF te berekenen tot de tweede macht:
-	double sigmaSquared = 8*sigma8Squared/samplesPerPixel;
-	//Dit is sigmaC uit de paper
-	double sigmaR = sigmaSquared;//20.0;//1/0.0;*/
+	//clock_t start, end;
+	//start = clock();
+
 	float *xyz = new float[3*nbPixels];
 	//RPFFilter *filter = new RPFFilter(sigmaD, sigmaR, n);
 	//filter->applyFilter(rpfPixels, xyz, xRes, yRes, samplesPerPixel);
@@ -109,14 +100,15 @@ void RPFCollector::ExecuteRPF(){
 	rpf->applyFilter(rpfPixels, xyz, xRes, yRes, samplesPerPixel);
 
 
-	end = clock();
-	std::cout << " -> Total time used by RPF: " << (double)(end-start)/CLOCKS_PER_SEC << " seconds." << std::endl;
+	//end = clock();
+	//std::cout << " -> Total time used by RPF: " << (double)(end-start)/CLOCKS_PER_SEC << " seconds." << std::endl;
 
 	std::cout << " -> Converting xyz values to rgb..." << std::endl;
 	float *rgb = new float[3*nbPixels];
 	int offset = 0;
 	for (int y = 0; y < yRes; ++y) {
 		for (int x = 0; x < xRes; ++x) {
+			Assert((3*offset < 3*nbPixels));
 			XYZToRGB(&xyz[3*offset], &rgb[3*offset]);
 			/*if(rgb[3*offset] > 1)
 				rgb[3*offset] = 0;
@@ -168,63 +160,32 @@ void RPFCollector::ExecuteRPF(){
 	os << yRes;
 	os << ".tga";*/
 	//string outputFileName = os.str();
+
+	/*for (int var = 0; var < 10; ++var) {
+		std::cout << " -> Writing image..." << std::endl;
+		std::ostringstream os;
+		os << "imageWritingTest/killeroo";
+		os << var;
+		os << ".exr";
+		string outputFileName = os.str();
+		WriteImage(outputFileName, rgb, NULL, xRes, yRes,
+						 xRes, yRes, 0, 0);
+		std::cout << " -> Writing image..." << std::endl;
+		std::ostringstream newos;
+		newos << "imageWritingTest/killeroo";
+		newos << var;
+		newos << ".tga";
+		outputFileName = newos.str();
+		WriteImage(outputFileName, rgb, NULL, xRes, yRes,
+						 xRes, yRes, 0, 0);
+		std::cout << " -> Image written to " << outputFileName << std::endl;
+	}*/
+
+	std::cout << " -> Writing image..." << std::endl;
 	string outputFileName = "testRgb.tga";
 	WriteImage(outputFileName, rgb, NULL, xRes, yRes,
 					 xRes, yRes, 0, 0);
 	std::cout << " -> Image written to " << outputFileName << std::endl;
-
-
-
-	/*float *rgb = new float[3*nbPixels];
-	int offset = 0;
-	for (int y=0; y<yRes; ++y) {
-		std::cout << "Row " << y << std::endl;
-		for (int x=0; x<xRes; ++x){
-			// Convert pixel XYZ color to RGB
-			float xyz[3];
-			xyz[0] = getPixelValue(0, rpfPixels[y*xRes +x]);
-			xyz[1] = getPixelValue(1, rpfPixels[y*xRes +x]);
-			xyz[2] = getPixelValue(2, rpfPixels[y*xRes +x]);
-			XYZToRGB(xyz, &rgb[3*offset]);
-
-			float invWt = 1.f / samplesPerPixel;
-			rgb[3*offset  ] = max(0.f, rgb[3*offset  ] * invWt);
-			rgb[3*offset+1] = max(0.f, rgb[3*offset+1] * invWt);
-			rgb[3*offset+2] = max(0.f, rgb[3*offset+2] * invWt);
-			offset++;
-		}
-	}
-	string outputFileName = "images/newTest.tga";
-	WriteImage(outputFileName, rgb, NULL, xRes, yRes,
-					 xRes, yRes, 0, 0);*/
+	delete rpf;
+	delete xyz;
 }
-
-
-		//How executeRPF() worked with boost
-		/*double sigmaD = 3.0;
-		double sigmaR = 20.0;//1/0.0;
-		int n = 1;
-		//int usedFilterVersion = 3;
-		std::cout << "Bilateral Filter (sigmaD=" << sigmaD << ", sigmaR=" << sigmaR << ", n=" << n << ")" << std::endl;
-		typedef boost::gil::pixel<boost::gil::bits8, boost::gil::rgb_layout_t> rgb8_pixel_t;
-
-		boost::gil::rgb8_image_t outputImage(xRes,yRes);
-		rgb8_pixel_t rgb8(0,0,0);
-		boost::gil::fill_pixels(view(outputImage), rgb8);
-		const boost::gil::rgb8_image_t::view_t& outputImageview = boost::gil::rgb8_image_t::view_t(outputImage._view);
-
-		clock_t start, end;
-		start = clock();
-
-		FastestBilateralFilter *filter = new FastestBilateralFilter(sigmaD, sigmaR, n);
-		std::cout << "Start filtering (v3.0)..." << std::endl;
-		filter->applyFilter(rpfPixels, outputImageview, xRes, yRes, samplesPerPixel);
-		std::cout << "Filtering done." << std::endl;
-
-		end = clock();
-		std::cout << "Elapsed time: " << (double)(end-start)/CLOCKS_PER_SEC << " seconds." << std::endl;
-
-		string outputFileName = "images/testAgain.jpg";
-		std::cout << "Writing image to " << outputFileName << std::endl;
-		boost::gil::jpeg_write_view(outputFileName, view(outputImage));
-		std::cout << "Writing image done." << std::endl;*/

@@ -12,7 +12,7 @@
 RPFPixel::RPFPixel(const int samplesPerPixel) : rpfsamples (){
 	rpfsamples.reserve (samplesPerPixel); // Reserve memory not to allocate it 10 times...
 	for (int i = 0; i < samplesPerPixel; ++i){
-		rpfsamples.push_back (RPFSample ());
+		rpfsamples.push_back(RPFSample ());
 	}
 	nextSample = 0;
 	totalrgb[0] = 0;

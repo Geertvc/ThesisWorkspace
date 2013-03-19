@@ -110,11 +110,14 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 	}
 
 	float invSamplesPerPixel = 1.f/((float) samplesPerPixel);
+	float *totalPixelColor = new float[3];
 	for (int y = 0; y < yRes; ++y) {
 		for (int x = 0; x < xRes; ++x) {
 
 			int pixelIndex = y*xRes + x;
-			float *totalPixelColor = new float[3];
+			totalPixelColor[0] = 0.f;
+			totalPixelColor[1] = 0.f;
+			totalPixelColor[2] = 0.f;
 			for (int s = 0; s < samplesPerPixel; ++s) {
 				int index = pixelIndex*samplesPerPixel + s;
 				totalPixelColor[0] += copyColors[index].x;
@@ -128,6 +131,7 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 			//std::cout << xyz[3*pixelIndex] << ", " << xyz[3*pixelIndex+1] << ", " << xyz[3*pixelIndex+2] << std::endl;
 		}
 	}
+	delete totalPixelColor;
 }
 
 void RPF::preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, int y, std::vector<RPFSample> &outputNeighboorhood,
@@ -812,101 +816,9 @@ void RPF::filterColorSamples(float Wr_c, int x, int y, std::vector<RPFSample> &o
 	//Calc -1/2sigmaC/FSquared in advance
 	float internalExpCoefficient = -1/(2*sigmaCAndFSquared);
 
-	/*//Calc normalized ci_k and fi_k
-	//Color channels
-	std::vector<float> ci_1 (samplesPerPixel);
-	std::vector<float> ci_2 (samplesPerPixel);
-	std::vector<float> ci_3 (samplesPerPixel);
-	//Scene features
-	std::vector<float> fi_NX (samplesPerPixel);
-	std::vector<float> fi_NY (samplesPerPixel);
-	std::vector<float> fi_NZ (samplesPerPixel);
-	std::vector<float> fi_WPX (samplesPerPixel);
-	std::vector<float> fi_WPY (samplesPerPixel);
-	std::vector<float> fi_WPZ (samplesPerPixel);
-	float meanci_1 = 0.f, meanci_2 = 0.f, meanci_3 = 0.f;
-	float meanfi_NX = 0.f, meanfi_NY = 0.f, meanfi_NZ = 0.f;
-	float meanfi_WPX = 0.f, meanfi_WPY = 0.f, meanfi_WPZ = 0.f;
-	for (unsigned int i = 0; i < samplesPerPixel; ++i) {
-		ci_1[i] = outputNeighboorhood[i].Lrgb[0];
-		ci_2[i] = outputNeighboorhood[i].Lrgb[1];
-		ci_3[i] = outputNeighboorhood[i].Lrgb[2];
-		fi_NX[i] = outputNeighboorhood[i].nx;
-		fi_NY[i] = outputNeighboorhood[i].ny;
-		fi_NZ[i] = outputNeighboorhood[i].nz;
-		fi_WPX[i] = outputNeighboorhood[i].wx;
-		fi_WPY[i] = outputNeighboorhood[i].wy;
-		fi_WPZ[i] = outputNeighboorhood[i].wz;
-
-		meanci_1 += outputNeighboorhood[i].Lrgb[0];
-		meanci_2 += outputNeighboorhood[i].Lrgb[1];
-		meanci_3 += outputNeighboorhood[i].Lrgb[2];
-		meanfi_NX += outputNeighboorhood[i].nx;
-		meanfi_NY += outputNeighboorhood[i].ny;
-		meanfi_NZ += outputNeighboorhood[i].nz;
-		meanfi_WPX += outputNeighboorhood[i].wx;
-		meanfi_WPY += outputNeighboorhood[i].wy;
-		meanfi_WPZ += outputNeighboorhood[i].wz;
-	}
-	meanci_1 /= samplesPerPixel;
-	meanci_2 /= samplesPerPixel;
-	meanci_3 /= samplesPerPixel;
-	meanfi_NX /= samplesPerPixel;
-	meanfi_NY /= samplesPerPixel;
-	meanfi_NZ /= samplesPerPixel;
-	meanfi_WPX /= samplesPerPixel;
-	meanfi_WPY /= samplesPerPixel;
-	meanfi_WPZ /= samplesPerPixel;
-	float sigmaci_1 = 0.f, sigmaci_2 = 0.f, sigmaci_3 = 0.f;
-	float sigmafi_NX = 0.f, sigmafi_NY = 0.f, sigmafi_NZ = 0.f;
-	float sigmafi_WPX = 0.f, sigmafi_WPY = 0.f, sigmafi_WPZ = 0.f;
-	for (unsigned int i = 0; i < samplesPerPixel; ++i) {
-		sigmaci_1 += pow((double) (ci_1[i]-meanci_1), 2);
-		sigmaci_2 += pow((double) (ci_2[i]-meanci_2), 2);
-		sigmaci_3 += pow((double) (ci_3[i]-meanci_3), 2);
-
-		sigmafi_NX += pow((double) (fi_NX[i]-meanfi_NX), 2);
-		sigmafi_NY += pow((double) (fi_NY[i]-meanfi_NY), 2);
-		sigmafi_NZ += pow((double) (fi_NZ[i]-meanfi_NZ), 2);
-
-		sigmafi_WPX += pow((double) (fi_WPX[i]-meanfi_WPX), 2);
-		sigmafi_WPY += pow((double) (fi_WPY[i]-meanfi_WPY), 2);
-		sigmafi_WPZ += pow((double) (fi_WPZ[i]-meanfi_WPZ), 2);
-
-	}
-	sigmaci_1 = sqrt(sigmaci_1/samplesPerPixel);
-	sigmaci_2 = sqrt(sigmaci_2/samplesPerPixel);
-	sigmaci_3 = sqrt(sigmaci_3/samplesPerPixel);
-
-	sigmafi_NX = sqrt(sigmafi_NX/samplesPerPixel);
-	sigmafi_NY = sqrt(sigmafi_NY/samplesPerPixel);
-	sigmafi_NZ = sqrt(sigmafi_NZ/samplesPerPixel);
-
-	sigmafi_WPX = sqrt(sigmafi_WPX/samplesPerPixel);
-	sigmafi_WPY = sqrt(sigmafi_WPY/samplesPerPixel);
-	sigmafi_WPZ = sqrt(sigmafi_WPZ/samplesPerPixel);
-
-	//Compute normalized vector for each sample by removing mean and dividing by standard deviation
-	for (unsigned int i = 0; i < samplesPerPixel; ++i) {
-		ci_1[i] = (ci_1[i]-meanci_1)/sigmaci_1;
-		ci_2[i] = (ci_2[i]-meanci_2)/sigmaci_2;
-		ci_3[i] = (ci_3[i]-meanci_3)/sigmaci_3;
-
-		fi_NX[i] = (fi_NX[i]-meanfi_NX)/sigmafi_NX;
-		fi_NY[i] = (fi_NY[i]-meanfi_NY)/sigmafi_NY;
-		fi_NZ[i] = (fi_NZ[i]-meanfi_NZ)/sigmafi_NZ;
-
-		fi_WPX[i] = (fi_WPX[i]-meanfi_WPX)/sigmafi_WPX;
-		fi_WPY[i] = (fi_WPY[i]-meanfi_WPY)/sigmafi_WPY;
-		fi_WPZ[i] = (fi_WPZ[i]-meanfi_WPZ)/sigmafi_WPZ;
-	}*/
-
 	//Loop over all samples i in Pixel P(x,y)
 	int pixelIndex = (y*xRes + x)*samplesPerPixel;
 	for (int i = 0; i < samplesPerPixel; ++i) {
-		/*float colToFilterX = copyColors[i+pixelIndex].x;
-		float colToFilterY = copyColors[i+pixelIndex].y;
-		float colToFilterZ = copyColors[i+pixelIndex].z;*/
 		float col1 = 0.f, col2 = 0.f, col3 = 0.f;
 		float weight = 0.f;
 
@@ -933,17 +845,6 @@ void RPF::filterColorSamples(float Wr_c, int x, int y, std::vector<RPFSample> &o
 			float fj_WPX = outputNeighboorhood[j].wx;
 			float fj_WPY = outputNeighboorhood[j].wy;
 			float fj_WPZ = outputNeighboorhood[j].wz;
-
-
-			/*alpha[0] = 1;
-			alpha[1] = 1;
-			alpha[2] = 1;
-			beta[0] = 1;
-			beta[1] = 1;
-			beta[2] = 1;
-			beta[3] = 1;
-			beta[4] = 1;
-			beta[5] = 1;*/
 
 			//Calc wij using alpha and beta
 			float wi_jColorWeightedExponential
@@ -994,6 +895,7 @@ void RPF::filterColorSamples(float Wr_c, int x, int y, std::vector<RPFSample> &o
 		col2 /= weight;
 		col3 /= weight;
 
+		Assert((i+pixelIndex) < newFilteredColors.size());
 		newFilteredColors[i+pixelIndex].x = col1;
 		newFilteredColors[i+pixelIndex].y = col2;
 		newFilteredColors[i+pixelIndex].z = col3;
@@ -1049,6 +951,7 @@ unsigned int RPF::getRandom2DSamples(double sigma_p, int baseX, int baseY, int b
 			}
 			int pixelIndex = j*xRes +i;
 			for (int s = 0; s < samplesPerPixel; ++s) {
+				Assert(pixelIndex < input.size());
 				double  chance = calcNormalChance(input[pixelIndex].rpfsamples[s].imageX, input[pixelIndex].rpfsamples[s].imageY, (double)baseX+0.5, (double)baseY+0.5, sigma_p);
 				normalChances.push_back(chance);
 				//cout << "call with: xCoord: " << xCoords[index] << ", ycoord: " << yCoords[index] << ", xMean: " << (double)x+0.5 << ", yMean: " << (double)y+0.5 << ", sigma: " << sigma_p << endl;
@@ -1078,8 +981,9 @@ unsigned int RPF::getRandom2DSamples(double sigma_p, int baseX, int baseY, int b
 		//std::cout << "total: " << calcTotalVector(normalChances) << std::endl;
 		double randomNumber = gen();
 		//std::cout << "random: " << randomNumber << std::endl;
-		//TODO hou rekening met de -1 die hieruit kan komen!!!
+
 		int selectedSample = findRandomSample(normalChances, randomNumber);
+		//rekening met de -1 die hieruit kan komen!!!
 		if(selectedSample == -1){
 			std::cout << "Random sample not found (-1 result), thus continue with the rest" << std::endl;
 			continue;
@@ -1087,6 +991,7 @@ unsigned int RPF::getRandom2DSamples(double sigma_p, int baseX, int baseY, int b
 		//Add the sample to the list
 		randomSamples.push_back(selectedSample);
 		//Keep the chance of this selected sample as it is needed in the next iteration
+		Assert(selectedSample < normalChances.size());
 		chanceOfLastSelectedSample = normalChances[selectedSample];
 		//Zet de kans op 0 zodat die nimeer gebruikt wordt.
 		normalChances[selectedSample] = 0.0;
@@ -1114,6 +1019,10 @@ unsigned int RPF::getRandom2DSamples(double sigma_p, int baseX, int baseY, int b
 		int s = index%samplesPerPixel;
 		int i = (index/samplesPerPixel)%xSize;
 		int j = (index/(xSize*samplesPerPixel));
+
+		Assert((i+startX) < xRes);
+		Assert((j+startY) < yRes);
+		Assert(s < samplesPerPixel);
 
 		/*outputXCoords[m] = i + startX;
 		outputYCoords[m] = j + startY;
@@ -1201,6 +1110,7 @@ void RPF::getHistogram(std::vector<int> &Xbins, int xNumberOfStates, std::vector
 	}
 	unsigned int length = Xbins.size();
 	for (unsigned int i = 0; i < length; ++i) {
+		Assert(Xbins[i] < histX.size());
 		histX[Xbins[i]] += 1.f;
 	}
 	//Return probabilities instead of counts
@@ -1221,6 +1131,7 @@ void RPF::getJointHistogram(std::vector<int> &Xbins, int xNumberOfStates, std::v
 	//fill the histogram with the number of times an int exists.
 	unsigned int length = Xbins.size();
 	for (unsigned int i = 0; i < length; ++i) {
+		Assert(Ybins[i] < histXY.size());
 		histXY[Ybins[i]][Xbins[i]] += 1.f;
 	}
 	for (int i = 0; i < yNumberOfStates; ++i) {
@@ -1233,10 +1144,9 @@ void RPF::getJointHistogram(std::vector<int> &Xbins, int xNumberOfStates, std::v
 float RPF::calculateMutualInformation(std::vector<float> &X, std::vector<float> &Y){
 	//Mu(X,Y) = sum(X(x),sum(Y(y), p(x,y)*log(p(x,y)/(p(x)*p(y)))) )
 
-	if(X.size() != Y.size()){
-		std::cout << "calculateMutualInformation called with vectors of different length" << std::endl;
-		return -1.f;
-	}
+	//You cannot calculate the mutual information of 2 vectors with different length.
+	Assert(X.size() == Y.size());
+
 	// Calculate pX and pY for calculating p(x) and p(y).
 	std::vector<int> Xbins;// = new std::vector<int>();
 	std::vector<int> Ybins;// = new std::vector<int>();

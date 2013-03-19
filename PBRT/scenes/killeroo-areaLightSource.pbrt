@@ -1,7 +1,7 @@
 
 LookAt 400 20 30   0 63 -110   0 0 1
 Rotate -5 0 0 1
-Camera "perspective" "float fov" [39] "float lensradius" [5] "float focaldistance" [200]
+Camera "perspective" "float fov" [39]
 Film "image"  
 "integer xresolution" [256] "integer yresolution" [256]
 Renderer "RPFsampler"
@@ -10,7 +10,7 @@ Renderer "RPFsampler"
 # "integer xresolution" [1500] "integer yresolution" [1500]
 #	"float cropwindow" [ .34 .49  .67 .8 ]
 
-Sampler "lowdiscrepancy" "integer pixelsamples" [8]
+Sampler "lowdiscrepancy" "integer pixelsamples" [2]
 
 SurfaceIntegrator "directlighting"
 
