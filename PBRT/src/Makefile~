@@ -24,9 +24,11 @@ DEFS=-DPBRT_HAS_OPENEXR
 MARCH=-m64
 
 # change this to -g3 for debug builds
-OPT=-O2
+#OPT=-O2
+OPT=-g3
+
 # comment out this line to enable assertions at runtime
-DEFS += -DNDEBUG
+# DEFS += -DNDEBUG
 
 #########################################################################
 # nothing below this line should need to be changed (usually)
@@ -55,13 +57,13 @@ ifeq ($(ARCH),Darwin)
   EXRLIBS += -lz
 endif
 
-CC=gcc
+CC=gcc -g
 CXX=g++
 LD=$(CXX) $(OPT) $(MARCH)
 INCLUDE=-I. -Icore $(EXR_INCLUDES) $(TIFF_INCLUDES)
 WARN=-Wall
 CWD=$(shell pwd)
-CXXFLAGS=$(OPT) $(MARCH) $(INCLUDE) $(WARN) $(DEFS) -g
+CXXFLAGS=$(OPT) $(MARCH) $(INCLUDE) $(WARN) $(DEFS)
 CCFLAGS=$(CXXFLAGS)
 LIBS=$(LEXLIB) $(EXR_LIBDIR) $(EXRLIBS) -lm -ljpeg
 
