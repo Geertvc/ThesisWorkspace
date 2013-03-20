@@ -21,8 +21,14 @@ private:
 	int samplesPerPixel;
 	int xRes, yRes;
 	int numberOfSceneFeatures;
+	float normalSigmaFactor;
+	float worldCoordinatesSigmaFactor;
+
 	float epsilon;
 	float sigma8Squared;
+	vector<int> box;
+
+
 	void preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, int y, std::vector<RPFSample> &outputNeighboorhood, std::vector<int> &neighboorhoodSampleIndices);
 	float computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorhood, std::vector<float> &alpha, std::vector<float> &beta);
 	void filterColorSamples(float Wr_c, int x, int y, std::vector<RPFSample> &outputNeighboorhood, std::vector<int> &neighboorhoodSampleIndices, std::vector<float> &alpha, std::vector<float> &beta, std::vector<Tuple3f> &copyColors, std::vector<Tuple3f> &newFilteredColors);
@@ -42,14 +48,5 @@ private:
 	void getJointHistogram(std::vector<int> &Xbins, int xNumberOfStates, std::vector<int> &Ybins, int yNumberOfStates, std::vector<std::vector<float> > &histXY);
 	float calculateMutualInformation(std::vector<float> &X, std::vector<float> &Y);
 };
-
-/*#ifdef RPFDEBUG
-#define RPFAssert(expr) ((void)0)
-#else
-#define RPFAssert(expr) \
-    ((expr) ? (void)0 : \
-        Severe("Assertion \"%s\" failed in %s, line %d", \
-               #expr, __FILE__, __LINE__))
-#endif // NDEBUG*/
 
 #endif /* RPF_H_ */

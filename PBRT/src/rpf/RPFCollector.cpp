@@ -161,31 +161,12 @@ void RPFCollector::ExecuteRPF(){
 	os << ".tga";*/
 	//string outputFileName = os.str();
 
-	/*for (int var = 0; var < 10; ++var) {
-		std::cout << " -> Writing image..." << std::endl;
-		std::ostringstream os;
-		os << "imageWritingTest/killeroo";
-		os << var;
-		os << ".exr";
-		string outputFileName = os.str();
-		WriteImage(outputFileName, rgb, NULL, xRes, yRes,
-						 xRes, yRes, 0, 0);
-		std::cout << " -> Writing image..." << std::endl;
-		std::ostringstream newos;
-		newos << "imageWritingTest/killeroo";
-		newos << var;
-		newos << ".tga";
-		outputFileName = newos.str();
-		WriteImage(outputFileName, rgb, NULL, xRes, yRes,
-						 xRes, yRes, 0, 0);
-		std::cout << " -> Image written to " << outputFileName << std::endl;
-	}*/
-
 	std::cout << " -> Writing image..." << std::endl;
 	string outputFileName = "testRgb.tga";
 	WriteImage(outputFileName, rgb, NULL, xRes, yRes,
 					 xRes, yRes, 0, 0);
 	std::cout << " -> Image written to " << outputFileName << std::endl;
 	delete rpf;
-	delete xyz;
+	delete[] xyz;
+	delete[] rgb;
 }

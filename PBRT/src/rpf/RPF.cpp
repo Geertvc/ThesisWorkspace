@@ -21,11 +21,27 @@ RPF::RPF(){
 	yRes = 0;
 	samplesPerPixel = 0;
 
-	//Parameters of RPF
+	/*********************
+	 * Parameters of RPF *
+	 *********************/
+
+	//Scene features
 	numberOfSceneFeatures = 6;
+	//Values for sample comparison with sigma
+	normalSigmaFactor = 3;
+	worldCoordinatesSigmaFactor = 30;
+
+	//Epsilon
 	epsilon = 0.00001f;
 	//Sigma8Squared is 0.02 for noisy scenes and 0.002 for all others
 	sigma8Squared = 0.02;
+
+	//The filtering stages.
+	//TODO change back into and loop back to 4 instead to 1: {55, 35, 17, 7};
+	//box.push_back(55);
+	//box.push_back(35);
+	//box.push_back(17);
+	box.push_back(7);
 }
 
 void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution, int yResolution, int samplesPerPixel){
@@ -58,15 +74,14 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 	std::cout << "yRes" << yRes << std::endl;*/
 
 
-	//filter the image 4 times with different neighboorhood sizes.
-	//TODO change back into and loop back to 4 instead to 1: int box[] = {55, 35, 17, 7};
+
 	std::vector<Tuple3f> newFilteredColors (numberOfSamples);
 
 	//std::cout << "length newFilteredColors: " << numberOfSamples << std::endl;
 	//std::cout << "length copyColors: " << numberOfSamples << std::endl;
 
-	int box[] = {7};
-	for (int t = 0; t < 1; ++t) {
+	//filter the image 4 times with different neighboorhood sizes.
+	for (int t = 0; t < (int) box.size(); ++t) {
 		int b = box[t];
 		//Max number of samples
 		int M = b*b*samplesPerPixel/2;
@@ -131,7 +146,7 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 			//std::cout << xyz[3*pixelIndex] << ", " << xyz[3*pixelIndex+1] << ", " << xyz[3*pixelIndex+2] << std::endl;
 		}
 	}
-	delete totalPixelColor;
+	delete[] totalPixelColor;
 }
 
 void RPF::preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, int y, std::vector<RPFSample> &outputNeighboorhood,
@@ -218,37 +233,37 @@ void RPF::preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, i
 
 			//Nx
 			diff = fabs(selectedSample.nx - meanNx);
-			if((diff > 3*sigmaNx) && (diff > 0.1 || sigmaNx > 0.1)){
+			if((diff > normalSigmaFactor*sigmaNx) && (diff > 0.1 || sigmaNx > 0.1)){
 				//std::cout << "con Nx" << std::endl;
 				continue;
 			}
 			//Ny
 			diff = fabs(selectedSample.ny - meanNy);
-			if((diff > 3*sigmaNy) && (diff > 0.1 || sigmaNy > 0.1)){
+			if((diff > normalSigmaFactor*sigmaNy) && (diff > 0.1 || sigmaNy > 0.1)){
 				//std::cout << "con Ny" << std::endl;
 				continue;
 			}
 			//Nz
 			diff = fabs(selectedSample.nz - meanNz);
-			if((diff > 3*sigmaNz) && (diff > 0.1 || sigmaNz > 0.1)){
+			if((diff > normalSigmaFactor*sigmaNz) && (diff > 0.1 || sigmaNz > 0.1)){
 				//std::cout << "con Nz" << std::endl;
 				continue;
 			}
 			//Wx
 			diff = fabs(selectedSample.wx - meanWx);
-			if((diff > 30*sigmaWx) && (diff > 0.1 || sigmaWx > 0.1)){
+			if((diff > worldCoordinatesSigmaFactor*sigmaWx) && (diff > 0.1 || sigmaWx > 0.1)){
 				//std::cout << "con Wx" << std::endl;
 				continue;
 			}
 			//Wy
 			diff = fabs(selectedSample.wy - meanWy);
-			if((diff > 30*sigmaWy) && (diff > 0.1 || sigmaWy > 0.1)){
+			if((diff > worldCoordinatesSigmaFactor*sigmaWy) && (diff > 0.1 || sigmaWy > 0.1)){
 				//std::cout << "con Wy" << std::endl;
 				continue;
 			}
 			//Wz
 			diff = fabs(selectedSample.wz - meanWz);
-			if((diff > 30*sigmaWz) && (diff > 0.1 || sigmaWz > 0.1)){
+			if((diff > worldCoordinatesSigmaFactor*sigmaWz) && (diff > 0.1 || sigmaWz > 0.1)){
 				//std::cout << "con Wz" << std::endl;
 				continue;
 			}
