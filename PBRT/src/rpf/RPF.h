@@ -28,8 +28,8 @@ private:
 	float sigma8Squared;
 	vector<int> box;
 
-	//bool normalFeature;
-	//bool worldCoordFeature;
+	bool normalFeature;
+	bool worldCoordFeature;
 
 
 	void preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, int y, std::vector<RPFSample> &outputNeighboorhood, std::vector<int> &neighboorhoodSampleIndices);

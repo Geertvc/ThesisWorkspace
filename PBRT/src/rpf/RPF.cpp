@@ -36,6 +36,9 @@ RPF::RPF(){
 	//Sigma8Squared is 0.02 for noisy scenes and 0.002 for all others
 	sigma8Squared = 0.02;
 
+	normalFeature = false;
+	worldCoordFeature = false;
+
 	//The filtering stages.
 	//TODO change back into and loop back to 4 instead to 1: {55, 35, 17, 7};
 	//box.push_back(55);
@@ -160,52 +163,65 @@ void RPF::preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, i
 		neighboorhoodSampleIndices.push_back(i);
 	}
 
-	//compute mean and standard deviation of the features of samples in pixel P(x,y) for clustering
-	//mean
+	/*************************************************************************************************
+	 * Compute mean and standard deviation of scenefeature of samples in pixel P(x,y) for clustering *
+	 *************************************************************************************************/
+
+	//Normal
 	float meanNx = 0.f;
 	float meanNy = 0.f;
 	float meanNz = 0.f;
-	float meanWx = 0.f;
-	float meanWy = 0.f;
-	float meanWz = 0.f;
-	for (int i = 0; i < samplesPerPixel; ++i) {
-		meanNx += outputNeighboorhood[i].nx;
-		meanNy += outputNeighboorhood[i].ny;
-		meanNz += outputNeighboorhood[i].nz;
-		meanWx += outputNeighboorhood[i].wx;
-		meanWy += outputNeighboorhood[i].wy;
-		meanWz += outputNeighboorhood[i].wz;
-	}
-	meanNx /= samplesPerPixel;
-	meanNy /= samplesPerPixel;
-	meanNz /= samplesPerPixel;
-	meanWx /= samplesPerPixel;
-	meanWy /= samplesPerPixel;
-	meanWz /= samplesPerPixel;
-
-
-	//std::cout << meanWx << std::endl;
-	//standard deviation = sqrt(sum(x_i-mean)/N)
 	float sigmaNx = 0.f;
 	float sigmaNy = 0.f;
 	float sigmaNz = 0.f;
+	if(normalFeature){
+		for (int i = 0; i < samplesPerPixel; ++i) {
+				meanNx += outputNeighboorhood[i].nx;
+				meanNy += outputNeighboorhood[i].ny;
+				meanNz += outputNeighboorhood[i].nz;
+		}
+		meanNx /= samplesPerPixel;
+		meanNy /= samplesPerPixel;
+		meanNz /= samplesPerPixel;
+
+
+		//standard deviation = sqrt(sum((x_i-mean)^2)/N)
+		for (int i = 0; i < samplesPerPixel; ++i) {
+				sigmaNx += pow(outputNeighboorhood[i].nx-meanNx,2);
+				sigmaNy += pow(outputNeighboorhood[i].ny-meanNy,2);
+				sigmaNz += pow(outputNeighboorhood[i].nz-meanNz,2);
+		}
+		sigmaNx = sqrt(sigmaNx/samplesPerPixel);
+		sigmaNy = sqrt(sigmaNy/samplesPerPixel);
+		sigmaNz = sqrt(sigmaNz/samplesPerPixel);
+	}
+
+	//World Coordinates
+	float meanWx = 0.f;
+	float meanWy = 0.f;
+	float meanWz = 0.f;
 	float sigmaWx = 0.f;
 	float sigmaWy = 0.f;
 	float sigmaWz = 0.f;
-	for (int i = 0; i < samplesPerPixel; ++i) {
-		sigmaNx += pow(outputNeighboorhood[i].nx-meanNx,2);
-		sigmaNy += pow(outputNeighboorhood[i].ny-meanNy,2);
-		sigmaNz += pow(outputNeighboorhood[i].nz-meanNz,2);
-		sigmaWx += pow(outputNeighboorhood[i].wx-meanWx,2);
-		sigmaWy += pow(outputNeighboorhood[i].wy-meanWy,2);
-		sigmaWz += pow(outputNeighboorhood[i].wz-meanWz,2);
+	if(worldCoordFeature){
+		for (int i = 0; i < samplesPerPixel; ++i) {
+			meanWx += outputNeighboorhood[i].wx;
+			meanWy += outputNeighboorhood[i].wy;
+			meanWz += outputNeighboorhood[i].wz;
+		}
+		meanWx /= samplesPerPixel;
+		meanWy /= samplesPerPixel;
+		meanWz /= samplesPerPixel;
+
+		for (int i = 0; i < samplesPerPixel; ++i) {
+			sigmaWx += pow(outputNeighboorhood[i].wx-meanWx,2);
+			sigmaWy += pow(outputNeighboorhood[i].wy-meanWy,2);
+			sigmaWz += pow(outputNeighboorhood[i].wz-meanWz,2);
+		}
+		sigmaWx = sqrt(sigmaWx/samplesPerPixel);
+		sigmaWy = sqrt(sigmaWy/samplesPerPixel);
+		sigmaWz = sqrt(sigmaWz/samplesPerPixel);
 	}
-	sigmaNx = sqrt(sigmaNx/samplesPerPixel);
-	sigmaNy = sqrt(sigmaNy/samplesPerPixel);
-	sigmaNz = sqrt(sigmaNz/samplesPerPixel);
-	sigmaWx = sqrt(sigmaWx/samplesPerPixel);
-	sigmaWy = sqrt(sigmaWy/samplesPerPixel);
-	sigmaWz = sqrt(sigmaWz/samplesPerPixel);
 
 
 	//add samples to outputNeighboorhood
@@ -230,7 +246,7 @@ void RPF::preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, i
 
 		//perform clustering
 
-
+		if(normalFeature){
 			//Nx
 			diff = fabs(selectedSample.nx - meanNx);
 			if((diff > normalSigmaFactor*sigmaNx) && (diff > 0.1 || sigmaNx > 0.1)){
@@ -249,6 +265,8 @@ void RPF::preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, i
 				//std::cout << "con Nz" << std::endl;
 				continue;
 			}
+		}
+		if(worldCoordFeature){
 			//Wx
 			diff = fabs(selectedSample.wx - meanWx);
 			if((diff > worldCoordinatesSigmaFactor*sigmaWx) && (diff > 0.1 || sigmaWx > 0.1)){
@@ -267,6 +285,7 @@ void RPF::preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, i
 				//std::cout << "con Wz" << std::endl;
 				continue;
 			}
+		}
 		//If the execution reaches this statement, add the sample.
 		outputNeighboorhood.push_back(selectedSample);
 		neighboorhoodSampleIndices.push_back(randomSampleCoords[q]);
@@ -275,65 +294,88 @@ void RPF::preProcessSamples(std::vector<RPFPixel> &input, int b, int M, int x, i
 	int actualNeighboorhoodSize = outputNeighboorhood.size();
 
 
-	//std::cout << actualAddedSamples << std::endl;
-	//Compute mean and standard deviation of all samples in neighboorhood.
-	//mean
-	meanNx = 0.f, meanNy = 0.f, meanNz = 0.f;
-	meanWx = 0.f, meanWy = 0.f, meanWz = 0.f;
-	for (int i = 0; i < actualNeighboorhoodSize; ++i) {
-		meanNx += outputNeighboorhood[i].nx;
-		meanNy += outputNeighboorhood[i].ny;
-		meanNz += outputNeighboorhood[i].nz;
-		meanWx += outputNeighboorhood[i].wx;
-		meanWy += outputNeighboorhood[i].wy;
-		meanWz += outputNeighboorhood[i].wz;
-	}
-	meanNx /= actualNeighboorhoodSize;
-	meanNy /= actualNeighboorhoodSize;
-	meanNz /= actualNeighboorhoodSize;
-	meanWx /= actualNeighboorhoodSize;
-	meanWy /= actualNeighboorhoodSize;
-	meanWz /= actualNeighboorhoodSize;
+	/************************************************************************
+	 * Compute mean and standard deviation of all samples in neighboorhood. *
+	 ************************************************************************/
+	//Normal
+	if(normalFeature){
+		meanNx = 0.f, meanNy = 0.f, meanNz = 0.f;
+		for (int i = 0; i < actualNeighboorhoodSize; ++i) {
+				meanNx += outputNeighboorhood[i].nx;
+				meanNy += outputNeighboorhood[i].ny;
+				meanNz += outputNeighboorhood[i].nz;
+		}
+		meanNx /= actualNeighboorhoodSize;
+		meanNy /= actualNeighboorhoodSize;
+		meanNz /= actualNeighboorhoodSize;
 
-	//standard deviation = sqrt(sum(x_i-mean)/N)
-	sigmaNx = 0.f, sigmaNy = 0.f, sigmaNz = 0.f;
-	sigmaWx = 0.f, sigmaWy = 0.f, sigmaWz = 0.f;
-	for (int i = 0; i < actualNeighboorhoodSize; ++i) {
-		sigmaNx += pow(outputNeighboorhood[i].nx-meanNx,2);
-		sigmaNy += pow(outputNeighboorhood[i].ny-meanNy,2);
-		sigmaNz += pow(outputNeighboorhood[i].nz-meanNz,2);
-		sigmaWx += pow(outputNeighboorhood[i].wx-meanWx,2);
-		sigmaWy += pow(outputNeighboorhood[i].wy-meanWy,2);
-		sigmaWz += pow(outputNeighboorhood[i].wz-meanWz,2);
-	}
-	sigmaNx = sqrt(sigmaNx/((float)actualNeighboorhoodSize));
-	sigmaNy = sqrt(sigmaNy/((float)actualNeighboorhoodSize));
-	sigmaNz = sqrt(sigmaNz/((float)actualNeighboorhoodSize));
-	sigmaWx = sqrt(sigmaWx/((float)actualNeighboorhoodSize));
-	sigmaWy = sqrt(sigmaWy/((float)actualNeighboorhoodSize));
-	sigmaWz = sqrt(sigmaWz/((float)actualNeighboorhoodSize));
-	//Compute normalized vector for each sample by removing mean and dividing by standard deviation
-	for (int i = 0; i < actualNeighboorhoodSize; ++i) {
-		outputNeighboorhood[i].nx = sigmaNx == 0.f ? 0.f : (outputNeighboorhood[i].nx-meanNx)/sigmaNx;
-		outputNeighboorhood[i].ny = sigmaNy == 0.f ? 0.f : (outputNeighboorhood[i].ny-meanNy)/sigmaNy;
-		outputNeighboorhood[i].nz = sigmaNz == 0.f ? 0.f : (outputNeighboorhood[i].nz-meanNz)/sigmaNz;
-		outputNeighboorhood[i].wx = sigmaWx == 0.f ? 0.f : (outputNeighboorhood[i].wx-meanWx)/sigmaWx;
-		outputNeighboorhood[i].wy = sigmaWy == 0.f ? 0.f : (outputNeighboorhood[i].wy-meanWy)/sigmaWy;
-		outputNeighboorhood[i].wz = sigmaWz == 0.f ? 0.f : (outputNeighboorhood[i].wz-meanWz)/sigmaWz;
+		//standard deviation = sqrt(sum(x_i-mean)/N)
+		sigmaNx = 0.f, sigmaNy = 0.f, sigmaNz = 0.f;
+		for (int i = 0; i < actualNeighboorhoodSize; ++i) {
+				sigmaNx += pow(outputNeighboorhood[i].nx-meanNx,2);
+				sigmaNy += pow(outputNeighboorhood[i].ny-meanNy,2);
+				sigmaNz += pow(outputNeighboorhood[i].nz-meanNz,2);
+		}
+		sigmaNx = sqrt(sigmaNx/((float)actualNeighboorhoodSize));
+		sigmaNy = sqrt(sigmaNy/((float)actualNeighboorhoodSize));
+		sigmaNz = sqrt(sigmaNz/((float)actualNeighboorhoodSize));
+
+		//Compute normalized vector for each sample by removing mean and dividing by standard deviation
+		for (int i = 0; i < actualNeighboorhoodSize; ++i) {
+				outputNeighboorhood[i].nx = sigmaNx == 0.f ? 0.f : (outputNeighboorhood[i].nx-meanNx)/sigmaNx;
+				outputNeighboorhood[i].ny = sigmaNy == 0.f ? 0.f : (outputNeighboorhood[i].ny-meanNy)/sigmaNy;
+				outputNeighboorhood[i].nz = sigmaNz == 0.f ? 0.f : (outputNeighboorhood[i].nz-meanNz)/sigmaNz;
+		}
 	}
 
-	//std::cout << "loop: " << x << ", " << y << std::endl;
+	//World Coordinates
+	if(worldCoordFeature){
+		meanWx = 0.f, meanWy = 0.f, meanWz = 0.f;
+		for (int i = 0; i < actualNeighboorhoodSize; ++i) {
+			meanWx += outputNeighboorhood[i].wx;
+			meanWy += outputNeighboorhood[i].wy;
+			meanWz += outputNeighboorhood[i].wz;
+		}
+		meanWx /= actualNeighboorhoodSize;
+		meanWy /= actualNeighboorhoodSize;
+		meanWz /= actualNeighboorhoodSize;
+
+		sigmaWx = 0.f, sigmaWy = 0.f, sigmaWz = 0.f;
+		for (int i = 0; i < actualNeighboorhoodSize; ++i) {
+			sigmaWx += pow(outputNeighboorhood[i].wx-meanWx,2);
+			sigmaWy += pow(outputNeighboorhood[i].wy-meanWy,2);
+			sigmaWz += pow(outputNeighboorhood[i].wz-meanWz,2);
+		}
+		sigmaWx = sqrt(sigmaWx/((float)actualNeighboorhoodSize));
+		sigmaWy = sqrt(sigmaWy/((float)actualNeighboorhoodSize));
+		sigmaWz = sqrt(sigmaWz/((float)actualNeighboorhoodSize));
+
+		//Compute normalized vector for each sample by removing mean and dividing by standard deviation
+		for (int i = 0; i < actualNeighboorhoodSize; ++i) {
+			outputNeighboorhood[i].wx = sigmaWx == 0.f ? 0.f : (outputNeighboorhood[i].wx-meanWx)/sigmaWx;
+			outputNeighboorhood[i].wy = sigmaWy == 0.f ? 0.f : (outputNeighboorhood[i].wy-meanWy)/sigmaWy;
+			outputNeighboorhood[i].wz = sigmaWz == 0.f ? 0.f : (outputNeighboorhood[i].wz-meanWz)/sigmaWz;
+		}
+	}
 }
 
 float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorhood, std::vector<float> &alpha, std::vector<float> &beta){
 
 	/********************************
+	 *                              *
 	 * CREATE THE NORMALIZED ARRAYS *
+	 *                              *
 	 ********************************/
 	//!!!!! IF YOU ADD A NEW FEATURE DON'T FORGET TO ADJUST THE NUMBEROFSCENEFEATURE FIELD. !!!!!
 
 	//Make arrays for all the mutual informations we have to calculate.
 	unsigned int length = outputNeighboorhood.size();
+
+	/*************************
+	 * Color channels,       *
+	 * Random parameters and *
+	 * Position parameters   *
+	 *************************/
 
 	//Color channels
 	std::vector<float> colorChan1 (length);
@@ -346,20 +388,12 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 	//Position parameters
 	std::vector<float> posX (length);
 	std::vector<float> posY (length);
-	//Scene features
-	std::vector<float> featureNormalX (length);
-	std::vector<float> featureNormalY (length);
-	std::vector<float> featureNormalZ (length);
-	std::vector<float> featureWorldPosX (length);
-	std::vector<float> featureWorldPosY (length);
-	std::vector<float> featureWorldPosZ (length);
+
 
 	//Mean variables
 	float meanCol1 = 0.f, meanCol2 = 0.f, meanCol3 = 0.f;
 	float meanRanLensU = 0.f, meanRanLensV = 0.f, meanRanTime = 0.f;
 	float meanPX = 0.f, meanPY = 0.f;
-	float meanNx = 0.f, meanNy = 0.f, meanNz = 0.f;
-	float meanWx = 0.f, meanWy = 0.f, meanWz = 0.f;
 
 	//fill the arrays with the values of the neighboorhood samples
 	for (unsigned int i = 0; i < length; ++i) {
@@ -375,13 +409,6 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 		posX[i] = outputNeighboorhood[i].imageX;
 		posY[i] = outputNeighboorhood[i].imageY;
 
-		featureNormalX[i] = outputNeighboorhood[i].nx;
-		featureNormalY[i] = outputNeighboorhood[i].ny;
-		featureNormalZ[i] = outputNeighboorhood[i].nz;
-		featureWorldPosX[i] = outputNeighboorhood[i].wx;
-		featureWorldPosY[i] = outputNeighboorhood[i].wy;
-		featureWorldPosZ[i] = outputNeighboorhood[i].wz;
-
 		meanCol1 += colorChan1[i];
 		meanCol2 += colorChan2[i];
 		meanCol3 += colorChan3[i];
@@ -392,14 +419,6 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 
 		meanPX += posX[i];
 		meanPY += posY[i];
-
-		meanNx += featureNormalX[i];
-		meanNy += featureNormalY[i];
-		meanNz += featureNormalZ[i];
-
-		meanWx += featureWorldPosX[i];
-		meanWy += featureWorldPosY[i];
-		meanWz += featureWorldPosZ[i];
 	}
 
 	meanCol1 /= length;
@@ -413,20 +432,11 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 	meanPX /= length;
 	meanPY /= length;
 
-	meanNx /= length;
-	meanNy /= length;
-	meanNz /= length;
-
-	meanWx /= length;
-	meanWy /= length;
-	meanWz /= length;
-
 	//standard deviation = sqrt(sum((x_i-mean)^2)/N)
 	float sigmaCol1 = 0.f, sigmaCol2 = 0.f, sigmaCol3 = 0.f;
 	float sigmaRanLensU = 0.f, sigmaRanLensV = 0.f, sigmaRanTime = 0.f;
 	float sigmaPX = 0.f, sigmaPY = 0.f;
-	float sigmaNx = 0.f, sigmaNy = 0.f, sigmaNz = 0.f;
-	float sigmaWx = 0.f, sigmaWy = 0.f, sigmaWz = 0.f;
+
 
 	for (unsigned int i = 0; i < length; ++i) {
 		sigmaCol1 += pow((double) (colorChan1[i]-meanCol1),2);
@@ -439,14 +449,6 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 
 		sigmaPX += pow((double) (posX[i]-meanPX),2);
 		sigmaPY += pow((double) (posY[i]-meanPY),2);
-
-		sigmaNx += pow((double) (featureNormalX[i]-meanNx),2);
-		sigmaNy += pow((double) (featureNormalY[i]-meanNy),2);
-		sigmaNz += pow((double) (featureNormalZ[i]-meanNz),2);
-
-		sigmaWx += pow((double) (featureWorldPosX[i]-meanWx),2);
-		sigmaWy += pow((double) (featureWorldPosY[i]-meanWy),2);
-		sigmaWz += pow((double) (featureWorldPosZ[i]-meanWz),2);
 	}
 	sigmaCol1 = sqrt(sigmaCol1/length);
 	sigmaCol2 = sqrt(sigmaCol2/length);
@@ -459,13 +461,6 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 	sigmaPX = sqrt(sigmaPX/length);
 	sigmaPY = sqrt(sigmaPY/length);
 
-	sigmaNx = sqrt(sigmaNx/length);
-	sigmaNy = sqrt(sigmaNy/length);
-	sigmaNz = sqrt(sigmaNz/length);
-
-	sigmaWx = sqrt(sigmaWx/length);
-	sigmaWy = sqrt(sigmaWy/length);
-	sigmaWz = sqrt(sigmaWz/length);
 
 	//Compute normalized vector for each sample by removing mean and dividing by standard deviation
 	for (unsigned int i = 0; i < length; ++i) {
@@ -480,16 +475,94 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 
 		posX[i] = sigmaPX == 0.f ? 0.f : (posX[i]-meanPX)/sigmaPX;
 		posY[i] = sigmaPY == 0.f ? 0.f : (posY[i]-meanPY)/sigmaPY;
-
-		featureNormalX[i] = sigmaNx == 0.f ? 0.f : (featureNormalX[i]-meanNx)/sigmaNx;
-		featureNormalY[i] = sigmaNy == 0.f ? 0.f : (featureNormalY[i]-meanNy)/sigmaNy;
-		featureNormalZ[i] = sigmaNz == 0.f ? 0.f : (featureNormalZ[i]-meanNz)/sigmaNz;
-
-		featureWorldPosX[i] = sigmaWx == 0.f ? 0.f : (featureWorldPosX[i]-meanWx)/sigmaWx;
-		featureWorldPosY[i] = sigmaWy == 0.f ? 0.f : (featureWorldPosY[i]-meanWy)/sigmaWy;
-		featureWorldPosZ[i] = sigmaWz == 0.f ? 0.f : (featureWorldPosZ[i]-meanWz)/sigmaWz;
 	}
 
+	/******************
+	 * Scene features *
+	 ******************/
+
+	//Normal
+
+	std::vector<float> featureNormalX (length);
+	std::vector<float> featureNormalY (length);
+	std::vector<float> featureNormalZ (length);
+
+	if(normalFeature){
+		float meanNx = 0.f, meanNy = 0.f, meanNz = 0.f;
+
+		for (unsigned int i = 0; i < length; ++i) {
+				featureNormalX[i] = outputNeighboorhood[i].nx;
+				featureNormalY[i] = outputNeighboorhood[i].ny;
+				featureNormalZ[i] = outputNeighboorhood[i].nz;
+				meanNx += featureNormalX[i];
+				meanNy += featureNormalY[i];
+				meanNz += featureNormalZ[i];
+		}
+
+		meanNx /= length;
+		meanNy /= length;
+		meanNz /= length;
+
+		float sigmaNx = 0.f, sigmaNy = 0.f, sigmaNz = 0.f;
+
+		for (unsigned int i = 0; i < length; ++i) {
+			sigmaNx += pow((double) (featureNormalX[i]-meanNx),2);
+			sigmaNy += pow((double) (featureNormalY[i]-meanNy),2);
+			sigmaNz += pow((double) (featureNormalZ[i]-meanNz),2);
+		}
+
+		sigmaNx = sqrt(sigmaNx/length);
+		sigmaNy = sqrt(sigmaNy/length);
+		sigmaNz = sqrt(sigmaNz/length);
+
+		for (unsigned int i = 0; i < length; ++i) {
+			featureNormalX[i] = sigmaNx == 0.f ? 0.f : (featureNormalX[i]-meanNx)/sigmaNx;
+			featureNormalY[i] = sigmaNy == 0.f ? 0.f : (featureNormalY[i]-meanNy)/sigmaNy;
+			featureNormalZ[i] = sigmaNz == 0.f ? 0.f : (featureNormalZ[i]-meanNz)/sigmaNz;
+		}
+	}
+
+	//World Coordinates
+
+	std::vector<float> featureWorldPosX (length);
+	std::vector<float> featureWorldPosY (length);
+	std::vector<float> featureWorldPosZ (length);
+
+	if(worldCoordFeature){
+		float meanWx = 0.f, meanWy = 0.f, meanWz = 0.f;
+
+		//fill the arrays with the values of the neighboorhood samples
+		for (unsigned int i = 0; i < length; ++i) {
+			featureWorldPosX[i] = outputNeighboorhood[i].wx;
+			featureWorldPosY[i] = outputNeighboorhood[i].wy;
+			featureWorldPosZ[i] = outputNeighboorhood[i].wz;
+			meanWx += featureWorldPosX[i];
+			meanWy += featureWorldPosY[i];
+			meanWz += featureWorldPosZ[i];
+		}
+
+		meanWx /= length;
+		meanWy /= length;
+		meanWz /= length;
+
+		float sigmaWx = 0.f, sigmaWy = 0.f, sigmaWz = 0.f;
+
+		for (unsigned int i = 0; i < length; ++i) {
+			sigmaWx += pow((double) (featureWorldPosX[i]-meanWx),2);
+			sigmaWy += pow((double) (featureWorldPosY[i]-meanWy),2);
+			sigmaWz += pow((double) (featureWorldPosZ[i]-meanWz),2);
+		}
+
+		sigmaWx = sqrt(sigmaWx/length);
+		sigmaWy = sqrt(sigmaWy/length);
+		sigmaWz = sqrt(sigmaWz/length);
+
+		for (unsigned int i = 0; i < length; ++i) {
+			featureWorldPosX[i] = sigmaWx == 0.f ? 0.f : (featureWorldPosX[i]-meanWx)/sigmaWx;
+			featureWorldPosY[i] = sigmaWy == 0.f ? 0.f : (featureWorldPosY[i]-meanWy)/sigmaWy;
+			featureWorldPosZ[i] = sigmaWz == 0.f ? 0.f : (featureWorldPosZ[i]-meanWz)/sigmaWz;
+		}
+	}
 	/***********************************
 	 * COMPUTE DEPENDENCIES FOR COLORS *
 	 ***********************************/
@@ -514,17 +587,17 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 		float Dp_c1 = Dp1_c1 + Dp2_c1;
 
 		//Scene feature 1: Normal X
-		float Df1_c1 = calculateMutualInformation(colorChan1, featureNormalX);
+		float Df1_c1 = normalFeature ? calculateMutualInformation(colorChan1, featureNormalX) : 0.f;
 		//Scene feature 2: Normal Y
-		float Df2_c1 = calculateMutualInformation(colorChan1, featureNormalY);
+		float Df2_c1 = normalFeature ? calculateMutualInformation(colorChan1, featureNormalY) : 0.f;
 		//Scene feature 3: Normal Z
-		float Df3_c1 = calculateMutualInformation(colorChan1, featureNormalZ);
+		float Df3_c1 = normalFeature ? calculateMutualInformation(colorChan1, featureNormalZ) : 0.f;
 		//Scene feature 4: World Position X
-		float Df4_c1 = calculateMutualInformation(colorChan1, featureWorldPosX);
+		float Df4_c1 = worldCoordFeature ? calculateMutualInformation(colorChan1, featureWorldPosX) : 0.f;
 		//Scene feature 5: World Position Y
-		float Df5_c1 = calculateMutualInformation(colorChan1, featureWorldPosY);
+		float Df5_c1 = worldCoordFeature ? calculateMutualInformation(colorChan1, featureWorldPosY) : 0.f;
 		//Scene feature 6: World Position Z
-		float Df6_c1 = calculateMutualInformation(colorChan1, featureWorldPosZ);
+		float Df6_c1 = worldCoordFeature ? calculateMutualInformation(colorChan1, featureWorldPosZ) : 0.f;
 		//Calc total Df_c1
 		float Df_c1 = Df1_c1 + Df2_c1 + Df3_c1 + Df4_c1 + Df5_c1 + Df6_c1;
 
@@ -555,17 +628,17 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 		float Dp_c2 = Dp1_c2 + Dp2_c2;
 
 		//Scene feature 1: Normal X
-		float Df1_c2 = calculateMutualInformation(colorChan2, featureNormalX);
+		float Df1_c2 = normalFeature ? calculateMutualInformation(colorChan2, featureNormalX) : 0.f;
 		//Scene feature 2: Normal Y
-		float Df2_c2 = calculateMutualInformation(colorChan2, featureNormalY);
+		float Df2_c2 = normalFeature ? calculateMutualInformation(colorChan2, featureNormalY) : 0.f;
 		//Scene feature 3: Normal Z
-		float Df3_c2 = calculateMutualInformation(colorChan2, featureNormalZ);
+		float Df3_c2 = normalFeature ? calculateMutualInformation(colorChan2, featureNormalZ) : 0.f;
 		//Scene feature 4: World Position X
-		float Df4_c2 = calculateMutualInformation(colorChan2, featureWorldPosX);
+		float Df4_c2 = worldCoordFeature ? calculateMutualInformation(colorChan2, featureWorldPosX) : 0.f;
 		//Scene feature 5: World Position Y
-		float Df5_c2 = calculateMutualInformation(colorChan2, featureWorldPosY);
+		float Df5_c2 = worldCoordFeature ? calculateMutualInformation(colorChan2, featureWorldPosY) : 0.f;
 		//Scene feature 6: World Position Z
-		float Df6_c2 = calculateMutualInformation(colorChan2, featureWorldPosZ);
+		float Df6_c2 = worldCoordFeature ? calculateMutualInformation(colorChan2, featureWorldPosZ) : 0.f;
 		//Calc total Df_c1
 		float Df_c2 = Df1_c2 + Df2_c2 + Df3_c2 + Df4_c2 + Df5_c2 + Df6_c2;
 
@@ -595,17 +668,17 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 		float Dp_c3 = Dp1_c3 + Dp2_c3;
 
 		//Scene feature 1: Normal X
-		float Df1_c3 = calculateMutualInformation(colorChan3, featureNormalX);
+		float Df1_c3 = normalFeature ? calculateMutualInformation(colorChan3, featureNormalX) : 0.f;
 		//Scene feature 2: Normal Y
-		float Df2_c3 = calculateMutualInformation(colorChan3, featureNormalY);
+		float Df2_c3 = normalFeature ? calculateMutualInformation(colorChan3, featureNormalY) : 0.f;
 		//Scene feature 3: Normal Z
-		float Df3_c3 = calculateMutualInformation(colorChan3, featureNormalZ);
+		float Df3_c3 = normalFeature ? calculateMutualInformation(colorChan3, featureNormalZ) : 0.f;
 		//Scene feature 4: World Position X
-		float Df4_c3 = calculateMutualInformation(colorChan3, featureWorldPosX);
+		float Df4_c3 = worldCoordFeature ? calculateMutualInformation(colorChan3, featureWorldPosX) : 0.f;
 		//Scene feature 5: World Position Y
-		float Df5_c3 = calculateMutualInformation(colorChan3, featureWorldPosY);
+		float Df5_c3 = worldCoordFeature ? calculateMutualInformation(colorChan3, featureWorldPosY) : 0.f;
 		//Scene feature 6: World Position Z
-		float Df6_c3 = calculateMutualInformation(colorChan3, featureWorldPosZ);
+		float Df6_c3 = worldCoordFeature ? calculateMutualInformation(colorChan3, featureWorldPosZ) : 0.f;
 		//Calc total Df_c1
 		float Df_c3 = Df1_c3 + Df2_c3 + Df3_c3 + Df4_c3 + Df5_c3 + Df6_c3;
 
@@ -625,6 +698,7 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 	 * COMPUTE DEPENDENCIES FOR SCENE FEATURES *
 	 *******************************************/
 
+	if(normalFeature){
 	//Feature 1: Normal X
 		//Random parameter 1: LensU
 		float Dr1_f1 = calculateMutualInformation(featureNormalX, randomLensU);
@@ -717,7 +791,13 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 		//Calc beta[2]
 		temp = 1-((1+(0.1*t))*Wr_f3);
 		beta[2] = temp > 0.f ? temp*Wf3_c : 0;
+	} else{
+		beta[0] = 0.f;
+		beta[1] = 0.f;
+		beta[2] = 0.f;
+	}
 
+	if(worldCoordFeature){
 	//Feature 4: World position X
 		//Random parameter 1: LensU
 		float Dr1_f4 = calculateMutualInformation(featureWorldPosX, randomLensU);
@@ -810,6 +890,11 @@ float RPF::computeFeatureWeights(int t, std::vector<RPFSample> &outputNeighboorh
 		//Calc beta[5]
 		temp = 1-((1+(0.1*t))*Wr_f6);
 		beta[5] = temp > 0.f ? temp*Wf6_c : 0;
+	} else{
+		beta[3] = 0.f;
+		beta[4] = 0.f;
+		beta[5] = 0.f;
+	}
 
 	/*std::cout << "alpha[0]: " << alpha[0] << std::endl;
 	std::cout << "alpha[1]: " << alpha[1] << std::endl;
@@ -840,12 +925,12 @@ void RPF::filterColorSamples(float Wr_c, int x, int y, std::vector<RPFSample> &o
 		float ci_1 = outputNeighboorhood[i].Lrgb[0];
 		float ci_2 = outputNeighboorhood[i].Lrgb[1];
 		float ci_3 = outputNeighboorhood[i].Lrgb[2];
-		float fi_NX = outputNeighboorhood[i].nx;
-		float fi_NY = outputNeighboorhood[i].ny;
-		float fi_NZ = outputNeighboorhood[i].nz;
-		float fi_WPX = outputNeighboorhood[i].wx;
-		float fi_WPY = outputNeighboorhood[i].wy;
-		float fi_WPZ = outputNeighboorhood[i].wz;
+		float fi_NX = normalFeature ? outputNeighboorhood[i].nx : 0.f;
+		float fi_NY = normalFeature ? outputNeighboorhood[i].ny : 0.f;
+		float fi_NZ = normalFeature ? outputNeighboorhood[i].nz : 0.f;
+		float fi_WPX = worldCoordFeature ? outputNeighboorhood[i].wx : 0.f;
+		float fi_WPY = worldCoordFeature ? outputNeighboorhood[i].wy : 0.f;
+		float fi_WPZ = worldCoordFeature ? outputNeighboorhood[i].wz : 0.f;
 
 		//std::cout << outputNeighboorhood[i].nx << std::endl;
 
@@ -854,12 +939,12 @@ void RPF::filterColorSamples(float Wr_c, int x, int y, std::vector<RPFSample> &o
 			float cj_1 = outputNeighboorhood[j].Lrgb[0];
 			float cj_2 = outputNeighboorhood[j].Lrgb[1];
 			float cj_3 = outputNeighboorhood[j].Lrgb[2];
-			float fj_NX = outputNeighboorhood[j].nx;
-			float fj_NY = outputNeighboorhood[j].ny;
-			float fj_NZ = outputNeighboorhood[j].nz;
-			float fj_WPX = outputNeighboorhood[j].wx;
-			float fj_WPY = outputNeighboorhood[j].wy;
-			float fj_WPZ = outputNeighboorhood[j].wz;
+			float fj_NX = normalFeature ? outputNeighboorhood[j].nx : 0.f;
+			float fj_NY = normalFeature ? outputNeighboorhood[j].ny : 0.f;
+			float fj_NZ = normalFeature ? outputNeighboorhood[j].nz : 0.f;
+			float fj_WPX = worldCoordFeature ? outputNeighboorhood[j].wx : 0.f;
+			float fj_WPY = worldCoordFeature ? outputNeighboorhood[j].wy : 0.f;
+			float fj_WPZ = worldCoordFeature ? outputNeighboorhood[j].wz : 0.f;
 
 			//Calc wij using alpha and beta
 			float wi_jColorWeightedExponential
