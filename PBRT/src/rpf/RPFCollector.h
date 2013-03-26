@@ -20,7 +20,7 @@
 
 class RPFCollector {
 public:
-	RPFCollector(const int xRes, const int yRes, const int nbOfsamplesPerPixel);
+	RPFCollector(const int xRes, const int yRes, const int nbOfsamplesPerPixel, RPFOptions &rpfOptions);
 	void AddSample(const CameraSample &sample, const Spectrum &L, const RayDifferential &ray, const Intersection &intersection);
 	void ExecuteRPF();
 	~RPFCollector(){
@@ -31,6 +31,7 @@ private:
 	const int nbPixels;
 	const int samplesPerPixel;
 	std::vector<RPFPixel> rpfPixels;
+	RPFOptions rpfOptions;
 };
 
 

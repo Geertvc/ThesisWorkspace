@@ -73,6 +73,7 @@ using std::vector;
 #endif
 #include <assert.h>
 #include <algorithm>
+#include "../rpf/RPFOptions.h"
 using std::min;
 using std::max;
 using std::swap;
@@ -128,6 +129,8 @@ struct Options {
     bool quiet, verbose;
     bool openWindow;
     string imageFile;
+
+    RPFOptions rpfOptions;
 };
 
 

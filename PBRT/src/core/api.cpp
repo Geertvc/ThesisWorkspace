@@ -1258,7 +1258,7 @@ Renderer *RenderOptions::MakeRenderer() const {
 			VolIntegratorParams);
 		if (!volumeIntegrator) Severe("Unable to create volume integrator.");
 		renderer = new RPFSamplerRenderer(sampler, camera, surfaceIntegrator,
-									   volumeIntegrator, visIds);
+									   volumeIntegrator, visIds, PbrtOptions.rpfOptions);
 		// Warn if no light sources are defined
 		if (lights.size() == 0)
 			Warning("No light sources defined in scene; "

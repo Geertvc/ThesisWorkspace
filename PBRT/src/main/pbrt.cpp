@@ -53,6 +53,18 @@ int main(int argc, char *argv[]) {
                    "[--verbose] [--help] <filename.pbrt> ...\n");
             return 0;
         }
+        else if (!strcmp(argv[i], "--normalFeatureOff")){
+        	options.rpfOptions.normalFeature = false;
+        	printf("normalFeature set to  %s \n",(options.rpfOptions.normalFeature)?"true":"false");
+        }
+        else if (!strcmp(argv[i], "--worldCoordFeatureOff")){
+        	options.rpfOptions.worldCoordFeature = false;
+        	printf("worldCoordFeature set to  %s \n",(options.rpfOptions.worldCoordFeature)?"true":"false");
+        }
+        else if (!strcmp(argv[i], "--sigma8Squared")){
+        	options.rpfOptions.sigma8Squared = atof(argv[++i]);
+        	printf("sigma8Squared set to  %f \n", options.rpfOptions.sigma8Squared);
+        }
         else filenames.push_back(argv[i]);
     }
 

@@ -15,7 +15,7 @@
 #include "progressreporter.h"
 
 
-RPF::RPF(){
+RPF::RPF(RPFOptions &rpfOptions){
 	//These values will be set when running applyFilter
 	xRes = 0;
 	yRes = 0;
@@ -34,10 +34,14 @@ RPF::RPF(){
 	//Epsilon
 	epsilon = 0.00001f;
 	//Sigma8Squared is 0.02 for noisy scenes and 0.002 for all others
-	sigma8Squared = 0.02;
+	sigma8Squared = rpfOptions.sigma8Squared;
 
-	normalFeature = false;
-	worldCoordFeature = false;
+	normalFeature = rpfOptions.normalFeature;
+	worldCoordFeature = rpfOptions.worldCoordFeature;
+
+	printf("normalFeature set to  %s \n",(rpfOptions.normalFeature)?"true":"false");
+	printf("worldCoordFeature set to  %s \n",(rpfOptions.worldCoordFeature)?"true":"false");
+	printf("sigma8Squared set to  %f \n", rpfOptions.sigma8Squared);
 
 	//The filtering stages.
 	//TODO change back into and loop back to 4 instead to 1: {55, 35, 17, 7};

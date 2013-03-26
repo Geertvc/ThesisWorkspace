@@ -175,14 +175,14 @@ void RPFSamplerRendererTask::Run() {
 // RPFSamplerRenderer Method Definitions
 RPFSamplerRenderer::RPFSamplerRenderer(Sampler *s, Camera *c,
                                  SurfaceIntegrator *si, VolumeIntegrator *vi,
-                                 bool visIds) {
+                                 bool visIds, RPFOptions &rpfOptions) {
     sampler = s;
     camera = c;
     surfaceIntegrator = si;
     volumeIntegrator = vi;
     visualizeObjectIds = visIds;
 
-    collector = new RPFCollector(camera->film->xResolution, camera->film->yResolution, s->samplesPerPixel);
+    collector = new RPFCollector(camera->film->xResolution, camera->film->yResolution, s->samplesPerPixel, rpfOptions);
 }
 
 

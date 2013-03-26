@@ -19,7 +19,7 @@
 /**
  * initialization using the constructor initialization list.
  */
-RPFCollector::RPFCollector(const int xResolution, const int yResolution, const int s)
+RPFCollector::RPFCollector(const int xResolution, const int yResolution, const int s, RPFOptions &rpfOpt)
 : xRes(xResolution), yRes(yResolution), nbPixels(xRes*yRes), samplesPerPixel(s), rpfPixels () {
 	//samplesPerPixel = s;
 	std::cout << " -> Resolution: width = " << xRes << ", height = " << yRes << std::endl;
@@ -31,6 +31,7 @@ RPFCollector::RPFCollector(const int xResolution, const int yResolution, const i
 		//std::cout << i << std::endl;
 		rpfPixels.push_back(RPFPixel (samplesPerPixel));
 	}
+	rpfOptions = rpfOpt;
 }
 
 //Dit wordt parallel aangeroepen maar geen probleem want alleen writes naar aparte plaatsen in de array hier.
@@ -96,7 +97,7 @@ void RPFCollector::ExecuteRPF(){
 	//RPFFilter *filter = new RPFFilter(sigmaD, sigmaR, n);
 	//filter->applyFilter(rpfPixels, xyz, xRes, yRes, samplesPerPixel);
 
-	RPF *rpf = new RPF();
+	RPF *rpf = new RPF(rpfOptions);
 	rpf->applyFilter(rpfPixels, xyz, xRes, yRes, samplesPerPixel);
 
 

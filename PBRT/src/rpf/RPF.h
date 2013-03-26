@@ -14,7 +14,7 @@
 
 class RPF {
 public:
-	RPF();
+	RPF(RPFOptions &rpfOptions);
 	~RPF(){}
 	void applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution, int yResolution, int samplesPerPixel);
 private:

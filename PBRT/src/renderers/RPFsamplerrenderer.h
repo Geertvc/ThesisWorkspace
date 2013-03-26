@@ -47,7 +47,7 @@ class RPFSamplerRenderer : public Renderer {
 public:
     // RPFSamplerRenderer Public Methods
     RPFSamplerRenderer(Sampler *s, Camera *c, SurfaceIntegrator *si,
-                    VolumeIntegrator *vi, bool visIds);
+                    VolumeIntegrator *vi, bool visIds, RPFOptions &rpfOptions);
     ~RPFSamplerRenderer();
     void Render(const Scene *scene);
     Spectrum Li(const Scene *scene, const RayDifferential &ray,
