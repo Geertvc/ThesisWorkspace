@@ -53,18 +53,34 @@ int main(int argc, char *argv[]) {
                    "[--verbose] [--help] <filename.pbrt> ...\n");
             return 0;
         }
-        else if (!strcmp(argv[i], "--normalFeatureOff")){
-        	options.rpfOptions.normalFeature = false;
+        else if (!strcmp(argv[i], "--normalFeature")){
+        	options.rpfOptions.normalFeature = true;
         	printf("normalFeature set to  %s \n",(options.rpfOptions.normalFeature)?"true":"false");
         }
-        else if (!strcmp(argv[i], "--worldCoordFeatureOff")){
-        	options.rpfOptions.worldCoordFeature = false;
+        else if (!strcmp(argv[i], "--worldCoordFeature")){
+        	options.rpfOptions.worldCoordFeature = true;
         	printf("worldCoordFeature set to  %s \n",(options.rpfOptions.worldCoordFeature)?"true":"false");
         }
         else if (!strcmp(argv[i], "--sigma8Squared")){
         	options.rpfOptions.sigma8Squared = atof(argv[++i]);
         	printf("sigma8Squared set to  %f \n", options.rpfOptions.sigma8Squared);
         }
+        else if (!strcmp(argv[i], "--iterations")){
+        	int numberOfIterations = atoi(argv[++i]);
+        	printf("number of iterations set to  %d \n", numberOfIterations);
+        	vector<int> iterations;
+        	for (int m = 0; m < numberOfIterations; ++m) {
+				iterations.push_back(atoi(argv[++i]));
+			}
+			options.rpfOptions.iterations = iterations;
+        	for (unsigned int var = 0; var < iterations.size(); ++var) {
+        		printf("iterations %u set to  %d \n", var, iterations[var]);
+			}
+		}
+        else if (!strcmp(argv[i], "--rpfOutfile")){
+			options.rpfOptions.rpfOutfile = argv[++i];
+			printf("rpfOutfile set to  %s \n", options.rpfOptions.rpfOutfile);
+		}
         else filenames.push_back(argv[i]);
     }
 

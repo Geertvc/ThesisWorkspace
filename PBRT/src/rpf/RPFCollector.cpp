@@ -163,7 +163,9 @@ void RPFCollector::ExecuteRPF(){
 	//string outputFileName = os.str();
 
 	std::cout << " -> Writing image..." << std::endl;
-	string outputFileName = "testRgb.tga";
+
+	//string outputFileName = "testRgb.tga";
+	string outputFileName = rpfOptions.rpfOutfile;
 	WriteImage(outputFileName, rgb, NULL, xRes, yRes,
 					 xRes, yRes, 0, 0);
 	std::cout << " -> Image written to " << outputFileName << std::endl;

@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# OPTIONSTOUSE="worldCoord normal"
+
+# function featureOptions() {
+# 	OPTIONS=""
+# 	for i in $1; do
+# 		if [ $i = "normal" ]; then
+# 			OPTIONS="$OPTIONS --normalFeature"
+# 		fi
+# 		if [ $i = "worldCoord" ]; then
+# 			OPTIONS="$OPTIONS --worldCoordFeature"
+# 		fi
+# 	done
+#     eval "$2='$OPTIONS'"
+# }
+
+# FEATURES=''
+# featureOptions "$OPTIONSTOUSE" "FEATURES"
+# echo "$FEATURES"
+
+# function test(){
+# 	echo "$1"
+# 	echo "$2"
+# 	echo "$3"
+# 	if [ "$1" != "" ]; then
+# 		$1="--sigma8Squared $1"
+# 	fi
+# 	echo "$1"
+# }
+
+# test "0" "tweede" "derde"
+
+function iterationsCommand() {
+	COMMAND=""
+
+	COUNTER=0
+	for i in $1; do
+		let COUNTER=COUNTER+1
+ 	done
+
+	COMMAND="--iterations $COUNTER $1"
+
+	eval "$2='$COMMAND'"
+}
+
+ITERATIONS="55 35 17 7"
+ITERATIONCOMMAND=''
+iterationsCommand "$ITERATIONS" "ITERATIONCOMMAND"
+
+echo $ITERATIONCOMMAND

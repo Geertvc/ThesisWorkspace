@@ -48,7 +48,20 @@ RPF::RPF(RPFOptions &rpfOptions){
 	//box.push_back(55);
 	//box.push_back(35);
 	//box.push_back(17);
-	box.push_back(7);
+	//box.push_back(7);
+
+	box = rpfOptions.iterations;
+
+	if(box.size() == 0){
+		printf("number of iterations set to  1 as default \n");
+		box.push_back(7);
+	} else{
+		unsigned int u = rpfOptions.iterations.size();
+		printf("number of iterations set to  %u \n", u);
+		for (unsigned int var = 0; var < rpfOptions.iterations.size(); ++var) {
+			printf("iterations %u set to  %d \n", var, rpfOptions.iterations[var]);
+		}
+	}
 }
 
 void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution, int yResolution, int samplesPerPixel){

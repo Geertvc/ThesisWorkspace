@@ -9,11 +9,14 @@
 #define RPFOPTIONS_H_
 
 struct RPFOptions {
-	RPFOptions() { normalFeature = worldCoordFeature = true;
-    			sigma8Squared = 0.02; }
+	RPFOptions() { normalFeature = worldCoordFeature = false;
+    			sigma8Squared = 0.02;
+				}
     bool normalFeature;
     bool worldCoordFeature;
     float sigma8Squared;
+    vector<int> iterations;
+    char *rpfOutfile;
 };
 
 
