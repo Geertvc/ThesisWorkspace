@@ -1,8 +1,8 @@
 #################
 ## CUSTOM	   ##
 #################
-PBRT/scenes/geometry/sanmiguel
-PBRT/scenes/textures/sanmiguel
+PBRT/scenes/geometry
+PBRT/scenes/textures
 
 
 #################
