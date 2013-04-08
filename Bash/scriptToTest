@@ -1,0 +1,39 @@
+#!/bin/bash
+
+. ~/Dropbox/ThesisWorkspace/Bash/rpfFunctions
+
+SIMPLEKILLEROOSCENE=~/Dropbox/ThesisWorkspace/PBRT/scenes/killeroo-simpleTest.pbrt
+SIMPLEKILLEROOSCENEREFERENCE=~/Dropbox/ThesisWorkspace/PBRT/scenes/killeroo-simpleTestReference.pbrt
+SIMPLECORNELLBOXSCENE=~/Dropbox/ThesisWorkspace/PBRT/scenes/cornell-mlt.pbrt
+
+ALLFEATURES="worldCoord normal"
+ONLYNORMAL="normal"
+ONLYWORLDCOORD="worldCoord"
+
+DEFAULTSIGMA="0.02"
+LESSNOISESIGMA="0.002"
+
+FOURITERATIONS="55 35 17 7"
+THREEITERATIONS="35 17 7"
+TWOITERATIONS="17 7"
+ONEITERATION="7"
+
+# PBRTOUTFILE=test.tga
+# RPFOUTFILE=output.tga
+# OPTIONSTOUSE="worldCoord normal"
+# SIGMA8SQUARED="0.02"
+# ITERATIONS="7"
+# rpf "$SIMPLEKILLEROOSCENE" "$PBRTOUTFILE" "$RPFOUTFILE" "$OPTIONSTOUSE" "$SIGMA8SQUARED" "$ITERATIONS"
+
+
+#Reference image
+#pbrt "$SIMPLEKILLEROOSCENEREFERENCE" "256KillerooReference.tga" > "images/256KillerooReference.txt"
+
+#All features / 1 iteration / defaultsigma
+rpf "$SIMPLEKILLEROOSCENE" "openmpTest.tga" "openmpTestFiltered.tga" "$ALLFEATURES" "$DEFAULTSIGMA" "$ONEITERATION" > "images/openmpTest.txt"
+
+#Only normal / 1 iteration / defaultsigma
+#rpf "$SIMPLEKILLEROOSCENE" "256KillerooNORMAL.tga" "256KillerooNORMALFiltered.tga" "$ONLYNORMAL" "$DEFAULTSIGMA" "$ONEITERATION" > "images/256KillerooNORMAL.txt"
+
+#Only worldCoord / 1 iteration / defaultsigma
+#rpf "$SIMPLEKILLEROOSCENE" "256KillerooWC.tga" "256KillerooWCFiltered.tga" "$ONLYWORLDCOORD" "$DEFAULTSIGMA" "$ONEITERATION" > "images/256KillerooWC.txt"

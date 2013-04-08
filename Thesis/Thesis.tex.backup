@@ -1,0 +1,140 @@
+  %
+  % Sjabloon voor de master ingenieurswetenschappen: computerwetenschappen
+  %
+  \documentclass[master=cws, masteroption=mmc]{kulemt}
+  \usepackage[dutch]{babel}
+  %%%%%%%%%%%%%% Wijzig niets boven deze regel %%%%%%%%%%%%%
+
+  % Vul de titel van jouw masterproef hieronder in tussen { en }.
+  \setup{title={Beste masterproef ooit al geschreven},
+  %
+  % Vul hieronder namen in, steeds Voornaam Naam.
+  % Indien meerdere auteurs, assessoren, assistenten, scheidt hun namen
+  % met \and .
+  author={Een Auteur\and Tweede Auteur},
+  promotor={Prof.\,dr.\,ir.\ Weet Beter},
+  assessor={Ir.\,W. Eetveel\and W. Eetrest},
+  assistant={Ir.\ A.~Assistent \and D.~Vriend}}
+  % 
+  \setup{filingcard, % Deze regel niet wijzigen
+  %
+  % Vul de vertaalde titel van jouw masterproef hieronder in tussen { en }.
+  translatedtitle={The best master thesis ever},
+  %
+  % UDC nummer is richtingafhankelijk. zie http://www.udcc.org/udcsummary/php/index.php?id=36946&lang=en voor het UDC nummer.
+  udc=621.3,
+  %
+  % Hieronder, tussen { en } een korte samenvatting toevoegen.
+  % Lege regels en het commando \par zijn niet toegelaten.
+  % Wees voorzichtig met speciale TeX-tekens #$%&^_~{}\ !!
+  shortabstract={%
+  Hier komt een heel bondig abstract van hooguit 500
+  woorden. \LaTeX\ commando's mogen hier gebruikt worden.
+  Voorbeelden van letters met accenten zijn 
+  ``{\'e}{\"\i}{\c{c}}{\`a}{\^o}''.
+  (Gebruik {\"\i} in plaats van {\"i}, om geen 3 puntjes te hebben.)
+  }}
+
+  %%%%%%%%% Wijzig niets onder deze regel %%%%%%%%
+  %\setup{coverpageonly}
+
+
+
+  % Choose the main text font (e.g., Latin Modern)
+  \setup{font=lm}
+
+  % If you want to include other LaTeX packages, do it here.
+
+  % Finally the hyperref package is used for pdf files.
+  % This can be commented out for printed versions.
+  \usepackage[pdfusetitle,colorlinks,plainpages=false]{hyperref}
+
+
+
+  \begin{document}
+    \begin{preface}[The Author\\ \textup{1 January 2010}]
+      The text of the preface. A few paragraphs should follow.
+    \end{preface}
+    
+    \tableofcontents*
+    
+    \begin{abstract}
+      abstract
+    \end{abstract}
+    
+    % A list of figures and tables is optional
+    %\listoffigures
+    %\listoftables
+    % If you only have a few figures and tables you can use the following instead
+    %\listoffiguresandtables
+    % The list of symbols is also optional.
+    % This list must be created manually, e.g., as follows:
+%     \chapter{List of Abbreviations and Symbols}
+%     \section*{Abbreviations}
+%     \begin{flushleft}
+%     \renewcommand{\arraystretch}{1.1}
+%     \begin{tabularx}{\textwidth}{@{}p{12mm}X@{}}
+%     LoG
+%     & Laplacian-of-Gaussian \\
+%     MSE
+%     & Mean Square error \\
+%     PSNR & Peak Signal-to-Noise ratio \\
+%     \end{tabularx}
+%     \end{flushleft}
+%     \section*{Symbols}
+%     \begin{flushleft}
+%     \renewcommand{\arraystretch}{1.1}
+%     \begin{tabularx}{\textwidth}{@{}p{12mm}X@{}}
+%     42
+%     & ‘‘The Answer to the Ultimate Question of Life, the Universe,
+%     and Everything’’ according to \cite{h2g2} \\
+%     $c$
+%     & Speed of light \\
+%     $E$
+%     & Energy \\
+%     $m$
+%     & Mass \\
+%     $\pi$ & The number pi \\
+%     \end{tabularx}
+%     \end{flushleft}
+
+    % Now comes the main text
+    \mainmatter
+
+
+
+    
+    \chapter{Inleiding}
+      In dit hoofdstuk wordt een algemene inleiding gegeven waarin het probleem gekaderd wordt, 
+      monte carlo integratie wordt kort uitgelegd aan de hand van de vergelijking, 
+      hierdoor wordt het probleem duidelijk.
+      [Figuur die een scene toont gerenderd met monte carlo rendering, met een klein aantal samples]
+      [Figuur die een scene toont gerenderd met monte carlo rendering, met een groot aantal samples]
+    
+    \chapter{Gerelateerd werk}
+      In dit hoofdstuk worden papers met gerelateerde inhoud besproken en met het RPF algoritme vergeleken, 
+      belangrijk is om verbanden te leggen tussen deze papers en ze zo op te delen in de verschillende stromingen waar ze deel van uitmaken.
+      (figuren? of gewoon droge tekst?)
+      
+    \chapter{Bilateral filter}
+      In dit hoofdstuk wordt uitgelegd hoe de bilateral filter werkt aangezien het RPF algoritme hierop gebaseerd is.
+      Net zoals in de paper volgt hier eerst de uitleg over een simpele Gaussiaanse filter, 
+      gevolgd door de gewone bilateral filter gevolgd door de cross bilateral filter.
+      [Figuur die gefilterd is door een Gaussiaanse filter]
+      [Figuur die gefilterd is door een bilateral filter]
+      ([Figuur die alleen gefilterd is door een cross bilateral filter] -> dit is al rpf, dus niet meer toevoegen (verwijzen naar eerste figuren bovenaan de thesis)?)
+      
+    \chapter{Random Parameter Filtering}
+      In dit hoofdstuk volgt de informatie over het RPF algoritme zelf dat gebaseerd is op de paper en het technische report over RPF.
+      
+    \chapter{Resultaten}
+    
+    \chapter{Discussie}
+    
+    
+    
+
+    
+    
+
+  \end{document}

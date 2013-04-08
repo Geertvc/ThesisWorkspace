@@ -1,0 +1,41 @@
+#!/bin/bash
+
+. ~/Dropbox/ThesisWorkspace/Bash/rpfFunctions
+
+SIMPLEKILLEROOSCENE=~/Dropbox/ThesisWorkspace/PBRT/scenes/killeroo-simpleTest.pbrt
+SIMPLECORNELLBOXSCENE=~/Dropbox/ThesisWorkspace/PBRT/scenes/cornell-mlt.pbrt
+SANMIGUELTESTSCENE=~/Dropbox/ThesisWorkspace/PBRT/scenes/sanMiguelTest.pbrt
+SANMIGUELTESTSCENEBIG=~/Dropbox/ThesisWorkspace/PBRT/scenes/sanMiguelTest512.pbrt
+SANMIGUELTESTSCENEREFERENCE=~/Dropbox/ThesisWorkspace/PBRT/scenes/sanMiguelTestReference.pbrt
+
+ALLFEATURES="worldCoord normal"
+ONLYNORMAL="normal"
+ONLYWORLDCOORD="worldCoord"
+
+DEFAULTSIGMA="0.02"
+LESSNOISESIGMA="0.002"
+
+#FOURITERATIONS="55 35 17 7"
+FOURITERATIONS="55 35 17 7"
+THREEITERATIONS="35 17 7"
+TWOITERATIONS="17 7"
+ONEITERATION="7"
+
+# PBRTOUTFILE=test.tga
+# RPFOUTFILE=output.tga
+# OPTIONSTOUSE="worldCoord normal"
+# SIGMA8SQUARED="0.02"
+# ITERATIONS="7"
+# rpf "$SIMPLEKILLEROOSCENE" "$PBRTOUTFILE" "$RPFOUTFILE" "$OPTIONSTOUSE" "$SIGMA8SQUARED" "$ITERATIONS"
+
+#Reference image
+pbrt "$SANMIGUELTESTSCENEREFERENCE" "sanMiguelReference.tga" > "images/sanMiguelReference.txt"
+
+#All features / 1 iteration / defaultsigma
+#rpf "$SANMIGUELTESTSCENE" "sanMiguel.tga" "sanMiguelFiltered.tga" "$ALLFEATURES" "$DEFAULTSIGMA" "$ONEITERATION" > "images/sanMiguel.txt"
+
+#All features / 3 iterations / defaultsigma
+#rpf "$SANMIGUELTESTSCENE" "sanMiguel3Iter.tga" "sanMiguel3IterFiltered.tga" "$ALLFEATURES" "$DEFAULTSIGMA" "$THREEITERATIONS" > "images/sanMiguel3Iter.txt"
+
+#All features / 4 iterations / littleNoiseSigma
+rpf "$SANMIGUELTESTSCENEBIG" "sanMiguel4Iter.tga" "sanMiguel4IterFiltered.tga" "$ALLFEATURES" "$LESSNOISESIGMA" "$FOURITERATIONS" > "images/sanMiguel4Iter.txt"

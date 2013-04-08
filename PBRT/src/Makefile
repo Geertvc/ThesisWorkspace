@@ -30,6 +30,9 @@ OPT=-O2
 # comment out this line to enable assertions at runtime
 DEFS += -DNDEBUG
 
+#comment out this line if you want to put openMP off
+OPENMP=-fopenmp
+
 #########################################################################
 # nothing below this line should need to be changed (usually)
 #########################################################################
@@ -63,7 +66,7 @@ LD=$(CXX) $(OPT) $(MARCH)
 INCLUDE=-I. -Icore $(EXR_INCLUDES) $(TIFF_INCLUDES)
 WARN=-Wall
 CWD=$(shell pwd)
-CXXFLAGS=$(OPT) $(MARCH) $(INCLUDE) $(WARN) $(DEFS)
+CXXFLAGS=$(OPT) $(MARCH) $(INCLUDE) $(WARN) $(DEFS) $(OPENMP)
 CCFLAGS=$(CXXFLAGS)
 LIBS=$(LEXLIB) $(EXR_LIBDIR) $(EXRLIBS) -lm -ljpeg
 

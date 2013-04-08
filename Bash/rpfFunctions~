@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Roep het pbrt en rpf algoritme op.
+# 
+# $1: Het pad naar de scenefile
+# $2: De naam van de outputfile van het pbrt algoritme
+# $3: De naam van de outputfile van het rpf algoritme
+# $4: De string met de features die actief moeten zijn tijdens het rpf algoritme 
+#	(zie featureOptions voor meer uitleg over de format van de string).
+# $5: De value voor de sigma8Squared value uit het rpf algoritme.
+function rpf {
+	#Maak correcte values van de lijst met actieve features.
+	local FEATURES=''
+	featureOptions "$4" "FEATURES"
+	
+	#Voeg het correcte commando voor de sigma value toe.
+	local SIGMASTRING="$5"
+	SIGMASTRING="--sigma8Squared $SIGMASTRING"
+
+	#Maak een correcte optie voor de iteraties van het rpf algoritme
+	local ITERATIONCOMMAND=''
+	iterationsCommand "$6" "ITERATIONCOMMAND"
+
+	#Make sure all the output files are stored in the images subdirectory
+	local PBRTOUTFILE="images/$2"
+	local RPFOUTFILE="images/$3"
+
+	#Start het pbrt en rpf commando
+	~/Dropbox/ThesisWorkspace/PBRT/src/bin/pbrt "$1" --outfile "$PBRTOUTFILE" --rpfOutfile "$RPFOUTFILE" $FEATURES $SIGMASTRING $ITERATIONCOMMAND
+}
+
+# Transformeer de string met actieve features naar een werkende optie
+# 
+# $1: De string met actieve features, deze moet bestaan uit de namen van de features gescheiden door spaties, 
+#	mogelijke features: [normal, worldCoord]
+# $2: De variabele waarin de resulterende optie van deze functie in wordt opgeslagen.
+function featureOptions() {
+	OPTIONS=""
+	for i in $1; do
+		if [ $i = "normal" ]; then
+			OPTIONS="$OPTIONS --normalFeature"
+		fi
+		if [ $i = "worldCoord" ]; then
+			OPTIONS="$OPTIONS --worldCoordFeature"
+		fi
+	done
+    eval "$2='$OPTIONS'"
+}
+
+# Transformeer de string met boxGroottes om naar een werkende optie
+# 
+# $1: De string met boxGroottes, deze moet bestaan uit integers gescheiden door spaties.
+# $2: De variabele waarin de resulterende optie van deze functie in wordt opgeslagen.
+function iterationsCommand() {
+	COMMAND=""
+
+	COUNTER=0
+	for i in $1; do
+		let COUNTER=COUNTER+1
+ 	done
+
+	COMMAND="--iterations $COUNTER $1"
+
+	eval "$2='$COMMAND'"
+}

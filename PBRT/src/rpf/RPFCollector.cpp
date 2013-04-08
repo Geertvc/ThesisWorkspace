@@ -90,8 +90,8 @@ double getPixelValue(int chan, RPFPixel pixel){
 
 void RPFCollector::ExecuteRPF(){
 	std::cout << " -> RPF execution started" << std::endl;
-	//clock_t start, end;
-	//start = clock();
+	clock_t start, end;
+	start = clock();
 
 	float *xyz = new float[3*nbPixels];
 	//RPFFilter *filter = new RPFFilter(sigmaD, sigmaR, n);
@@ -101,8 +101,8 @@ void RPFCollector::ExecuteRPF(){
 	rpf->applyFilter(rpfPixels, xyz, xRes, yRes, samplesPerPixel);
 
 
-	//end = clock();
-	//std::cout << " -> Total time used by RPF: " << (double)(end-start)/CLOCKS_PER_SEC << " seconds." << std::endl;
+	end = clock();
+	std::cout << " -> Total time used by RPF: " << (double)(end-start)/CLOCKS_PER_SEC << " seconds." << std::endl;
 
 	std::cout << " -> Converting xyz values to rgb..." << std::endl;
 	float *rgb = new float[3*nbPixels];

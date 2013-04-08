@@ -19,6 +19,9 @@
 #include <boost/random.hpp>
 #include <boost/random/normal_distribution.hpp>
 //#include "rpf/RPFCollector.h"
+
+#include <omp.h>
+#include <stdio.h>
 using namespace std;
 
 void Tuple3fTest();
@@ -30,12 +33,14 @@ void normalDistTest();
 void normalDistTest2D();
 void alternativeNormalDist2D();
 void mutualInformationTest();
+int runOpenMPExample();
 
 template <class T>
 void printArray(T *array, int size);
 
 int main() {
-	mutualInformationTest();
+	runOpenMPExample();
+	//mutualInformationTest();
 	//alternativeNormalDist2D();
 	//normalDistTest();
 	//normalDistTest2D();
@@ -44,6 +49,28 @@ int main() {
 	//sizeofTest();
 	//stringstreamTest();
 	//maxIntValueTest();
+	return 0;
+}
+
+int runOpenMPExample(){
+	int nthreads, tid;
+
+	/* Fork a team of threads with each thread having a private tid variable */
+#pragma omp dynamic private(tid)
+	{
+
+		/* Obtain and print thread id */
+		tid = omp_get_thread_num();
+		printf("Hello World from thread = %d\n", tid);
+
+		/* Only master thread does this */
+		if (tid == 0)
+		{
+			nthreads = omp_get_num_threads();
+			printf("Number of threads = %d\n", nthreads);
+		}
+
+	}  /* All threads join master thread and terminate */
 	return 0;
 }
 
@@ -504,7 +531,7 @@ void normalDistTest(){
 	int p[10] = {};
 	for (int i=0; i<nbTests; ++i) {
 		double number = values[i];
-	    if ((number>=0.0)&&(number<=10.0)) ++p[int(number)];
+		if ((number>=0.0)&&(number<=10.0)) ++p[int(number)];
 	}
 
 	cout << "normal_distribution (" << mean << ", " << sigma << "):" << endl;

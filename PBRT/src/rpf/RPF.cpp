@@ -108,7 +108,9 @@ void RPF::applyFilter(std::vector<RPFPixel> &input, float *xyz, int xResolution,
 		std::cout << "Start RPF filtering with box width " << b << std::endl;
 		ProgressReporter reporter(yRes, "Filtering");
 
+
 		//Main forloop over all pixels.
+		#pragma omp parallel for schedule(dynamic,1) shared(input, b, M, t, copyColors, newFilteredColors)
 		for (int y = 0; y < yRes; ++y) {
 			for (int x = 0; x < xRes; ++x) {
 				//pre-process samples

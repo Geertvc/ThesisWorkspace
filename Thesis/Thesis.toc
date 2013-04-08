@@ -1,0 +1,26 @@
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
+\contentsline {chapter}{Voorwoord}{i}{chapter*.1}
+\contentsline {chapter}{Samenvatting}{iii}{chapter*.2}
+\contentsline {chapter}{\chapternumberline {1}Inleiding}{1}{chapter.1}
+\contentsline {chapter}{\chapternumberline {2}Gerelateerd werk}{3}{chapter.2}
+\contentsline {chapter}{\chapternumberline {3}Bilateral filter}{5}{chapter.3}
+\contentsline {chapter}{\chapternumberline {4}Random Parameter Filtering}{7}{chapter.4}
+\contentsline {chapter}{\chapternumberline {5}Resultaten}{9}{chapter.5}
+\contentsline {chapter}{\chapternumberline {6}Discussie}{11}{chapter.6}
+\contentsline {chapter}{\chapternumberline {7}Besluit}{13}{chapter.7}
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
+\select@language {dutch}
